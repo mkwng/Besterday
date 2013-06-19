@@ -14,20 +14,21 @@
         <link rel="stylesheet" href="css/default.css">
         <link rel="stylesheet" href="css/main.css">
 
-
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="disable-cover" style="display:none;position:fixed;width:100%;height:100%;top:0;left:0;background:#ffffff;opacity:.8;"></div>
+        <div class="disable-cover"></div>
 
         <div class="account">
-            <a class="account-uid" href="#">Account</a>
-            <ul class="account-nav">
-                <li><a href="#" onclick='view("login")'>Sign out</a></li>
-            </ul>
+            <div class="account-uid" href="#">
+                <span>Account</span>
+                <ul class="account-nav">
+                    <li><a href="#" onclick='view("login")'>Sign out</a></li>
+                </ul>
+            </div>
         </div>
 
         <form id="login" style="display:none">
@@ -38,11 +39,9 @@
         </form>
 
         <form id="journal" style="display:none">
-            <p>
-                <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a>
-            </p>
-            <p><label for="story">This is the best thing that happened to me <em>today</em>.</label></p>
-            <p><textarea id="story" name="story"></textarea></p>
+            <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a>
+            <label for="story">This is the best thing that happened to me <em>today</em>.</label>
+            <textarea id="story" name="story"></textarea>
             <input type="submit" value="Save">
         <form>
 

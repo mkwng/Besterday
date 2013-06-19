@@ -25,14 +25,14 @@ function view(page) {
   switch(page) {
     case "login":
       $journal.fadeOut(function() {
-        $account.find("a.account-uid").html("Sign in");
+        $account.find(".account-uid span").html("Sign in");
         hoodie.account.signOut();
         $login.fadeIn()
       });
       break;
     case "journal":
       if(hoodie.account.username){
-        $account.find("a.account-uid").html(hoodie.account.username);
+        $account.find(".account-uid span").html(hoodie.account.username);
         stories = loadStories();
         $login.fadeOut(function() {
           loadDay();
@@ -142,7 +142,7 @@ function loadStory(date) {
 function loadDay(date) {
   // If there's no date parameter, we assume today.
   targetDate = typeof date=="undefined" ? new Date(today) : new Date(date);
-  $currentDay.html(prettyDate(targetDate));
+  $currentDay.css("opacity","0").html(prettyDate(targetDate)).stop().animate({"opacity":1});
 
   // Find if there is already an entry for this date.
   currentStory = loadStory(targetDate);
