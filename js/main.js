@@ -8,9 +8,54 @@ var $login = $("#login");
 var $journal = $("#journal");
 var $story = $("#story");
 var $currentDay = $("#journal label em");
+var $account = $(".account");
 
 $(document).ready(function() {
+  if(hoodie.account.username) view("journal");
+  else view("login");
 });
+
+
+
+//////////////////////// GLOBAL ////////////////////////
+
+var pageNames = ["login","journal","dashboard"];
+// Navigate.
+function view(page) {
+  switch(page) {
+    case "login":
+      $journal.fadeOut(function() {
+        $account.find("a.account-uid").html("Sign in");
+        hoodie.account.signOut();
+        $login.fadeIn()
+      });
+      break;
+    case "journal":
+      if(hoodie.account.username){
+        $account.find("a.account-uid").html(hoodie.account.username);
+        stories = loadStories();
+        $login.fadeOut(function() {
+          loadDay();
+          $journal.fadeIn();
+        });
+      } else displayWarning("Not logged in.");
+      break;
+    case "dashboard":
+      break;
+  }
+}
+
+hoodie.account.on('unauthenticated', function() {
+  view("login");
+});
+
+function displayMessage(msg) {
+  console.log(msg);
+}
+function displayWarning(msg) {
+  alert(msg);
+}
+
 
 //////////////////////// LOGIN ////////////////////////
 
@@ -19,29 +64,24 @@ $login.submit(function(e) {
   e.preventDefault();
   hoodie.account.signIn($("#uid").val(),$("#pwd").val())
     .done(function() {
-      console.log('Hello, ' + hoodie.account.username);
-      stories = loadStories();
-      $login.fadeOut(function() {
-        loadDay();
-        $journal.fadeIn();
-      });
+      displayMessage('Hello, ' + hoodie.account.username);
+      view("journal");
     })
     .fail(function() {
-      alert("Login fail.");
+      displayWarning("Login fail.");
     });
 });
 
 // Creating a new account.
 $("#create").click(function(e) {
   e.preventDefault();
-  alert("hellpo");
   hoodie.account.signUp($("#uid").val(),$("#pwd").val())
     .done(function() {
-      alert("Account created!");
+      displayMessage("Account created!");
       $login.submit();
     })
     .fail(function() {
-      alert("Could not create account for some reason...");
+      displayWarning("Could not create account for some reason...");
     });
 });
 
@@ -59,7 +99,6 @@ $journal.submit(function(e) {
     });
     $journal.find("input").attr("value","Update");
   } else {
-    console.log("testing");
     hoodie.store.update('story',currentStory[0].id,{
       text:   $story.val()
     });
@@ -71,14 +110,14 @@ $journal.submit(function(e) {
 hoodie.store.on('add:story', function() {
   stories = loadStories();
   // console.log(stories);
-  console.log("New story added.");
+  displayMessage("New story added.");
   loadStory(targetDate);
   $(".disable-cover").stop().fadeOut();
 });
 hoodie.store.on('update:story', function() {
   stories = loadStories();
   // console.log(stories);
-  console.log("Updated a story.");
+  displayMessage("Updated a story.");
   loadStory(targetDate);
   $(".disable-cover").stop().fadeOut();
 });
@@ -103,16 +142,16 @@ function loadStory(date) {
 function loadDay(date) {
   // If there's no date parameter, we assume today.
   targetDate = typeof date=="undefined" ? new Date(today) : new Date(date);
-  $currentDay.html(targetDate);
+  $currentDay.html(prettyDate(targetDate));
 
   // Find if there is already an entry for this date.
   currentStory = loadStory(targetDate);
   if(currentStory.length) {
-    console.log("There is at least one story for this day");
+    // console.log("There is at least one story for this day");
     $journal.find("input").attr("value","Update");
     fillDay(currentStory);
   } else {
-    console.log("No stories for this day");
+    // console.log("No stories for this day");
     $("#story").val("");
     $journal.find("input").attr("value","Save");
   }
@@ -125,9 +164,9 @@ function loadDay(date) {
 
 // Compare two days to see if they're the same
 function sameDay(date1,date2) {
-    return  date1.getUTCFullYear() == date2.getUTCFullYear() && 
-            date1.getUTCMonth() == date2.getUTCMonth() && 
-            date1.getUTCDate() == date2.getUTCDate();
+    return  date1.getFullYear() == date2.getFullYear() && 
+            date1.getMonth() == date2.getMonth() && 
+            date1.getDate() == date2.getDate();
 }
 
 // Navigating between days

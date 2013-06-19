@@ -1,0 +1,25 @@
+Features
+• Calendar view
+• Share on FB/Twitter (Tumblr? Instagram? Foursquare?)
+• IFTTT support
+• Uploading a picture
+• Multiple best things
+• Timezone support (https://github.com/mde/timezone-js)
+• Post streak
+
+Dashboard View
+• Most commonly used words
+• Length of entry
+• Time of day
+• Grid view of all your best things
+
+Premium Product Possibility
+• Amazon Turk to provide true sentiment analysis
+
+Bugs
+• Check if user is logged in before displaying login.
+• Currently stuck on UTC time.
+• I think the delay in syncing with the server is causing some glitches.
+
+Design
+• One-pager

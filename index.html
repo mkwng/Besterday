@@ -6,11 +6,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Besterday</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/default.css">
         <link rel="stylesheet" href="css/main.css">
 
 
@@ -22,7 +23,14 @@
 
         <div class="disable-cover" style="display:none;position:fixed;width:100%;height:100%;top:0;left:0;background:#ffffff;opacity:.8;"></div>
 
-        <form id="login" action="">
+        <div class="account">
+            <a class="account-uid" href="#">Account</a>
+            <ul class="account-nav">
+                <li><a href="#" onclick='view("login")'>Sign out</a></li>
+            </ul>
+        </div>
+
+        <form id="login" style="display:none">
             <p><label for="uid">Username:</label><input id="uid" name="uid" type="text"></p>
             <p><label for="pwd">Password:</label><input id="pwd" name="pwd" type="password"></p>
             <input type="submit" value="Log in">
@@ -33,7 +41,7 @@
             <p>
                 <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a>
             </p>
-            <p><label for="story">What's the best thing that happened to you on <em>Monday</em>?</label></p>
+            <p><label for="story">This is the best thing that happened to me <em>today</em>.</label></p>
             <p><textarea id="story" name="story"></textarea></p>
             <input type="submit" value="Save">
         <form>
