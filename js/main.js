@@ -174,6 +174,7 @@ function loadDay(date) {
     fillDay(currentStory);
   } else {
     // console.log("No stories for this day");
+    makeBackground();
     $("#story").val("");
     currentPicture = undefined;
     $journal.find("input[type=submit]").attr("value","Save");
@@ -186,6 +187,7 @@ function loadDay(date) {
 function fillDay(currentStory) {
   $("#story").val(currentStory[0].text);
   currentPicture = currentStory[0].image;
+  console.log("we got here");
   if(currentPicture) {
     makeBackground(currentPicture);
     $upload.addClass("attached");
