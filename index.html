@@ -21,6 +21,7 @@
         <![endif]-->
 
         <div class="disable-cover"></div>
+        <div class="bg-image"></div>
 
         <div class="account">
             <div class="account-uid" href="#">
@@ -32,17 +33,19 @@
         </div>
 
         <form id="login" style="display:none">
-            <p><label for="uid">Username:</label><input id="uid" name="uid" type="text"></p>
-            <p><label for="pwd">Password:</label><input id="pwd" name="pwd" type="password"></p>
-            <input type="submit" value="Log in">
-            <input type="button" id="create" value="Create user">
+            <h1>Besterday</h1>
+            <p><input id="uid" name="uid" type="text" placeholder="Username"></p>
+            <p><input id="pwd" name="pwd" type="password" placeholder="Password"></p>
+            <button type="submit" value="Log in">Log in</button>
+            <button id="create" value="Create user">Create user</button>
         </form>
 
         <form id="journal" style="display:none">
             <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a>
             <label for="story">This is the best thing that happened to me <em>today</em>.</label>
             <textarea id="story" name="story"></textarea>
-            <input type="submit" value="Save">
+            <a class="upload" href="#">Upload Picture</a>
+            <button type="submit" value="Save">Save</button>
         <form>
 
         <script src="js/vendor/jquery-1.9.1.js"></script>

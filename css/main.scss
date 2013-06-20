@@ -18,10 +18,35 @@ body,html {
   min-height:100%;
 }
 
-body {
-  background:$bg;
+h1 {
+  display:block;
+  margin:0 auto;
+  width:202px;
+  height:94px;
+  background:url(../img/besterday.svg);
+  text-indent:-999em;
+  overflow:hidden;
 }
 
+body {
+  background:$bg;
+  background-size: 100%;
+}
+
+input[type=text],input[type=password],textarea {
+    padding:10px 8px;
+    border:1px solid #ffffff;
+    background:#ffffff;
+    resize: none; 
+    outline:none;
+    &:active,&:focus {
+      border-color:$orange;
+    }
+}
+
+button {
+  @include smallcaps;
+}
 
 .disable-cover {
   z-index:9999999;
@@ -97,6 +122,11 @@ body {
   text-align:center;
   display:block;
   position:relative;
+  overflow:hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top:250px;
 }
 
 #journal {
@@ -106,6 +136,10 @@ body {
   display:block;
   position:relative;
   overflow:hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top:250px;
 
   a.prev,a.next {
     position:absolute;
@@ -125,7 +159,7 @@ body {
   a.next {right:-50px;}
 
   label {
-    margin:100px 0 30px 0;
+    margin:0px 0 30px 0;
     display:block;
     @include smallcaps;
     em {
@@ -146,11 +180,35 @@ body {
     width:420px;
     height:120px;
     border:1px solid #ffffff;
-    background:url(../img/story-bg.gif);
-    resize: none; 
-    outline:none;
-    &:active,&:focus {
-      border-color:$orange;
-    }
+    background:url(../img/story-bg.gif) #ffffff;
   }
+
+  .upload {
+    position:relative;
+    margin:-26px auto 26px auto;
+    left:212px;
+    display:block;
+    width:16px;
+    height:16px;
+    text-indent:-9999em;
+    overflow:hidden;
+    background:url(../img/camera.png);
+    opacity:.25;
+    &:hover{opacity:.5}
+    &.attached{opacity:1;background-position:0 16px;}
+    &.attached:hover{opacity:.75}
+    &.active{top:1px;}
+  }
+}
+
+.bg-image {
+    position:absolute;
+    z-index:-1;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background:no-repeat center center fixed;
+    opacity:0.9;
+    background-size: cover;
 }

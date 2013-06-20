@@ -4,8 +4,34 @@ body, html {
   height: 100%;
   min-height: 100%; }
 
+h1 {
+  display: block;
+  margin: 0 auto;
+  width: 202px;
+  height: 94px;
+  background: url(../img/besterday.svg);
+  text-indent: -999em;
+  overflow: hidden; }
+
 body {
-  background: #fcf9f5; }
+  background: #fcf9f5;
+  background-size: 100%; }
+
+input[type=text], input[type=password], textarea {
+  padding: 10px 8px;
+  border: 1px solid #ffffff;
+  background: #ffffff;
+  resize: none;
+  outline: none; }
+  input[type=text]:active, input[type=text]:focus, input[type=password]:active, input[type=password]:focus, textarea:active, textarea:focus {
+    border-color: #ffae41; }
+
+button {
+  font-family: "Proxima Nova";
+  font-size: 13px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px; }
 
 .disable-cover {
   z-index: 9999999;
@@ -74,7 +100,12 @@ body {
   height: 100%;
   text-align: center;
   display: block;
-  position: relative; }
+  position: relative;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: 250px; }
 
 #journal {
   width: 100%;
@@ -82,7 +113,11 @@ body {
   text-align: center;
   display: block;
   position: relative;
-  overflow: hidden; }
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: 250px; }
   #journal a.prev, #journal a.next {
     position: absolute;
     display: block;
@@ -104,7 +139,7 @@ body {
   #journal a.next {
     right: -50px; }
   #journal label {
-    margin: 100px 0 30px 0;
+    margin: 0px 0 30px 0;
     display: block;
     font-family: "Proxima Nova";
     font-size: 13px;
@@ -127,8 +162,35 @@ body {
     width: 420px;
     height: 120px;
     border: 1px solid #ffffff;
-    background: url(../img/story-bg.gif);
-    resize: none;
-    outline: none; }
-    #journal textarea:active, #journal textarea:focus {
-      border-color: #ffae41; }
+    background: url(../img/story-bg.gif) white; }
+  #journal .upload {
+    position: relative;
+    margin: -26px auto 26px auto;
+    left: 212px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-indent: -9999em;
+    overflow: hidden;
+    background: url(../img/camera.png);
+    opacity: .25; }
+    #journal .upload:hover {
+      opacity: .5; }
+    #journal .upload.attached {
+      opacity: 1;
+      background-position: 0 16px; }
+    #journal .upload.attached:hover {
+      opacity: .75; }
+    #journal .upload.active {
+      top: 1px; }
+
+.bg-image {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: no-repeat center center fixed;
+  opacity: 0.9;
+  background-size: cover; }

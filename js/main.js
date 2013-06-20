@@ -3,12 +3,14 @@ window.hoodie  = new Hoodie()
 var today = new Date();
 var stories;
 var currentStory;
+var currentPicture;
 var targetDate = today;
 var $login = $("#login");
 var $journal = $("#journal");
 var $story = $("#story");
 var $currentDay = $("#journal label em");
 var $account = $(".account");
+var $upload = $("a.upload");
 
 $(document).ready(function() {
   if(hoodie.account.username) view("journal");
@@ -25,9 +27,11 @@ function view(page) {
   switch(page) {
     case "login":
       $journal.fadeOut(function() {
+        makeBackground();
         $account.find(".account-uid span").html("Sign in");
         hoodie.account.signOut();
-        $login.fadeIn()
+        $login.fadeIn();
+        makeBackground("../img/08.jpg");
       });
       break;
     case "journal":
@@ -54,6 +58,22 @@ function displayMessage(msg) {
 }
 function displayWarning(msg) {
   alert(msg);
+}
+
+function makeBackground(picture) {
+  if (typeof picture != "undefined"){
+    var url;
+    if (picture.indexOf("{") !== -1) {
+      url = JSON.parse(picture).url;
+    }
+    else url = picture;
+    $(".bg-image").stop().animate({opacity:0},function() {
+      $(this).css("background-image","url("+url+")").animate({opacity:.9})
+    });
+  }
+  else $(".bg-image").animate({opacity:0},function() {
+    $(this).css("background-image","none")
+  });
 }
 
 
@@ -95,12 +115,14 @@ $journal.submit(function(e) {
   if(!currentStory.length) {
     hoodie.store.add('story',{
       date:   targetDate,
-      text:   $story.val()
+      text:   $story.val(),
+      image:  currentPicture
     });
     $journal.find("input").attr("value","Update");
   } else {
     hoodie.store.update('story',currentStory[0].id,{
-      text:   $story.val()
+      text:   $story.val(),
+      image:  currentPicture
     });
   }
   $(".disable-cover").stop().fadeIn();
@@ -148,17 +170,29 @@ function loadDay(date) {
   currentStory = loadStory(targetDate);
   if(currentStory.length) {
     // console.log("There is at least one story for this day");
-    $journal.find("input").attr("value","Update");
+    $journal.find("input[type=submit]").attr("value","Update");
     fillDay(currentStory);
   } else {
     // console.log("No stories for this day");
     $("#story").val("");
-    $journal.find("input").attr("value","Save");
+    currentPicture = undefined;
+    $journal.find("input[type=submit]").attr("value","Save");
   }
 
-  // This actually fills in the DOM elements with the content.
-  function fillDay(currentStory) {
-    $("#story").val(currentStory[0].text);
+
+}
+
+// This actually fills in the DOM elements with the content.
+function fillDay(currentStory) {
+  $("#story").val(currentStory[0].text);
+  currentPicture = currentStory[0].image;
+  if(currentPicture) {
+    makeBackground(currentPicture);
+    $upload.addClass("attached");
+  }
+  else {
+    makeBackground();
+    $upload.removeClass("attached");
   }
 }
 
@@ -169,10 +203,39 @@ function sameDay(date1,date2) {
             date1.getDate() == date2.getDate();
 }
 
+var maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 1);
 // Navigating between days
 $(".next").click(function() {
-  loadDay(targetDate.setDate(targetDate.getDate() + 1));
+  var nextDay = today;
+  nextDay.setDate(targetDate.getDate() + 1);
+  // console.log(prettyDate(new Date()),prettyDate(nextDay));
+  if(sameDay(maxDate,nextDay)) $(this).addClass("disabled");
+  if(!$(this).hasClass("disabled")) loadDay(targetDate.setDate(targetDate.getDate() + 1));
 });
 $(".prev").click(function() {
+  $(".next").removeClass("disabled");
   loadDay(targetDate.setDate(targetDate.getDate() - 1));
+});
+
+// Upload a picture
+$upload.click(function(e) {
+  e.preventDefault();
+  filepicker.pick({
+    mimetypes: ['image/*', 'text/plain'],
+    container: 'modal',
+    services:['COMPUTER', 'URL', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 
+    'PICASA', 'DROPBOX', 'GMAIL'],
+  },
+  function(FPFile){
+    currentPicture = JSON.stringify(FPFile);
+    $upload.addClass("attached");
+    $journal.submit()
+    makeBackground(currentPicture);
+  },
+  function(FPError){
+    console.log(FPError.toString());
+    $upload.addClass("error");
+  }
+);
 });
