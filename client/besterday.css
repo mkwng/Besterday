@@ -1,0 +1,302 @@
+@keyframes bgscroll {
+  from {
+    background-position: 100% 0; }
+
+  to {
+    background-position: 0 0; } }
+
+@-webkit-keyframes bgscroll {
+  from {
+    background-position: 100% 0; }
+
+  to {
+    background-position: 0 0; } }
+
+@-moz-keyframes bgscroll {
+  from {
+    background-position: 100% 0; }
+
+  to {
+    background-position: 0 0; } }
+
+@-ms-keyframes bgscroll {
+  from {
+    background-position: 100% 0; }
+
+  to {
+    background-position: 0 0; } }
+
+@-o-keyframes bgscroll {
+  from {
+    background-position: 100% 0; }
+
+  to {
+    background-position: 0 0; } }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%; }
+
+h1 {
+  display: block;
+  margin: 0 auto;
+  width: 202px;
+  height: 94px;
+  background: url(/img/besterday.svg);
+  text-indent: -999em;
+  overflow: hidden; }
+
+body {
+  background: #fcf9f5;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+input[type=text], input[type=password], textarea {
+  padding: 10px 8px;
+  border: 1px solid #ffffff;
+  background: #ffffff;
+  resize: none;
+  outline: none; }
+  input[type=text]:active, input[type=text]:focus, input[type=password]:active, input[type=password]:focus, textarea:active, textarea:focus {
+    border-color: #ffae41; }
+
+button {
+  font-family: "Proxima Nova";
+  font-size: 13px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px; }
+
+#login-buttons {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 44px;
+  background: #ffffff;
+  top: 0; }
+  #login-buttons .login-link-and-dropdown-list {
+    font-family: "Proxima Nova";
+    font-size: 13px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    width: auto;
+    height: 14px;
+    padding: 15px 20px;
+    float: right;
+    position: relative;
+    background: #f9f9f9; }
+    #login-buttons .login-link-and-dropdown-list ul {
+      display: none;
+      position: absolute;
+      top: 44px;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+      #login-buttons .login-link-and-dropdown-list ul li {
+        display: block;
+        margin: 0;
+        padding: 0; }
+        #login-buttons .login-link-and-dropdown-list ul li a {
+          background: #ffae41;
+          color: #ffffff;
+          display: block;
+          width: 75px;
+          text-align: right;
+          padding: 15px 20px;
+          margin: 0;
+          text-decoration: none; }
+          #login-buttons .login-link-and-dropdown-list ul li a:hover {
+            background: #ffa327; }
+          #login-buttons .login-link-and-dropdown-list ul li a:active {
+            padding: 16px 20px 14px;
+            background: #ff9d18; }
+  #login-buttons .account-uid:hover {
+    background: #f1f1f1; }
+    #login-buttons .account-uid:hover ul {
+      display: block; }
+  #login-buttons #login-dropdown-list {
+    position: relative; }
+
+#login {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 16px solid #fcf9f5;
+  border-top: none; }
+  #login .inner {
+    height: 280px;
+    position: absolute;
+    top: 55%;
+    margin: -140px auto 0;
+    width: 100%; }
+
+#journal {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 16px solid #ffffff;
+  border-top: none; }
+  #journal .inner {
+    height: 280px;
+    position: absolute;
+    top: 55%;
+    margin: -140px auto 0;
+    width: 100%; }
+  #journal label {
+    -webkit-transition: color .5s ease-in;
+    -moz-transition: color .5s ease-in;
+    -o-transition: color .5s ease-in;
+    transition: color .5s ease-in; }
+  #journal a.prev, #journal a.next {
+    position: absolute;
+    display: block;
+    background: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    text-indent: -9999em;
+    overflow: hidden;
+    top: 50%;
+    margin-top: -50px; }
+    #journal a.prev:hover, #journal a.next:hover {
+      background: #ffae41; }
+    #journal a.prev:active, #journal a.next:active {
+      margin-top: -49px;
+      background: #ffa327; }
+  #journal a.prev {
+    left: -50px; }
+  #journal a.next {
+    right: -50px; }
+  #journal label {
+    margin: 0px 0 30px 0;
+    display: block;
+    font-family: "Proxima Nova";
+    font-size: 13px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
+    #journal label em {
+      font-style: normal;
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer; }
+  #journal .journal-input {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    width: 462px;
+    height: 146px; }
+  #journal textarea {
+    color: #666666;
+    position: relative;
+    letter-spacing: .1em;
+    line-height: 26px;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    padding: 12px 20px;
+    width: 420px;
+    height: 120px;
+    border: 1px solid #ffffff;
+    background: url(/img/story-bg.gif) white; }
+  #journal .loading-cover {
+    z-index: 2;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/img/load.png);
+    -webkit-animation: bgscroll 50s infinite linear;
+    -moz-animation: bgscroll 50s infinite linear;
+    -ms-animation: bgscroll 50s infinite linear;
+    -o-animation: bgscroll 50s infinite linear;
+    animation: bgscroll 50s infinite linear; }
+  #journal .social-icons a {
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-indent: -9999em;
+    overflow: hidden;
+    opacity: .25;
+    bottom: 10px;
+    background-image: url("/img/icons.png"); }
+    @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+      #journal .social-icons a {
+        background-image: url("/img/icons@2x.png");
+        -webkit-background-size: 96px 32px; } }
+    #journal .social-icons a.upload {
+      background-position: 0 0;
+      right: 10px; }
+      #journal .social-icons a.upload.attached {
+        opacity: 1;
+        background-position: 0 -16px; }
+      #journal .social-icons a.upload.attached:hover {
+        background-position: -16px -16px;
+        opacity: .8; }
+    #journal .social-icons a.facebook {
+      background-position: -48px 0;
+      right: 31px; }
+      #journal .social-icons a.facebook.active {
+        background-position: -48px -16px;
+        opacity: 1; }
+    #journal .social-icons a.twitter {
+      background-position: -32px 0;
+      right: 52px; }
+      #journal .social-icons a.twitter.active {
+        background-position: -32px -16px;
+        opacity: 1; }
+    #journal .social-icons a:hover {
+      opacity: .5; }
+    #journal .social-icons a:active {
+      margin-top: 1px; }
+
+.bg-image {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: #222222 center center fixed;
+  opacity: 0.9;
+  background-size: cover;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  perspective: 1000;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -o-perspective: 1000;
+  -ms-perspective: 1000;
+  -webkit-filter: grayscale(10%) blur(8px);
+  -moz-filter: grayscale(10%) blur(8px);
+  -o-filter: grayscale(10%) blur(8px);
+  -ms-filter: grayscale(10%) blur(8px);
+  filter: grayscale(10%) blur(8px); }

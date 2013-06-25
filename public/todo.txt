@@ -1,0 +1,16 @@
+Features
+• Calendar view
+• Share on FB/Twitter (Tumblr? Instagram? Foursquare?)
+• IFTTT support
+• Post streak
+
+Dashboard View
+• Most commonly used words
+• Length of entry
+• Time of day
+• Grid view of all your best things
+
+Design
+• One pager
+• Style the filepicker interface
+• Sign in dialog
