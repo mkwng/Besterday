@@ -18,7 +18,6 @@ $(document).ready(function() {
 });
 
 
-
 //////////////////////// GLOBAL ////////////////////////
 
 var pageNames = ["login","journal","dashboard"];
@@ -187,7 +186,6 @@ function loadDay(date) {
 function fillDay(currentStory) {
   $("#story").val(currentStory[0].text);
   currentPicture = currentStory[0].image;
-  console.log("we got here");
   if(currentPicture) {
     makeBackground(currentPicture);
     $upload.addClass("attached");
