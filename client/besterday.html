@@ -1,9 +1,12 @@
 <head>
     <title>Besterday</title>
+    <script type="text/javascript" src="//use.typekit.net/gtr3ign.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
  
 <body>
   <div class="bg-image"></div>
+  <div class="dummy"></div>
   {{loginButtons}}
   {{> journal }}
 </body>
@@ -11,21 +14,18 @@
 <template name="journal">
 
   {{#if loggedIn}}
-  <form id="journal">
+  <div id="journal">
+    {{#constant}}
+    <label for="story"><em>{{date}}</em></label> 
+    {{/constant}}
+    <textarea id="story" name="story" placeholder="The best thing that happened to me {{date}} was...">{{story.text}}</textarea>
 
-    <div class="inner">
-        <a href="#" class="prev">Previous</a> <a href="#" class="next">Next</a>
-        <label for="story">This is the best thing that happened to me <em>{{date}}</em>.</label>
-        <div class="journal-input">
-            <textarea id="story" name="story">{{story.text}}</textarea>
-            <div class="social-icons">
-                <a class="facebook" href="#" alt="Share on Facebook">Share on Facebook</a>
-                <a class="twitter" href="#" alt="Share on Twitter">Share on Twitter</a>
-                <a class="upload {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
-            </div>
-        </div>
+    <div class="social-icons">
+        <a class="upload {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
     </div>
-    {{/if}}
 
-  <form>
+  </div>
+  {{/if}}
+
+  {{invokeAfterLoad}}
 </template>

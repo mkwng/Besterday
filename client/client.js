@@ -1,8 +1,9 @@
 // If no story selected, select one.
 Meteor.startup(function () {
   Deps.autorun(function () {
-    setDate(new Date());
+    setDate(new Date(new Date().setDate(new Date().getDate() - 1)));
   });
+  $(window).resize(function() {$("#story").verticalCenter();});
 });
 
 // Meteor.subscribe("Stories", function() {
@@ -14,6 +15,11 @@ Meteor.startup(function () {
 
 // var image;
 
+var $dummy;
+Template.journal.rendered = function() {
+
+}
+
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
   var story = Stories.findOne(Session.get("session_story"));
@@ -21,13 +27,21 @@ Template.journal.story = function () {
     image = story.img;
     date = story.date;
   }
+
   return story;
 }; 
 
+Template.journal.invokeAfterLoad = function() {
+  if(typeof $dummy == "undefined" && $(".dummy").length) $dummy = $(".dummy");
+  if($("#story").length) setTimeout(function() {$("#story").verticalCenter();},1);
+}
+
 Template.journal.helpers({
   date: function() {
-    if (typeof Session.get("session_date") == "object") return prettyDate(Session.get("session_date"));
-    else return "invalid date";
+
+    if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
+    return "No date set.";
+
   },
   loggedIn: function() {
     return Meteor.userId;
@@ -36,6 +50,7 @@ Template.journal.helpers({
 
 Template.journal.events({
   'keyup #story' : function (e) {
+    $(e.target).verticalCenter();
     if(Session.get("session_story")) {
       Stories.update(
         { _id: Session.get("session_story")},
@@ -179,8 +194,8 @@ function makeBackground(picture) {
     else var url = picture;
 
     getImageLightness(url,function(brightness){
-      if(brightness<150) $("#journal").find("label").css("color","#ffffff");
-      else $("#journal").find("label").css("color","#222222");
+      if(brightness<150) {$("textarea").css("color","#ffffff");console.log("yes");}
+      else {$("textarea").css("color","#666666");console.log("no");}
     });
 
     $(".bg-image").stop().animate({opacity:0},function() {
@@ -192,7 +207,7 @@ function makeBackground(picture) {
   else $(".bg-image").animate({opacity:0},function() {
     $(".upload").removeClass("attached");
     $(this).css("background-image","none");
-    $("#journal").find("label").css("color","#222222");
+    $("textarea").css("color","#666666");
   });
 }
 
@@ -218,6 +233,7 @@ var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","N
 // long ago the date represents.
 function prettyDate(time){
     // var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+    // console.log(time);
     var date = time;
         diff = (((new Date()).getTime() - date.getTime()) / 1000),
         day_diff = Math.floor(diff / 86400);
@@ -309,3 +325,51 @@ function getImageLightness(imageSrc,callback) {
 // Filepicker.io
 (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
 filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
+
+
+function formatDummyText( text ) {
+  if ( !text ) {
+    return 'The best thing that happened to me yesterday was...';
+  }
+  return text.replace( /\n$/, '<br>&nbsp;' )
+    .replace( /\n/g, '<br>' ).replace( /\s\s/g , '&nbsp; ');
+}
+
+
+jQuery.fn.verticalCenter = function() {
+  $dummy.html(formatDummyText($(this).val()));
+  // console.log("hello");
+  var h = $(window).height()-120;
+  var top = (h - $dummy.height()) * .5;
+  // while (top<0) $(this).css('font-size', '-=1');
+  $(this).css({"padding-top":top,"opacity":1});
+  $("label").css({"top":top+20,"opacity":1});
+};
+
+// $( function() {
+
+//   var $wrap = $('#wrap');
+//   var $textarea = $('textarea');
+//   var $dummy = $('.dummy');
+
+  
+//   function positionTextarea() {
+//     var h = $wrap.height();
+//     var top = Math.max( 0, ( h - $dummy.height() ) * 0.5 );
+//     $textarea.css({
+//       paddingTop: top,
+//       height: h - top
+//     });
+//   }
+
+//   $textarea.on( 'keyup change', function( event ) {
+//     var html = formatDummyText( $textarea.val() );
+//     $dummy.html( html );
+//     positionTextarea();
+//   }).trigger('change');
+
+//   // should debounce this
+//   $( window ).on( 'resize', positionTextarea );
+  
+// });
+
