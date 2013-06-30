@@ -6,6 +6,29 @@
 Meteor.startup(function () {
   Session.set('data_loaded', false); 
   $(window).resize(function() {$("#story").verticalCenter(true);});
+
+var cleanUp;
+$(window).bind('mousewheel', function(event) {
+    if (event.originalEvent.wheelDelta >= 0) {
+        if($(".controls-up").css("top").replace(/[^-\d\.]/g, '')<-50)
+          $(".controls-up").css({"top" : "+=1px"});
+        else {
+          console.log("done");
+        }
+        clearTimeout(cleanUp);
+        cleanUp = setTimeout(function() {
+          $(".controls-up").animate({"top":"-100px"});
+        },10);
+    }
+    else {
+        if($(".controls-dn").css("bottom").replace(/[^-\d\.]/g, '')<-50)
+          $(".controls-dn").css({"bottom" : "+=1px"});
+        else {
+          console.log("done");
+        }
+    }
+});
+
 });
 
 Meteor.subscribe('default_db_data', function(){
@@ -256,7 +279,7 @@ filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
  * Author: Behnam Esmali
  * Source: http://stackoverflow.com/questions/13552655/how-to-vertically-center-text-in-textarea
  */
-var centerOnce = true; // Incredibly annoying bug fix
+var centerOnce = true; // Incredibly annoying hack to center the type on first load.
 
 function formatDummyText(text) {
   if ( !text ) return 'The best thing that happened was...';

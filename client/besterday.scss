@@ -227,6 +227,7 @@ body {
     top:0;
     left:0;
     width:100%;
+    height:100%;
 
     /* Display & Box Model */
     @include box-sizing;
@@ -317,6 +318,33 @@ body {
 
       /* Font */
       text-indent:-9999em;
+    }
+
+    .controls-up,.controls-dn {
+      /* Positioning */
+      position:absolute;
+      @include box-sizing;
+      height:100px;
+      width:100px;
+
+      /* Display & Box Model */
+      display:block;
+      left:50%;
+      margin-left:-50px;
+
+      /* Presentation */
+      background:#ffffff;
+      overflow:hidden;
+      border-radius:50px;
+
+      /* Font */
+      text-indent:-9999em;
+    }
+    .controls-up {
+      top:-100px;
+    }
+    .controls-dn {
+      bottom:-100px;
     }
   }
 }

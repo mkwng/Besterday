@@ -196,6 +196,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     /* Display & Box Model */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -277,3 +278,25 @@ body {
       overflow: hidden;
       /* Font */
       text-indent: -9999em; }
+    #journal .controls .controls-up, #journal .controls .controls-dn {
+      /* Positioning */
+      position: absolute;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      height: 100px;
+      width: 100px;
+      /* Display & Box Model */
+      display: block;
+      left: 50%;
+      margin-left: -50px;
+      /* Presentation */
+      background: #ffffff;
+      overflow: hidden;
+      border-radius: 50px;
+      /* Font */
+      text-indent: -9999em; }
+    #journal .controls .controls-up {
+      top: -100px; }
+    #journal .controls .controls-dn {
+      bottom: -100px; }
