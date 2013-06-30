@@ -7,27 +7,7 @@ Meteor.startup(function () {
   Session.set('data_loaded', false); 
   $(window).resize(function() {$("#story").verticalCenter(true);});
 
-var cleanUp;
-$(window).bind('mousewheel', function(event) {
-    if (event.originalEvent.wheelDelta >= 0) {
-        if($(".controls-up").css("top").replace(/[^-\d\.]/g, '')<-50)
-          $(".controls-up").css({"top" : "+=1px"});
-        else {
-          console.log("done");
-        }
-        clearTimeout(cleanUp);
-        cleanUp = setTimeout(function() {
-          $(".controls-up").animate({"top":"-100px"});
-        },10);
-    }
-    else {
-        if($(".controls-dn").css("bottom").replace(/[^-\d\.]/g, '')<-50)
-          $(".controls-dn").css({"bottom" : "+=1px"});
-        else {
-          console.log("done");
-        }
-    }
-});
+  scrollNav();
 
 });
 
@@ -41,11 +21,14 @@ Meteor.subscribe('default_db_data', function(){
    TEMPLATE: Journal
    ========================================================================== */
 var $dummy;
+var cleanUp;
+var dateChangeable = true;
 
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
   var story = Stories.findOne(Session.get("session_story"));
-  if(story)image = story.img;
+  if(story){image = story.img;}
+  else {story = new Object();story.text = ""}
   return story;
 }; 
 
@@ -58,7 +41,7 @@ Template.journal.rendered = function() {
 
 Template.journal.events({
   'keyup #story' : function (e) {
-    $(e.target).verticalCenter();
+    var css = $("#story").attr("style");
     if(Session.get("session_story")) {
       Stories.update(
         { _id: Session.get("session_story")},
@@ -78,11 +61,16 @@ Template.journal.events({
         }
       ));
     }
+    setTimeout(function() {
+      $("#story").attr("style",css);
+      $(e.target).verticalCenter(true);
+    },0);
   },
   'click .media-image' : function (e) {
   },
   'click .controls-save' : function (e) {  
     // $(e.target).verticalCenter();
+    var css = $("#story").attr("style");
     if(Session.get("session_story")) {
       Stories.update(
         { _id: Session.get("session_story")},
@@ -102,6 +90,7 @@ Template.journal.events({
         }
       ));
     }
+    setTimeout(function() {$("#story").attr("style",css)},0);
   }
 });
 
@@ -136,16 +125,25 @@ function setDate(date) {
   nextDate = new Date(new Date().setDate(date.getDate() + 1));
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
-  Session.set("session_date", date);
 
-  story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
-  if(story) {
-    makeBackground(story.img);
-    Session.set("session_story", story._id);
-  }
-  else {
-    makeBackground();
-    Session.set("session_story", undefined);
+  if(end < new Date()) {
+
+    Session.set("session_date", date);
+    story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
+    if(story) {
+      makeBackground(story.img);
+      Session.set("session_story", story._id);
+      $("#story").val(story.text);
+    }
+    else {
+      makeBackground();
+      Session.set("session_story", undefined);
+      $("#story").val("");
+    }
+    setTimeout(function() {$("#story").verticalCenter(true);},0)
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -157,8 +155,8 @@ function makeBackground(picture) {
     else var url = picture;
 
     getImageLightness(url,function(brightness){
-      if(brightness<150) {$("textarea").css("color","#ffffff");console.log("yes");}
-      else {$("textarea").css("color","#666666");console.log("no");}
+      if(brightness<150) {$("#story").css("color","#ffffff");console.log("color white");}
+      else {$("#story").css("color","#666666");console.log("no");}
     });
 
     $(".bg-image").stop().animate({opacity:0},function() {
@@ -170,10 +168,102 @@ function makeBackground(picture) {
   else $(".bg-image").animate({opacity:0},function() {
     $(".upload").removeClass("attached");
     $(this).css("background-image","none");
-    $("textarea").css("color","#666666");
+    $("#story").css("color","#666666");
   });
 }
 
+
+function scrollNav() {
+
+  function resetScroll() {
+
+    $(".nav-up").animate({"top":"-48px"});
+    $(".nav-dn").animate({"bottom":"-48px"},function() {
+      $(".nav-up").css({ WebkitTransform: 'rotate(0deg)'});
+      $(".nav-dn").css({ WebkitTransform: 'rotate(0deg)'});
+      // For Mozilla browser: e.g. Firefox
+      $(".nav-up").css({ '-moz-transform': 'rotate(0deg)'});
+      $(".nav-dn").css({ '-moz-transform': 'rotate(0deg)'});
+      dateChangeable = true;
+    });
+
+  }
+
+  function animateReset(date) {
+    $(".nav-up").rotate(180);
+    $(".nav-dn").rotate(180);
+    setTimeout(function() {
+      if (setDate(date)) {
+        resetScroll();
+      }
+      else {
+        animateFail();
+      }
+    },500);
+  }
+
+
+  jQuery.fn.rotate = function(degree) {
+    var d = 0;
+    function animation_loop() {
+        setTimeout(function() { 
+          $(".nav-up").css({ WebkitTransform: 'rotate(' + d + 'deg)'});
+          $(".nav-dn").css({ WebkitTransform: 'rotate(' + -d + 'deg)'});
+          // For Mozilla browser: e.g. Firefox
+          $(".nav-up").css({ '-moz-transform': 'rotate(' + d + 'deg)'});
+          $(".nav-dn").css({ '-moz-transform': 'rotate(' + -d + 'deg)'});
+          d+=5; 
+          if (d <= degree) { animation_loop(); } 
+        }, 1);
+    };
+    animation_loop();
+
+  }
+
+  function animateFail() {
+    console.log("fail");
+    $(".nav").animate({left:"+=10px"},100,function() {
+      $(this).animate({left:"-=20px"},80,function() {
+        $(this).animate({left:"+=10px"},70,function() {
+          resetScroll();
+        })
+      })
+    });
+  }
+
+  $(window).bind('mousewheel', function(event) {
+    if(dateChangeable) {
+        if (event.originalEvent.wheelDelta >= 0) {
+            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<50){
+              $(".nav-up").css({"top" : "+=2px"});
+              clearTimeout(cleanUp);
+              cleanUp = setTimeout(function() {
+                resetScroll();
+              },100);
+            }
+            else {
+              clearTimeout(cleanUp);
+              dateChangeable = false;
+              animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+            }
+        }
+        else {
+            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<50){
+              $(".nav-dn").css({"bottom" : "+=2px"});
+              clearTimeout(cleanUp);
+              cleanUp = setTimeout(function() {
+                resetScroll();
+              },100);
+            }
+            else {
+              clearTimeout(cleanUp);
+              dateChangeable = false;
+              animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()+1)));
+            }
+        }
+      }
+  });
+}
 
 
 /* ==========================================================================
@@ -305,7 +395,7 @@ jQuery.fn.verticalCenter = function(force) {
     var top = calculateTop();
       if (centerOnce && top+"px"!=$(this).css("padding-top") && top) {
         centerOnce = false;
-        $(this).css("padding-top",top);
+        $(this).css("padding-top",top).focus();
       }
    });
 

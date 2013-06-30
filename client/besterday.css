@@ -37,7 +37,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: -2;
   /* Presentation */
   background: center center fixed;
   background-size: cover;
@@ -63,6 +63,45 @@ body {
   -o-filter: grayscale(10%) blur(12px);
   -ms-filter: grayscale(10%) blur(12px);
   filter: grayscale(10%) blur(12px); }
+
+.nav {
+  /* Positioning */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 48px;
+  height: 100%;
+  margin-left: -24px;
+  z-index: 0;
+  overflow: hidden; }
+  .nav .nav-up, .nav .nav-dn {
+    /* Positioning */
+    position: absolute;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 48px;
+    width: 48px;
+    /* Display & Box Model */
+    display: block;
+    /* Presentation */
+    background: transparent;
+    border: 1px solid #ffae41;
+    overflow: hidden;
+    border-radius: 24px;
+    /* Font */
+    color: #ffae41;
+    font-family: "ratio";
+    font-size: 8px;
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    line-height: 48px;
+    text-decoration: none; }
+  .nav .nav-up {
+    top: -48px; }
+  .nav .nav-dn {
+    bottom: -48px; }
 
 /* ==========================================================================
    Journal
@@ -114,6 +153,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    z-index: 1;
     /* Display & Box Model */
     display: block;
     -moz-box-sizing: border-box;
@@ -128,7 +168,7 @@ body {
     border: none;
     outline: none;
     /* Font */
-    color: #666666;
+    color: inherit;
     font-family: "ratio";
     font-weight: 300;
     font-size: 42px;
@@ -166,7 +206,8 @@ body {
     /* Positioning */
     position: absolute;
     bottom: 10px;
-    right: 10px; }
+    right: 10px;
+    z-index: 2; }
     #journal .media .media-image {
       /* Positioning */
       width: 16px;
@@ -177,26 +218,30 @@ body {
       text-indent: -9999em;
       overflow: hidden;
       background-image: url("/img/icons.png");
-      opacity: .25; }
+      background-position: 0 0;
+      opacity: .25;
+      transition: opacity 0.25s;
+      -webkit-transition: opacity 0.25s;
+      -moz-transition: opacity 0.25s;
+      -o-transition: opacity 0.25s; }
       @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
         #journal .media .media-image {
           background-image: url("/img/icons@2x.png");
           -webkit-background-size: 96px 32px; } }
-      #journal .media .media-image.upload {
-        background-position: 0 0; }
-        #journal .media .media-image.upload.attached {
-          opacity: 1;
-          background-position: 0 -16px; }
-        #journal .media .media-image.upload.attached:hover {
-          background-position: -16px -16px;
-          opacity: .8; }
+      #journal .media .media-image:hover {
+        opacity: .5; }
+      #journal .media .media-image.attached {
+        opacity: .75;
+        background-position: 0 -16px; }
+      #journal .media .media-image.attached:hover {
+        opacity: 1; }
   #journal .controls {
     /* Positioning */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    z-index: 2;
     /* Display & Box Model */
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -206,7 +251,6 @@ body {
       /* Positioning */
       float: left;
       height: 36px;
-      max-width: 36px;
       /* Display & Box Model */
       display: block;
       -moz-box-sizing: border-box;
@@ -240,18 +284,17 @@ body {
         letter-spacing: .2em;
         font-size: 12px;
         text-decoration: none; }
-      #journal .controls .controls-menu:hover {
-        max-width: 300px; }
     #journal .controls .controls-save {
       /* Positioning */
       float: right;
       height: 36px;
+      width: 100px;
       /* Display & Box Model */
       display: block;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      padding: 10px 24px 0;
+      padding: 10px 0 0;
       margin: 0 0 0 10px;
       /* Presentation */
       background: #ffae41;
@@ -262,6 +305,7 @@ body {
       text-transform: uppercase;
       letter-spacing: .2em;
       font-size: 12px;
+      text-align: center;
       text-decoration: none; }
     #journal .controls .controls-share {
       /* Positioning */
@@ -278,25 +322,3 @@ body {
       overflow: hidden;
       /* Font */
       text-indent: -9999em; }
-    #journal .controls .controls-up, #journal .controls .controls-dn {
-      /* Positioning */
-      position: absolute;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      height: 100px;
-      width: 100px;
-      /* Display & Box Model */
-      display: block;
-      left: 50%;
-      margin-left: -50px;
-      /* Presentation */
-      background: #ffffff;
-      overflow: hidden;
-      border-radius: 50px;
-      /* Font */
-      text-indent: -9999em; }
-    #journal .controls .controls-up {
-      top: -100px; }
-    #journal .controls .controls-dn {
-      bottom: -100px; }

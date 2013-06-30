@@ -97,7 +97,7 @@ body {
   position:absolute;
   width:100%;
   height:100%;
-  z-index:-1;
+  z-index:-2;
 
   /* Presentation */
   background:center center fixed;
@@ -109,6 +109,50 @@ body {
   @include filter(grayscale(10%) blur(12px));
 }
 
+  .nav {
+    /* Positioning */
+    position:absolute;
+    top:0;
+    left:50%;
+    width:48px;
+    height:100%;
+    margin-left:-24px;
+    z-index:0;
+    overflow:hidden;
+
+    .nav-up,.nav-dn {
+      /* Positioning */
+      position:absolute;
+      @include box-sizing;
+      height:48px;
+      width:48px;
+
+      /* Display & Box Model */
+      display:block;
+
+      /* Presentation */
+      background:transparent;
+      border:1px solid $orange;
+      overflow:hidden;
+      border-radius:24px;
+
+      /* Font */
+      color:$orange;
+      font-family:"ratio";
+      font-size:8px;
+      text-transform:uppercase;
+      font-weight:300;
+      text-align:center;
+      line-height:48px;
+      text-decoration:none;
+    }
+    .nav-up {
+      top:-48px;
+    }
+    .nav-dn {
+      bottom:-48px;
+    }
+  }
 
 /* ==========================================================================
    Journal
@@ -164,6 +208,7 @@ body {
     position:absolute;
     width:100%;
     height:100%;
+    z-index:1;
 
     /* Display & Box Model */
     display:block;
@@ -179,7 +224,7 @@ body {
     outline:none;
 
     /* Font */
-    color:$text;
+    color:inherit;
     font-family:"ratio";
     font-weight:300;
     font-size:42px;
@@ -198,6 +243,7 @@ body {
     position:absolute;
     bottom:10px;
     right:10px;
+    z-index:2;
 
     .media-image {
       /* Positioning */
@@ -211,13 +257,15 @@ body {
       text-indent:-9999em;
       overflow:hidden;
       @include background-image-retina('/img/icons', 'png', 96px, 32px);
+      background-position:0 0;
       opacity:.25;
 
-      &.upload {
-        background-position:0 0;
-        &.attached{opacity:1;background-position:0 -16px;}
-        &.attached:hover{background-position:-16px -16px; opacity:.8}
-      }
+      @include transition(opacity .25s);
+
+      &:hover {opacity:.5;}
+
+      &.attached{opacity:.75;background-position:0 -16px;}
+      &.attached:hover{opacity:1}
     }
   }
 
@@ -227,7 +275,7 @@ body {
     top:0;
     left:0;
     width:100%;
-    height:100%;
+    z-index:2;
 
     /* Display & Box Model */
     @include box-sizing;
@@ -237,7 +285,7 @@ body {
       /* Positioning */
       float:left;
       height:36px;
-      max-width:36px;
+      // max-width:36px;
 
       /* Display & Box Model */
       display:block;
@@ -275,7 +323,7 @@ body {
 
       }
       &:hover {
-        max-width:300px;
+        // max-width:300px;
       }
     }
 
@@ -283,11 +331,12 @@ body {
       /* Positioning */
       float:right;
       height:36px;
+      width:100px;
 
       /* Display & Box Model */
       display:block;
       @include box-sizing;
-      padding:10px 24px 0;
+      padding:10px 0 0;
       margin:0 0 0 10px;
 
       /* Presentation */
@@ -300,6 +349,7 @@ body {
       text-transform:uppercase;
       letter-spacing:.2em;
       font-size:12px;
+      text-align:center;
       text-decoration:none;
     }
     .controls-share {
@@ -319,34 +369,8 @@ body {
       /* Font */
       text-indent:-9999em;
     }
-
-    .controls-up,.controls-dn {
-      /* Positioning */
-      position:absolute;
-      @include box-sizing;
-      height:100px;
-      width:100px;
-
-      /* Display & Box Model */
-      display:block;
-      left:50%;
-      margin-left:-50px;
-
-      /* Presentation */
-      background:#ffffff;
-      overflow:hidden;
-      border-radius:50px;
-
-      /* Font */
-      text-indent:-9999em;
-    }
-    .controls-up {
-      top:-100px;
-    }
-    .controls-dn {
-      bottom:-100px;
-    }
   }
+
 }
 
 

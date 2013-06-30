@@ -6,7 +6,11 @@
  
 <body>
   <div class="bg-image"></div>
-  <div class="dummy"></div>
+  <div class="dummy"></div>  
+  <div class="nav">
+    <a class="nav-up" href="#">Previous</a>
+    <a class="nav-dn" href="#">Next</a>
+  </div>
   {{loginButtons}}
   {{> journal }}
 </body>
@@ -15,7 +19,7 @@
 
   {{#if loggedIn}}
   <div id="journal">
-    <textarea id="story" style="{{style}}" name="story" placeholder="The best thing that happened was...">{{story.text}}</textarea>
+    <textarea autofocus id="story" style="{{style}}" name="story" placeholder="The best thing that happened was...">{{story.text}}</textarea>
 
     <div class="media">
         <a class="media-image {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
@@ -24,9 +28,8 @@
       <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
       <a class="controls-save" href="#">Update</a>
       <a class="controls-share" href="#">Locked</a>
-      <a class="controls-up" href="#">Previous</a>
-      <a class="controls-dn" href="#">Next</a>
     </div>
+
 
   </div>
   {{/if}}
