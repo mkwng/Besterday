@@ -5,7 +5,7 @@
 
 Meteor.startup(function () {
   Session.set('data_loaded', false); 
-  // $(window).resize(function() {$("#story").verticalCenter();});
+  $(window).resize(function() {$("#story").verticalCenter(true);});
 });
 
 Meteor.subscribe('default_db_data', function(){
@@ -18,7 +18,6 @@ Meteor.subscribe('default_db_data', function(){
    TEMPLATE: Journal
    ========================================================================== */
 var $dummy;
-
 
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
@@ -257,35 +256,36 @@ filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
  * Author: Behnam Esmali
  * Source: http://stackoverflow.com/questions/13552655/how-to-vertically-center-text-in-textarea
  */
-var centerOnce = true;
+var centerOnce = true; // Incredibly annoying bug fix
+
 function formatDummyText(text) {
   if ( !text ) return 'The best thing that happened was...';
   else return text.replace( /\n$/, '<br>&nbsp;' ).replace( /\n/g, '<br>' );
 }
-jQuery.fn.verticalCenter = function(first) {
-
-  $dummy.html(formatDummyText($(this).val()));
-
+function calculateTop() {
   var top=0;
-
   if(Session.get("data_loaded") && typeof $dummy != "undefined") {
     if ($dummy.length) {
       var h = $(window).height()-120;
       top = (h - $dummy.height()) * .5;
     }
   }
+  return top;
+}
+jQuery.fn.verticalCenter = function(force) {
 
-  //Bug fix for initial load not taking into account the full height;
+  $dummy.html(formatDummyText($(this).val()));
+
+
+  // Bug fix for initial load not taking into account the full height;
   $(this).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
-
-      console.log(centerOnce && top+"px"!=$(this).css("padding-top") && top); 
+    var top = calculateTop();
       if (centerOnce && top+"px"!=$(this).css("padding-top") && top) {
         centerOnce = false;
         $(this).css("padding-top",top);
       }
-
    });
 
-
+  if(force) {$(this).css("padding-top",calculateTop());}
   $(this).css({opacity:1});
 };
