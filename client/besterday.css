@@ -1,3 +1,28 @@
+/* ==========================================================================
+   Colors
+   ========================================================================== */
+/* ==========================================================================
+   Helpers & Mixins
+   ========================================================================== */
+.opaque {
+  opacity: 1; }
+
+.left {
+  float: left !important; }
+
+.right {
+  float: right !important; }
+
+.smallcaps {
+  font-family: "ratio";
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: 12px; }
+
+/* ==========================================================================
+   Global styles
+   ========================================================================== */
 body, html {
   margin: 0;
   padding: 0;
@@ -7,127 +32,17 @@ body, html {
 body {
   background: #fcf9f5; }
 
-.dummy {
-  background: red;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: auto;
-  padding: 0 20px;
-  outline: none;
-  margin: 40px 0;
-  left: -99999px;
-  color: #666666;
-  font-family: "ratio";
-  font-weight: 300;
-  font-size: 42px; }
-
-#journal {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  border: 20px solid #ffffff; }
-  #journal label {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: top 1s,opacity 2s,font-size .1s;
-    font-family: "ratio";
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: .2em;
-    font-size: 12px;
-    margin-left: 20px; }
-  #journal textarea {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -o-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    perspective: 1000;
-    -webkit-perspective: 1000;
-    -moz-perspective: 1000;
-    -o-perspective: 1000;
-    -ms-perspective: 1000;
-    transition: padding 1s,opacity 2s,font-size .1s;
-    opacity: 0;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    padding: 0 20px;
-    margin: 40px 0;
-    width: 100%;
-    height: 100%;
-    resize: none;
-    border: none;
-    background: transparent;
-    outline: none;
-    color: #666666;
-    font-family: "ratio";
-    font-weight: 300;
-    font-size: 42px; }
-    #journal textarea::-webkit-input-placeholder {
-      opacity: .5; }
-    #journal textarea:-moz-placeholder {
-      /* Firefox 18- */
-      opacity: .5; }
-    #journal textarea::-moz-placeholder {
-      /* Firefox 19+ */
-      opacity: .5; }
-    #journal textarea:-ms-input-placeholder {
-      opacity: .5; }
-  #journal .social-icons a {
-    position: absolute;
-    display: block;
-    width: 16px;
-    height: 16px;
-    text-indent: -9999em;
-    overflow: hidden;
-    opacity: .25;
-    bottom: 10px;
-    background-image: url("/img/icons.png"); }
-    @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-      #journal .social-icons a {
-        background-image: url("/img/icons@2x.png");
-        -webkit-background-size: 96px 32px; } }
-    #journal .social-icons a.upload {
-      background-position: 0 0;
-      right: 10px; }
-      #journal .social-icons a.upload.attached {
-        opacity: 1;
-        background-position: 0 -16px; }
-      #journal .social-icons a.upload.attached:hover {
-        background-position: -16px -16px;
-        opacity: .8; }
-
-.opaque {
-  opacity: 1; }
-
 .bg-image {
+  /* Positioning */
   position: absolute;
-  z-index: -1;
   width: 100%;
   height: 100%;
+  z-index: -1;
+  /* Presentation */
   background: center center fixed;
-  opacity: 0.9;
   background-size: cover;
+  opacity: 0.9;
+  /* Animation */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
@@ -148,3 +63,217 @@ body {
   -o-filter: grayscale(10%) blur(12px);
   -ms-filter: grayscale(10%) blur(12px);
   filter: grayscale(10%) blur(12px); }
+
+/* ==========================================================================
+   Journal
+   ========================================================================== */
+/* Positioning */
+/* Display & Box Model */
+/* Presentation */
+/* Font */
+/* Animation */
+.dummy {
+  /* Positioning */
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: -99999px;
+  /* Display & Box Model */
+  display: block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 40px 0;
+  padding: 0 20px;
+  /* Presentation */
+  background: red;
+  outline: none;
+  /* Font */
+  color: #666666;
+  font-family: "ratio";
+  font-weight: 300;
+  font-size: 42px; }
+
+#journal {
+  /* Positioning */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* Display & Box Model */
+  display: block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 20px solid #ffffff;
+  /* Presentation */
+  overflow: hidden; }
+  #journal textarea {
+    /* Positioning */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Display & Box Model */
+    display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 40px 0;
+    padding: 0 20px;
+    /* Presentation */
+    background: transparent;
+    opacity: 0;
+    resize: none;
+    border: none;
+    outline: none;
+    /* Font */
+    color: #666666;
+    font-family: "ratio";
+    font-weight: 300;
+    font-size: 42px;
+    /* Firefox 18- */
+    /* Firefox 19+ */
+    /* Animation */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective: 1000;
+    -ms-perspective: 1000;
+    transition: padding 0.8s, opacity 2s;
+    -webkit-transition: padding 0.8s, opacity 2s;
+    -moz-transition: padding 0.8s, opacity 2s;
+    -o-transition: padding 0.8s, opacity 2s; }
+    #journal textarea::-webkit-input-placeholder {
+      opacity: .5; }
+    #journal textarea:-moz-placeholder {
+      opacity: .5; }
+    #journal textarea::-moz-placeholder {
+      opacity: .5; }
+    #journal textarea:-ms-input-placeholder {
+      opacity: .5; }
+  #journal .media {
+    /* Positioning */
+    position: absolute;
+    bottom: 10px;
+    right: 10px; }
+    #journal .media .media-image {
+      /* Positioning */
+      width: 16px;
+      height: 16px;
+      /* Display & Box Model */
+      display: block;
+      /* Presentation */
+      text-indent: -9999em;
+      overflow: hidden;
+      background-image: url("/img/icons.png");
+      opacity: .25; }
+      @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+        #journal .media .media-image {
+          background-image: url("/img/icons@2x.png");
+          -webkit-background-size: 96px 32px; } }
+      #journal .media .media-image.upload {
+        background-position: 0 0; }
+        #journal .media .media-image.upload.attached {
+          opacity: 1;
+          background-position: 0 -16px; }
+        #journal .media .media-image.upload.attached:hover {
+          background-position: -16px -16px;
+          opacity: .8; }
+  #journal .controls {
+    /* Positioning */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Display & Box Model */
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px; }
+    #journal .controls .controls-menu {
+      /* Positioning */
+      float: left;
+      height: 36px;
+      max-width: 36px;
+      /* Display & Box Model */
+      display: block;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 0 0 0 36px;
+      /* Presentation */
+      background: #ffffff;
+      overflow: hidden;
+      transition: max-width 1s;
+      -webkit-transition: max-width 1s;
+      -moz-transition: max-width 1s;
+      -o-transition: max-width 1s; }
+      #journal .controls .controls-menu .controls-menu-date {
+        /* Positioning */
+        float: left;
+        height: 36px;
+        /* Display & Box Model */
+        display: block;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px 16px;
+        /* Presentation */
+        background: #f1f1f1;
+        /* Font */
+        color: #666666;
+        font-family: "ratio";
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+        font-size: 12px;
+        text-decoration: none; }
+      #journal .controls .controls-menu:hover {
+        max-width: 300px; }
+    #journal .controls .controls-save {
+      /* Positioning */
+      float: right;
+      height: 36px;
+      /* Display & Box Model */
+      display: block;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 10px 24px 0;
+      margin: 0 0 0 10px;
+      /* Presentation */
+      background: #ffae41;
+      /* Font */
+      color: #ffffff;
+      font-family: "ratio";
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      font-size: 12px;
+      text-decoration: none; }
+    #journal .controls .controls-share {
+      /* Positioning */
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      float: right;
+      height: 36px;
+      width: 36px;
+      /* Display & Box Model */
+      display: block;
+      /* Presentation */
+      background: #ffffff;
+      overflow: hidden;
+      /* Font */
+      text-indent: -9999em; }

@@ -1,37 +1,55 @@
+/* ==========================================================================
+   Colors
+   ========================================================================== */
+
 $bg: #FCF9F5;
 $orange: #ffae41;
 $hover: #f1f1f1;
 $text: #666666;
 
+/* ==========================================================================
+   Helpers & Mixins
+   ========================================================================== */
+
 @mixin accelerate {
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
-        -moz-transform: translateZ(0);
-        -o-transform: translateZ(0);
-        -ms-transform: translateZ(0);
+  // Enable 3D transforms, activating hardware acceleration
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  // Fixing flickering bug
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  // Some bug fix, I forget why this is in here.
+  perspective: 1000;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -o-perspective: 1000;
+  -ms-perspective: 1000;
+}
 
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        -moz-backface-visibility: hidden;
-        -o-backface-visibility: hidden;
-        -ms-backface-visibility: hidden;
-
-        perspective: 1000;
-        -webkit-perspective: 1000;
-        -moz-perspective: 1000;
-        -o-perspective: 1000;
-        -ms-perspective: 1000;
+@mixin filter($args) {
+  -webkit-filter: $args;
+  -moz-filter: $args;
+  -o-filter: $args;
+  -ms-filter: $args;
+  filter: $args;
 }
 
 @mixin box-sizing {
+  // Box sizing makes padding and margins inclusive of declared width/height
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 @mixin background-image-retina($file, $type, $width, $height) {
+  // If on retina device, load retina image as background.
   background-image: url($file + '.' + $type);
- 
   @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
     & {
       background-image: url($file + '@2x.' + $type);
@@ -39,6 +57,29 @@ $text: #666666;
     }
   }
 }
+
+@mixin transition($args...) {
+  transition: $args;
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -o-transition: $args;
+}
+
+.opaque {opacity:1;}
+.left {float:left !important;}
+.right {float:right !important;}
+
+.smallcaps {
+    font-family:"ratio";
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    font-size:12px;
+}
+
+/* ==========================================================================
+   Global styles
+   ========================================================================== */
 
 
 body,html {
@@ -51,140 +92,233 @@ body {
   background:$bg;
 }
 
+.bg-image {
+  /* Positioning */
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index:-1;
+
+  /* Presentation */
+  background:center center fixed;
+  background-size: cover;
+  opacity:0.9;
+
+  /* Animation */
+  @include accelerate;
+  @include filter(grayscale(10%) blur(12px));
+}
 
 
+/* ==========================================================================
+   Journal
+   ========================================================================== */
+  /* Positioning */
+  /* Display & Box Model */
+  /* Presentation */
+  /* Font */
+  /* Animation */
 
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-//////////////////////// JOURNAL ////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
+.dummy {
+  /* Positioning */
+  position:absolute;
+  width:100%;
+  height:auto;
+  left:-99999px;
 
-  .dummy {
-    background:red;
-    @include box-sizing;
-    display:block;
-    position:absolute;
-    width:100%;
-    height:auto;
-    padding:0 20px;
-    outline:none;
-    // visibility:hidden;
-    margin:40px 0;
-    left:-99999px;
-    color:$text;
-    font-family:"ratio";
-    font-weight:300;
-    font-size:42px;
-  }
+  /* Display & Box Model */
+  display:block;
+  @include box-sizing;
+  margin:40px 0;
+  padding:0 20px;
+
+  /* Presentation */
+  background:red;
+  outline:none;
+
+  /* Font */
+  color:$text;
+  font-family:"ratio";
+  font-weight:300;
+  font-size:42px;
+}
 
 #journal {
-  @include box-sizing;
-  display:block;
+  /* Positioning */
   position:absolute;
   width:100%;
   height:100%;
   top:0;
   left:0;
-  overflow:hidden;
-  border:20px solid #ffffff;
-  label {
-        opacity:0;
-        position:absolute;
-        top:0;
-        transition: top 1s,opacity 2s,font-size .1s;
-        font-family:"ratio";
-        font-weight:400;
-        // font-style:normal;
-        text-transform:uppercase;
-        letter-spacing:.2em;
-        font-size:12px;
-        margin-left:20px;
 
-  }
+  /* Display & Box Model */
+  display:block;
+  @include box-sizing;
+  border:20px solid #ffffff;
+
+  /* Presentation */
+  overflow:hidden;
+
   textarea {
-    @include accelerate;
-    transition: padding 1s,opacity 2s,font-size .1s;
-    opacity:0;
-    @include box-sizing;
-    display:block;
+    /* Positioning */
     position:absolute;
-    padding:0 20px;
-    margin:40px 0;
     width:100%;
     height:100%;
+
+    /* Display & Box Model */
+    display:block;
+    @include box-sizing;
+    margin:40px 0;
+    padding:0 20px;
+
+    /* Presentation */
+    background:transparent;
+    opacity:0;
     resize:none;
     border:none;
-    background:transparent;
     outline:none;
 
+    /* Font */
     color:$text;
     font-family:"ratio";
     font-weight:300;
     font-size:42px;
-    &::-webkit-input-placeholder {
-   opacity:.5;
-        }
+    &::-webkit-input-placeholder  {opacity:.5;}
+    &:-moz-placeholder            {opacity:.5;} /* Firefox 18- */
+    &::-moz-placeholder           {opacity:.5;} /* Firefox 19+ */
+    &:-ms-input-placeholder       {opacity:.5;}  
 
-        &:-moz-placeholder { /* Firefox 18- */
-   opacity:.5;
-        }
-
-        &::-moz-placeholder {  /* Firefox 19+ */
-   opacity:.5;
-        }
-
-        &:-ms-input-placeholder {  
-   opacity:.5;
-        }
+    /* Animation */
+    @include accelerate;
+    @include transition(padding .8s,opacity 2s);
   }
 
-  .social-icons a {
+  .media {
+    /* Positioning */
     position:absolute;
-    display:block;
-    width:16px;
-    height:16px;
-    text-indent:-9999em;
-    overflow:hidden;
-    opacity:.25;
     bottom:10px;
-    @include background-image-retina('/img/icons', 'png', 96px, 32px);
-    &.upload   {
-      background-position:0 0; right:10px;
-      &.attached{opacity:1;background-position:0 -16px;}
-      &.attached:hover{background-position:-16px -16px; opacity:.8}
+    right:10px;
+
+    .media-image {
+      /* Positioning */
+      width:16px;
+      height:16px;
+
+      /* Display & Box Model */
+      display:block;
+
+      /* Presentation */
+      text-indent:-9999em;
+      overflow:hidden;
+      @include background-image-retina('/img/icons', 'png', 96px, 32px);
+      opacity:.25;
+
+      &.upload {
+        background-position:0 0;
+        &.attached{opacity:1;background-position:0 -16px;}
+        &.attached:hover{background-position:-16px -16px; opacity:.8}
+      }
     }
-}
+  }
 
-
-
-}
-
-.opaque {
-  opacity:1;
-}
-
-
-.bg-image {
+  .controls {
+    /* Positioning */
     position:absolute;
-    z-index:-1;
+    top:0;
+    left:0;
     width:100%;
-    height:100%;
-    background:center center fixed;
-    opacity:0.9;
-    background-size: cover;
-    @include accelerate;
--webkit-filter: grayscale(10%) blur(12px);
--moz-filter: grayscale(10%) blur(12px);
--o-filter: grayscale(10%) blur(12px);
--ms-filter: grayscale(10%) blur(12px);
-filter: grayscale(10%) blur(12px);
-// -webkit-filter: blur(8px);
-// -moz-filter: blur(8px);
-// -o-filter: blur(8px);
-// -ms-filter: blur(8px);
-// filter: blur(8px);
 
+    /* Display & Box Model */
+    @include box-sizing;
+    padding:20px;
+
+    .controls-menu {
+      /* Positioning */
+      float:left;
+      height:36px;
+      max-width:36px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:0 0 0 36px;
+
+      /* Presentation */
+      background:#ffffff;
+      overflow:hidden;
+
+      @include transition(max-width 1s);
+
+      .controls-menu-date {
+
+      /* Positioning */
+      float:left;
+      height:36px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:10px 16px;
+
+      /* Presentation */
+      background:$hover;
+
+      /* Font */
+      color:$text;
+      font-family:"ratio";
+      font-weight:400;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-size:12px;
+      text-decoration:none;
+
+      }
+      &:hover {
+        max-width:300px;
+      }
+    }
+
+    .controls-save {
+      /* Positioning */
+      float:right;
+      height:36px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:10px 24px 0;
+      margin:0 0 0 10px;
+
+      /* Presentation */
+      background:$orange;
+
+      /* Font */
+      color:#ffffff;
+      font-family:"ratio";
+      font-weight:400;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-size:12px;
+      text-decoration:none;
+    }
+    .controls-share {
+      /* Positioning */
+      @include box-sizing;
+      float:right;
+      height:36px;
+      width:36px;
+
+      /* Display & Box Model */
+      display:block;
+
+      /* Presentation */
+      background:#ffffff;
+      overflow:hidden;
+
+      /* Font */
+      text-indent:-9999em;
+    }
+  }
 }
+
+

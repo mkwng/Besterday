@@ -15,17 +15,18 @@
 
   {{#if loggedIn}}
   <div id="journal">
-    {{#constant}}
-    <label for="story"><em>{{date}}</em></label> 
-    {{/constant}}
-    <textarea id="story" name="story" placeholder="The best thing that happened to me {{date}} was...">{{story.text}}</textarea>
+    <textarea id="story" style="{{style}}" name="story" placeholder="The best thing that happened was...">{{story.text}}</textarea>
 
-    <div class="social-icons">
-        <a class="upload {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
+    <div class="media">
+        <a class="media-image {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
+    </div>
+    <div class="controls">
+      <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
+      <a class="controls-save" href="#">Update</a>
+      <a class="controls-share" href="#">Locked</a>
     </div>
 
   </div>
   {{/if}}
 
-  {{invokeAfterLoad}}
 </template>

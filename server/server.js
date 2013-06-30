@@ -1,8 +1,8 @@
 // Seed the movie database with a few movies
 Meteor.startup(function () {
-  // Meteor.publish("Stories");
-
-
+  Meteor.publish('default_db_data', function(){
+    return Stories.find({});
+  });
 });
 
   // Stories.update(

@@ -1,52 +1,38 @@
-// If no story selected, select one.
+
+/* ==========================================================================
+   Client
+   ========================================================================== */
+
 Meteor.startup(function () {
-  Deps.autorun(function () {
-    setDate(new Date(new Date().setDate(new Date().getDate() - 1)));
-  });
-  $(window).resize(function() {$("#story").verticalCenter();});
+  Session.set('data_loaded', false); 
+  // $(window).resize(function() {$("#story").verticalCenter();});
 });
 
-// Meteor.subscribe("Stories", function() {
-//   console.log("Subscribe successful.");
-//   if (!Session.get("session_date")) {
-//     setDate(new Date());
-//   }
-// });
+Meteor.subscribe('default_db_data', function(){
+  //Set the reactive session as true to indicate that the data have been loaded
+  Session.set('data_loaded', true); 
+  if(!Session.get("session_date") && Session.get('data_loaded')) setDate(new Date(new Date().setDate(new Date().getDate() - 1)));
+});
 
-// var image;
-
+/* ==========================================================================
+   TEMPLATE: Journal
+   ========================================================================== */
 var $dummy;
-Template.journal.rendered = function() {
 
-}
 
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
   var story = Stories.findOne(Session.get("session_story"));
-  if(story){
-    image = story.img;
-    date = story.date;
-  }
-
+  if(story)image = story.img;
   return story;
 }; 
 
-Template.journal.invokeAfterLoad = function() {
-  if(typeof $dummy == "undefined" && $(".dummy").length) $dummy = $(".dummy");
-  if($("#story").length) setTimeout(function() {$("#story").verticalCenter();},1);
-}
-
-Template.journal.helpers({
-  date: function() {
-
-    if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
-    return "No date set.";
-
-  },
-  loggedIn: function() {
-    return Meteor.userId;
-  }
-});
+Template.journal.rendered = function() {
+  Meteor.defer(function () {
+    if(typeof $dummy == "undefined" && $(".dummy").length) $dummy = $(".dummy");
+    if($("#story").length) $("#story").verticalCenter();
+  });
+};
 
 Template.journal.events({
   'keyup #story' : function (e) {
@@ -70,121 +56,76 @@ Template.journal.events({
         }
       ));
     }
-
   },
-  'click .prev' : function (e) {
-    e.preventDefault();
-
-    prevDate = new Date(new Date().setDate(Session.get("session_date").getDate() - 1));
-
-    setDate(prevDate);
+  'click .media-image' : function (e) {
   },
-  'click .next' : function (e) {
-    e.preventDefault();
-
-    tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
-    nextDate = new Date(new Date().setDate(Session.get("session_date").getDate() + 1));
-
-    if(nextDate < tomorrow) 
-      setDate(nextDate);
-
-  },
-  'click .upload' : function (e) {
-    e.preventDefault();
-    console.log($(e.target).hasClass("attached"));
-    if ($(e.target).hasClass("attached")) {
-      $(e.target).removeClass("attached");
-      // Remove the current picture.
-      makeBackground();
-        Stories.update(
-          { "_id": Session.get("session_story")},
-          {
-            $unset: {
-              "img": ""
-            }
+  'click .controls-save' : function (e) {  
+    // $(e.target).verticalCenter();
+    if(Session.get("session_story")) {
+      Stories.update(
+        { _id: Session.get("session_story")},
+        {
+          $set: {
+            text: document.getElementById('story').value
           }
-        );
-    } else {
-      filepicker.pick({
-        mimetypes: ['image/*', 'text/plain'],
-        container: 'modal',
-        services:['COMPUTER', 'URL', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 
-        'PICASA', 'DROPBOX', 'GMAIL'],
-        },
-        function(FPFile){
-          // image = JSON.stringify(FPFile);
-          image = JSON.stringify(FPFile);
-          makeBackground(image);
-          console.log(image);
-
-          if(Session.get("session_story")) {
-            Stories.update(
-              { "_id": Session.get("session_story")},
-              {
-                $set: {
-                  "img": image
-                }
-              }
-            );
-          } else {
-            Session.set("session_story",Stories.insert(
-              {
-                owner: Meteor.userId(),
-                date: Session.get("session_date"),
-                img: image,
-                public: false
-              }
-            ));
-          }
-        },
-        function(FPError){
-          console.log(FPError.toString());
-          $(e.target).addClass("error");
         }
       );
+    } else {
+      Session.set("session_story",Stories.insert(
+        {
+          owner: Meteor.userId(),
+          date: Session.get("session_date"),
+          text: document.getElementById('story').value,
+          public: false
+        }
+      ));
     }
-  },
-  'click .facebook' : function (e) {
-    e.preventDefault();
-    console.log("hello");
-    makeBackground("/soma.png");
-  },
-  'click .twitter' : function (e) {
-    e.preventDefault();
-    console.log("bye");
-    makeBackground();
   }
 });
 
+Template.journal.helpers({
+  style: function() {
+    var style = "";
+    var top = 0;
+    centering = true;
 
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-//////////////////////// GLOBAL /////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
+    if(Session.get("data_loaded") && typeof $dummy != "undefined") {
+      if($("#story").length) $("#story").verticalCenter();
+      if ($dummy.length) {
+        var h = $(window).height()-120;
+        top = (h - $dummy.height()) * .5;
+        // console.log("Applying style...")
+      }
+    }
+
+    style = "padding-top:"+top+"px";
+    return style;
+  },
+  date: function() {
+    if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
+    else return "Loading...";
+  },
+  loggedIn: function() {
+    return Meteor.userId;
+  }
+});
 
 function setDate(date) {
-
   nextDate = new Date(new Date().setDate(date.getDate() + 1));
-
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
-
   Session.set("session_date", date);
 
   story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
   if(story) {
-      Session.set("session_story", story._id);
-      makeBackground(story.img);
-  } else {
-      Session.set("session_story", undefined);
-      makeBackground();
+    makeBackground(story.img);
+    Session.set("session_story", story._id);
   }
-
+  else {
+    makeBackground();
+    Session.set("session_story", undefined);
+  }
 }
-
 
 function makeBackground(picture) {
   if (typeof picture != "undefined"){
@@ -213,14 +154,9 @@ function makeBackground(picture) {
 
 
 
-
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-//////////////////////// PLUGINS ////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
+/* ==========================================================================
+   PLUGINS
+   ========================================================================== */
 
 /*
  * JavaScript Pretty Date
@@ -232,8 +168,6 @@ var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","N
 // Takes an ISO time and returns a string representing how
 // long ago the date represents.
 function prettyDate(time){
-    // var date = new Date((time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
-    // console.log(time);
     var date = time;
         diff = (((new Date()).getTime() - date.getTime()) / 1000),
         day_diff = Math.floor(diff / 86400);
@@ -242,29 +176,17 @@ function prettyDate(time){
         return dayNames[date.getDay()] + ", " + monthNames[date.getMonth()] + " " + date.getDate();
             
     return day_diff == 0 && (
-            diff < 60 && "today" ||
-            diff < 120 && "today" ||
-            diff < 3600 && "today" ||
-            diff < 7200 && "today" ||
             diff < 86400 && "today") ||
         day_diff == 1 && "yesterday" ||
         day_diff < 7 && dayNames[date.getDay()];
 }
 
-// If jQuery is included in the page, adds a jQuery plugin to handle it as well
-if ( typeof jQuery != "undefined" )
-    jQuery.fn.prettyDate = function(){
-        return this.each(function(){
-            var date = prettyDate(this.title);
-            if ( date )
-                jQuery(this).text( date );
-        });
-    };
 
-
-
-
-// Image light/dark detection: http://stackoverflow.com/questions/13762864/image-dark-light-detection-client-sided-script
+/*
+ * Image Light/Dark Detection
+ * Author: lostsource
+ * Source: http://stackoverflow.com/questions/13762864/image-dark-light-detection-client-sided-script
+ */
 function getImageLightness(imageSrc,callback) {
     var img = new Image,
     canvas = document.createElement("canvas"),
@@ -322,54 +244,48 @@ function getImageLightness(imageSrc,callback) {
     }
 }
 
-// Filepicker.io
-(function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
+/*
+ * Ink File Picker
+ * Source: https://developers.inkfilepicker.com/docs/web/
+ */
+ (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
 filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
 
 
-function formatDummyText( text ) {
-  if ( !text ) {
-    return 'The best thing that happened to me yesterday was...';
-  }
-  return text.replace( /\n$/, '<br>&nbsp;' )
-    .replace( /\n/g, '<br>' ).replace( /\s\s/g , '&nbsp; ');
+/*
+ * Vertically Center Text In "textarea"
+ * Author: Behnam Esmali
+ * Source: http://stackoverflow.com/questions/13552655/how-to-vertically-center-text-in-textarea
+ */
+var centerOnce = true;
+function formatDummyText(text) {
+  if ( !text ) return 'The best thing that happened was...';
+  else return text.replace( /\n$/, '<br>&nbsp;' ).replace( /\n/g, '<br>' );
 }
+jQuery.fn.verticalCenter = function(first) {
 
-
-jQuery.fn.verticalCenter = function() {
   $dummy.html(formatDummyText($(this).val()));
-  // console.log("hello");
-  var h = $(window).height()-120;
-  var top = (h - $dummy.height()) * .5;
-  // while (top<0) $(this).css('font-size', '-=1');
-  $(this).css({"padding-top":top,"opacity":1});
-  $("label").css({"top":top+20,"opacity":1});
+
+  var top=0;
+
+  if(Session.get("data_loaded") && typeof $dummy != "undefined") {
+    if ($dummy.length) {
+      var h = $(window).height()-120;
+      top = (h - $dummy.height()) * .5;
+    }
+  }
+
+  //Bug fix for initial load not taking into account the full height;
+  $(this).one("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+
+      console.log(centerOnce && top+"px"!=$(this).css("padding-top") && top); 
+      if (centerOnce && top+"px"!=$(this).css("padding-top") && top) {
+        centerOnce = false;
+        $(this).css("padding-top",top);
+      }
+
+   });
+
+
+  $(this).css({opacity:1});
 };
-
-// $( function() {
-
-//   var $wrap = $('#wrap');
-//   var $textarea = $('textarea');
-//   var $dummy = $('.dummy');
-
-  
-//   function positionTextarea() {
-//     var h = $wrap.height();
-//     var top = Math.max( 0, ( h - $dummy.height() ) * 0.5 );
-//     $textarea.css({
-//       paddingTop: top,
-//       height: h - top
-//     });
-//   }
-
-//   $textarea.on( 'keyup change', function( event ) {
-//     var html = formatDummyText( $textarea.val() );
-//     $dummy.html( html );
-//     positionTextarea();
-//   }).trigger('change');
-
-//   // should debounce this
-//   $( window ).on( 'resize', positionTextarea );
-  
-// });
-
