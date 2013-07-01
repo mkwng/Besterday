@@ -32,7 +32,7 @@
 <template name="journal">
 
   {{#if loggedIn}}
-    <textarea autofocus id="story" style="{{style}}" name="story" placeholder="The best thing that happened was...">{{story.text}}</textarea>
+    <textarea autofocus id="story" style="{{style}}" name="story" placeholder="What was the best thing that happened to you?">{{story.text}}</textarea>
 
     <div class="media">
         <a class="media-image {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
@@ -54,26 +54,16 @@
       <input type="radio" id="list" name="sidebar-menu-sub" checked>
       <label for="list">List</label>
       <ul class="content">
-        <li class="sidebar-menu-sub-list-week prev"> <a href="#">Last Week</a>
-          <ul>
-            {{#each weekPrev}}
-            <li><a href="#" class="{{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{date}}</a></li>
-            {{/each}}
-          </ul>
+        <li class="sidebar-menu-sub-list-week prev"> <a href="#">Previous Week</a>
         </li>
-        <li class="sidebar-menu-sub-list-week this"> <a href="#">This Week</a>
+        <li class="sidebar-menu-sub-list-week this"> <a href="#">Current Week</a>
           <ul>
             {{#each weekThis}}
-            <li><a href="#" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}</a></li>
+            <li><a href="#" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}{{#if img}}<div class="hasImg {{#if active}}active{{/if}}"></div>{{/if}}</a></li>
             {{/each}}
           </ul>
         </li>
         <li class="sidebar-menu-sub-list-week next"> <a href="#">Next Week</a>
-          <ul>
-            {{#each weekNext}}
-            <li><a href="#" class="{{#if story}}story{{/if}} {{#if active}}active{{/if}}">{{date}}</a></li>
-            {{/each}}
-          </ul>
         </li>
       </ul>
     </li>

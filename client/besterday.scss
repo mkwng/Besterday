@@ -119,6 +119,7 @@ body {
   /* Animation */
   @include accelerate;
   @include filter(grayscale(10%) blur(12px));
+  // filter:(url(/img/blur.svg#blur));
 }
 
   .nav {
@@ -572,23 +573,31 @@ li.sidebar-menu-sub-list-week {
 
     > li {
       a {
+        margin:5px;
         /* Positioning */
         /* Display & Box Model */
         display:block;
-        padding:20px;
+        padding:10px 20px;
         /* Presentation */
         /* Font */
         font-family:"ratio";
-        color:lighten($text,35%);
+        color:lighten($text,40%);
         font-weight:300;
         text-transform:uppercase;
         font-size:16px;
         text-decoration:none;
         letter-spacing:.1em;
-        &:hover {
-          color:lighten($text,20%);
-        }
         /* Animation */
+        @include transition(color .2s);
+
+        &.story {
+          color:lighten($text,10%);
+        }
+
+        &:hover {
+          color:$orange;
+        }
+
         &.active {
           /* Positioning */
           /* Display & Box Model */
@@ -600,7 +609,28 @@ li.sidebar-menu-sub-list-week {
 
           /* Animation */
         }
+
       }
+
+      .hasImg {
+        /* Positioning */
+        float:right;
+        width:16px;
+        height:16px;
+
+        /* Display & Box Model */
+        display:block;
+        margin-top:2px;
+
+        /* Presentation */
+        text-indent:-9999em;
+        overflow:hidden;
+        @include background-image-retina('/img/icons', 'png', 96px, 32px);
+        background-position:0 -16px;
+
+        &.active {background-position:0 0; @include filter(invert(100%));}
+      }
+
     }
   }
 }
@@ -609,18 +639,23 @@ li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
   left:0;
   width:100%;
   /* Display & Box Model */
+  @include box-sizing;
   /* Presentation */
-  background:darken($hover,5%);
   overflow:hidden;
   /* Font */
   /* Animation */
   z-index:1;
-}
-li.sidebar-menu-sub-list-week.prev{
-  max-height:0px;
-  top:0;
-}
-li.sidebar-menu-sub-list-week.next{
-  max-height:40px;
-  bottom:0;
+
+  a{
+  /* Display & Box Model */
+  @include box-sizing;
+  background:$hover;
+  margin:15px;
+  padding:10px 20px;
+  font-size:14px;
+  &:hover {
+  background:darken($hover,5%);
+
+  }
+  }
 }

@@ -322,9 +322,11 @@ function scrollNav() {
     });
   }
 
-  $("#journal").bind('mousewheel', function(event) {
+  $("#journal").bind('mousewheel wheel', function(event) {
+    if(event.originalEvent.wheelDelta) delta = event.originalEvent.wheelDelta;
+    else delta = -event.originalEvent.deltaY;
     if(dateChangeable) {
-        if (event.originalEvent.wheelDelta >= 0) {
+        if (delta >= 0) {
             if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<100){
               $(".nav-up").css({"top" : "+=4px"});
               clearTimeout(cleanUp);
@@ -403,17 +405,19 @@ Template.sidebar.weekThis = function () {
 
   for(var i = currently;i<=6;i++) {
     currentTime = new Date(Session.get("session_date")).getTime();
-    newTime = new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) );
-    days[i] = returnStory(new Date(newTime));
-    if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
-    console.log(i,new Date(newTime));
+    newTime = new Date(new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) ));
+    newDate = new Date(newTime.getFullYear(),newTime.getMonth(),newTime.getDate());
+    days[i] = returnStory(new Date(newDate));
+    days[i].prettyDate = prettyDate(newDate);
+    console.log(i,days[i].date,days[i].prettyDate);
   }
-  for(var i = currently-1;i>=0;i--) {
+  for(var i = currently;i>=0;i--) {
     currentTime = new Date(Session.get("session_date")).getTime();
-    newTime = new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) );
-    days[i] = returnStory(new Date(newTime));
-    if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
-    console.log(i,new Date(newTime))
+    newTime = new Date(new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) ));
+    newDate = new Date(newTime.getFullYear(),newTime.getMonth(),newTime.getDate());
+    days[i] = returnStory(new Date(newDate));
+    days[i].prettyDate = prettyDate(newDate);
+    console.log(i,days[i].date,days[i].prettyDate);
   }
   days[currently].active = "active";
   // console.log(days);
@@ -437,7 +441,19 @@ Template.sidebar.helpers({
 Template.sidebar.events({
   'click .sidebar-menu-sub-list-week li': function(e) {
     setDate(new Date(e.target.getAttribute("data-date")));
-    closeSidebar();
+    // closeSidebar();
+  },
+  'click .sidebar-menu-sub-list-week.next':function(e) {
+    var newDate = new Date($(".sidebar-menu-sub-list-week.this li").last().find("a").data("date"));
+
+    newDate = new Date(new Date().setTime(newDate.getTime() + 24 * 60 * 60 * 1000));
+    setDate(new Date(newDate));
+  },
+  'click .sidebar-menu-sub-list-week.prev':function(e) {
+    var newDate = new Date($(".sidebar-menu-sub-list-week.this li").first().find("a").data("date"));
+
+    newDate = new Date(new Date().setTime(newDate.getTime() - 24 * 60 * 60 * 1000));
+    setDate(new Date(newDate));
   }
 });
 
@@ -608,7 +624,7 @@ filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
 var centerOnce = true; // Incredibly annoying hack to center the type on first load.
 
 function formatDummyText(text) {
-  if ( !text ) return 'The best thing that happened was...';
+  if ( !text ) return 'What was the best thing that happened to you?';
   else return text.replace( /\n$/, '<br>&nbsp;' ).replace( /\n/g, '<br>' );
 }
 function calculateTop() {
