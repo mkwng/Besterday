@@ -7,18 +7,31 @@
 <body>
   <div class="bg-image"></div>
   <div class="dummy"></div>  
+  {{> page}}
+
+</body>
+
+<template name="page">
   <div class="nav">
     <a class="nav-up" href="#">Previous</a>
     <a class="nav-dn" href="#">Next</a>
   </div>
   {{loginButtons}}
-  {{> journal }}
-</body>
+
+  <div id="sidebar">
+    {{#if showSidebar}}
+      {{> sidebar}}
+    {{/if}}
+  </div>
+
+  <div id="journal">
+    {{> journal }}
+  </div>
+</template>
 
 <template name="journal">
 
   {{#if loggedIn}}
-  <div id="journal">
     <textarea autofocus id="story" style="{{style}}" name="story" placeholder="The best thing that happened was...">{{story.text}}</textarea>
 
     <div class="media">
@@ -31,7 +44,56 @@
     </div>
 
 
-  </div>
   {{/if}}
 
+</template>
+
+<template name="sidebar">
+  <ul class="sidebar-menu">
+    <li class="sidebar-menu-sub list">
+      <input type="radio" id="list" name="sidebar-menu-sub" checked>
+      <label for="list">List</label>
+      <ul class="content">
+        <li class="sidebar-menu-sub-list-week prev"> <a href="#">Last Week</a>
+          <ul>
+            {{#each weekPrev}}
+            <li><a href="#" class="{{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{date}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+        <li class="sidebar-menu-sub-list-week this"> <a href="#">This Week</a>
+          <ul>
+            {{#each weekThis}}
+            <li><a href="#" data-date="{{date}}" class="{{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+        <li class="sidebar-menu-sub-list-week next"> <a href="#">Next Week</a>
+          <ul>
+            {{#each weekNext}}
+            <li><a href="#" class="{{#if story}}story{{/if}} {{#if active}}active{{/if}}">{{date}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-menu-sub profile">
+      <input type="radio" id="profile" name="sidebar-menu-sub">
+      <label for="profile">Profile</label>
+      <ul class="content">
+
+          <li><a href="#">Edit Profile</a></li>
+          <li><a href="#">Edit Password</a></li>
+          <li><a href="#">Sharing Settings</a></li>
+
+      </ul>
+    </li>
+    <li class="sidebar-menu-sub signout">
+      <input type="radio" id="signout" name="sidebar-menu-sub">
+      <label for="signout">Sign Out</label>
+      <ul class="content">
+        <li>Goodbye!</li>
+      </ul>
+    </li>
+  </ul>
 </template>

@@ -11,6 +11,18 @@ $text: #666666;
    Helpers & Mixins
    ========================================================================== */
 
+@mixin prefix ( $property, $value ) {
+  -webkit-#{$property}: $value;
+     -moz-#{$property}: $value;
+      -ms-#{$property}: $value;
+       -o-#{$property}: $value;
+          #{$property}: $value;
+}
+
+@mixin box-shadow($args) {
+  @include prefix( box-shadow, $args );
+}
+
 @mixin accelerate {
   // Enable 3D transforms, activating hardware acceleration
   transform: translateZ(0);
@@ -40,11 +52,9 @@ $text: #666666;
   filter: $args;
 }
 
-@mixin box-sizing {
+@mixin box-sizing($value:border-box) {
   // Box sizing makes padding and margins inclusive of declared width/height
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+  @include prefix( box-sizing, $value );
 }
 
 @mixin background-image-retina($file, $type, $width, $height) {
@@ -59,10 +69,11 @@ $text: #666666;
 }
 
 @mixin transition($args...) {
-  transition: $args;
-  -webkit-transition: $args;
-  -moz-transition: $args;
-  -o-transition: $args;
+  @include prefix( transition, $args... );
+}
+
+@mixin transform($args...) {
+  @include prefix( transform, $args... );
 }
 
 .opaque {opacity:1;}
@@ -90,6 +101,7 @@ body,html {
 }
 body {
   background:$bg;
+  overflow:hidden;
 }
 
 .bg-image {
@@ -131,26 +143,20 @@ body {
       display:block;
 
       /* Presentation */
-      background:transparent;
+      background:transparent url(/img/arrow.svg) center no-repeat;
       border:1px solid $orange;
       overflow:hidden;
       border-radius:24px;
 
       /* Font */
-      color:$orange;
-      font-family:"ratio";
-      font-size:8px;
-      text-transform:uppercase;
-      font-weight:300;
-      text-align:center;
-      line-height:48px;
-      text-decoration:none;
+      text-indent:-999em;
     }
     .nav-up {
       top:-48px;
     }
     .nav-dn {
       bottom:-48px;
+      @include transform(rotate(180deg));
     }
   }
 
@@ -201,7 +207,9 @@ body {
   border:20px solid #ffffff;
 
   /* Presentation */
+  color:$text;
   overflow:hidden;
+  @include transition(left .5s);
 
   textarea {
     /* Positioning */
@@ -354,12 +362,12 @@ body {
     }
     .controls-share {
       /* Positioning */
-      @include box-sizing;
       float:right;
       height:36px;
       width:36px;
 
       /* Display & Box Model */
+      @include box-sizing;
       display:block;
 
       /* Presentation */
@@ -374,3 +382,235 @@ body {
 }
 
 
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+  /* Positioning */
+  /* Display & Box Model */
+  /* Presentation */
+  /* Font */
+  /* Animation */
+
+#sidebar {
+  /* Positioning */
+  position:absolute;
+  width:240px;
+  height:100%;
+  left:-270px;
+  top:0;
+  z-index:3;
+
+  /* Display & Box Model */
+  @include box-sizing;
+  margin:0;
+  padding:0;
+
+  /* Presentation */
+  @include box-shadow(0px 0px 30px rgba(0,0,0,0.25));
+
+  /* Font */
+  /* Animation */
+  @include transition(left .5s);
+}
+.sidebar-menu {
+  /* Positioning */
+  width:240px;
+  height:100%;
+  top:0;
+  left:0;
+  /* Display & Box Model */
+  display:block;
+  margin:0;
+  padding:0;
+  /* Presentation */
+  background:#ffffff;
+  /* Font */
+  /* Animation */
+
+  > li {
+    /* Positioning */
+    width:80px;
+    height:80px;
+    float:left;
+    /* Display & Box Model */
+    @include box-sizing;
+    display:block;
+    /* Presentation */
+    list-style:none;
+    /* Font */
+    /* Animation */
+
+    [type=radio] {
+      display: none;   
+    }
+
+    [type=radio]:checked ~ label {
+      background: white;
+      border-bottom: 1px solid white;
+      z-index: 2;
+    }
+    [type=radio]:checked ~ label ~ .content {
+      z-index: 1;
+    }
+    [type=radio]:checked ~ label ~ .content > * {
+      opacity: 1;
+      
+      -webkit-transform: translateX(0);
+      -moz-transform:    translateX(0);
+      -ms-transform:     translateX(0);
+      -o-transform:      translateX(0);
+    }
+
+    label {
+      /* Positioning */
+      width:100%;
+      height:100%;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+
+      /* Presentation */
+      background:$hover;
+      cursor:pointer;
+
+      /* Font */
+      line-height:80px;
+      text-align:center;
+      font-family:"ratio";
+      color:lighten($text,20%);
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.2em;
+
+      /* Animation */
+      &:hover {background:darken($hover,4%);}
+      &:target {background:#ffffff;}
+    }
+    .content {
+      /* Positioning */
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width:240px;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+
+      /* Display & Box Model */
+      @include box-sizing;
+      list-style:none;
+      margin:0;
+      padding:0;
+
+      /* Presentation */
+      background: white;
+      overflow-x: hidden;
+      overflow-y:scroll;
+
+      /* Font */
+      /* Animation */
+    }
+  }
+}
+
+li.sidebar-menu-sub-list-week {
+  /* Positioning */
+
+  /* Display & Box Model */
+  display:block;
+  @include box-sizing;
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  /* Presentation */
+
+  /* Font */
+
+  /* Animation */
+
+  > a {   
+    /* Positioning */
+    /* Display & Box Model */
+    display:block;
+    padding:10px;
+    /* Presentation */
+    /* Font */
+    text-align:center;
+    font-family:"ratio";
+    color:lighten($text,20%);
+    font-weight:300;
+    text-transform:uppercase;
+    font-size:16px;
+    text-decoration:none;
+
+    /* Animation */
+  }
+
+  > ul {
+    /* Positioning */
+
+    /* Display & Box Model */
+    display:block;
+    @include box-sizing;
+    list-style:none;
+    margin:0;
+    padding:0;
+
+
+    > li {
+      a {
+        /* Positioning */
+        /* Display & Box Model */
+        display:block;
+        padding:20px;
+        /* Presentation */
+        /* Font */
+        font-family:"ratio";
+        color:lighten($text,35%);
+        font-weight:300;
+        text-transform:uppercase;
+        font-size:16px;
+        text-decoration:none;
+        letter-spacing:.1em;
+        &:hover {
+          color:lighten($text,20%);
+        }
+        /* Animation */
+        &.active {
+          /* Positioning */
+          /* Display & Box Model */
+          /* Presentation */
+          background:$orange;
+          /* Font */
+          color:#ffffff;
+          font-size:16px;
+
+          /* Animation */
+        }
+      }
+    }
+  }
+}
+li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
+  /* Positioning */
+  position:absolute;
+  left:0;
+  width:100%;
+  /* Display & Box Model */
+  /* Presentation */
+  background:darken($hover,5%);
+  overflow:hidden;
+  /* Font */
+  /* Animation */
+  z-index:1;
+}
+li.sidebar-menu-sub-list-week.prev{
+  max-height:0px;
+  top:0;
+}
+li.sidebar-menu-sub-list-week.next{
+  max-height:40px;
+  bottom:0;
+}

@@ -41,6 +41,7 @@ Template.journal.rendered = function() {
 
 Template.journal.events({
   'keyup #story' : function (e) {
+    //Hack to maintain the style
     var css = $("#story").attr("style");
     if(Session.get("session_story")) {
       Stories.update(
@@ -91,6 +92,20 @@ Template.journal.events({
       ));
     }
     setTimeout(function() {$("#story").attr("style",css)},0);
+  },
+  'click .controls-menu' : function(e) {
+
+    //Hack to maintain the style
+    var css = $("#story").attr("style");
+
+    console.log(css);
+    if(!Session.get("show_sidebar")) openSidebar();
+    else closeSidebar();
+
+    //Hack to maintain the style
+    setTimeout(function() {
+      $("#story").attr("style",css);
+    },0);
   }
 });
 
@@ -155,8 +170,16 @@ function makeBackground(picture) {
     else var url = picture;
 
     getImageLightness(url,function(brightness){
-      if(brightness<150) {$("#story").css("color","#ffffff");console.log("color white");}
-      else {$("#story").css("color","#666666");console.log("no");}
+      if(brightness<150) {
+        setTimeout(function() {
+          $("#story").css("color","#ffffff");
+        },2);
+      }
+      else {
+        setTimeout(function() {
+          $("#story").css("color","#666666");
+        },2);
+      }
     });
 
     $(".bg-image").stop().animate({opacity:0},function() {
@@ -166,9 +189,11 @@ function makeBackground(picture) {
     });
   }
   else $(".bg-image").animate({opacity:0},function() {
-    $(".upload").removeClass("attached");
-    $(this).css("background-image","none");
-    $("#story").css("color","#666666");
+    setTimeout(function() {
+      $(".upload").removeClass("attached");
+      $(this).css("background-image","none");
+      $("#story").css("color","#666666");
+    },2);
   });
 }
 
@@ -180,10 +205,10 @@ function scrollNav() {
     $(".nav-up").animate({"top":"-48px"});
     $(".nav-dn").animate({"bottom":"-48px"},function() {
       $(".nav-up").css({ WebkitTransform: 'rotate(0deg)'});
-      $(".nav-dn").css({ WebkitTransform: 'rotate(0deg)'});
+      $(".nav-dn").css({ WebkitTransform: 'rotate(180deg)'});
       // For Mozilla browser: e.g. Firefox
       $(".nav-up").css({ '-moz-transform': 'rotate(0deg)'});
-      $(".nav-dn").css({ '-moz-transform': 'rotate(0deg)'});
+      $(".nav-dn").css({ '-moz-transform': 'rotate(180deg)'});
       dateChangeable = true;
     });
 
@@ -208,10 +233,10 @@ function scrollNav() {
     function animation_loop() {
         setTimeout(function() { 
           $(".nav-up").css({ WebkitTransform: 'rotate(' + d + 'deg)'});
-          $(".nav-dn").css({ WebkitTransform: 'rotate(' + -d + 'deg)'});
+          $(".nav-dn").css({ WebkitTransform: 'rotate(' + (180-d) + 'deg)'});
           // For Mozilla browser: e.g. Firefox
           $(".nav-up").css({ '-moz-transform': 'rotate(' + d + 'deg)'});
-          $(".nav-dn").css({ '-moz-transform': 'rotate(' + -d + 'deg)'});
+          $(".nav-dn").css({ '-moz-transform': 'rotate(' + (180-d) + 'deg)'});
           d+=5; 
           if (d <= degree) { animation_loop(); } 
         }, 1);
@@ -231,11 +256,11 @@ function scrollNav() {
     });
   }
 
-  $(window).bind('mousewheel', function(event) {
+  $("#journal").bind('mousewheel', function(event) {
     if(dateChangeable) {
         if (event.originalEvent.wheelDelta >= 0) {
-            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<50){
-              $(".nav-up").css({"top" : "+=2px"});
+            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<100){
+              $(".nav-up").css({"top" : "+=3px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
@@ -248,8 +273,8 @@ function scrollNav() {
             }
         }
         else {
-            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<50){
-              $(".nav-dn").css({"bottom" : "+=2px"});
+            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<100){
+              $(".nav-dn").css({"bottom" : "+=3px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
@@ -265,6 +290,146 @@ function scrollNav() {
   });
 }
 
+/* ==========================================================================
+   TEMPLATE: Sidebar
+   ========================================================================== */
+var sidebarChangeable = true;
+var sidebarCleanup;
+
+var openSidebar = function () {
+  Session.set("show_sidebar", true);
+  setTimeout(function() {
+    $("#sidebar").animate({"left":0});
+    scrollSidebar();
+    $("#journal").one("click",closeSidebar);
+  },1);
+};
+
+var closeSidebar = function() {
+  $("#sidebar").css("left",-330);
+  $("#journal").unbind("click",closeSidebar);
+  setTimeout(function() {
+
+    //Hack to maintain the style
+    var css = $("#story").attr("style");
+
+    Session.set("show_sidebar", false);
+
+    //Hack to maintain the style
+    setTimeout(function() {
+      $("#story").attr("style",css);
+    },0);
+
+  },500);
+  $()
+}
+
+Template.page.showSidebar = function () {
+  return Session.get("show_sidebar");
+};
+
+var days = [1,2,3,4,5,6,7];
+Template.sidebar.weekThis = function () {
+
+
+  currently = Session.get("session_date").getDay();
+  console.log(currently);
+
+
+  for(var i = currently;i<=6;i++) {
+    days[i] = returnStory(new Date().setDate(new Date(Session.get("session_date")).getDate()-currently+i));
+    if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
+  }
+  for(var i = currently-1;i>=0;i--) {
+    days[i] = returnStory(new Date().setDate(new Date(Session.get("session_date")).getDate()-currently+i));
+    if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
+  }
+  days[currently].active = "active";
+  console.log(days);
+  if (! days)
+    return []; // party hasn't loaded yet
+  return days;
+};
+
+Template.sidebar.helpers({
+  // "active": function() {
+  //   return "";
+  // },
+  // "story": function() {
+  //   return "";
+  // },
+  // "date":function() {
+  //   return "hi";
+  // }
+});
+
+Template.sidebar.events({
+  'click .sidebar-menu-sub-list-week li': function(e) {
+    setDate(new Date(e.target.getAttribute("data-date")));
+    closeSidebar();
+  }
+});
+
+Template.sidebar.rendered = function() {
+
+}
+
+function returnStory(date) {
+  date = new Date(date);
+  nextDate = new Date(new Date().setDate(date.getDate() + 1));
+  start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
+
+  story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
+  if(story) return story;
+  else return {date:date};
+}
+
+function scrollSidebar() {
+
+  function resetScroll() {
+    $("li.sidebar-menu-sub-list-week.next").animate({"max-height":"40px"});
+    $("li.sidebar-menu-sub-list-week.prev").animate({"max-height":"0px"},function() {
+      dateChangeable = true;
+    });
+  }
+
+  $(".sidebar-menu-sub.list .content").bind('mousewheel', function(event) {
+    console.log();
+    if(sidebarChangeable) {
+        if (event.originalEvent.wheelDelta >= 0 && $(this).scrollTop() < 1) {
+
+            if($("li.sidebar-menu-sub-list-week.prev").css("max-height").replace(/[^-\d\.]/g, '')<=40){
+              $("li.sidebar-menu-sub-list-week.prev").css({"max-height" : "+=1px"});
+              clearTimeout(sidebarCleanup);
+              sidebarCleanup = setTimeout(function() {
+                resetScroll();
+              },100);
+            }
+            else {
+              clearTimeout(sidebarCleanup);
+              sidebarChangeable = false;
+              // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+            }
+        }
+        else if($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1) {
+
+            if($("li.sidebar-menu-sub-list-week.next").css("max-height").replace(/[^-\d\.]/g, '')<=80){
+              $("li.sidebar-menu-sub-list-week.next").css({"max-height" : "+=1px"});
+              clearTimeout(sidebarCleanup);
+              sidebarCleanup = setTimeout(function() {
+                resetScroll();
+              },100);
+            }
+            else {
+              clearTimeout(sidebarCleanup);
+              sidebarChangeable = false;
+              // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+            }
+        }
+      }
+  });
+}
 
 /* ==========================================================================
    PLUGINS
