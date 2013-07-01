@@ -6,7 +6,7 @@
 insecure
 preserve-inputs
 jquery
-accounts-ui
 accounts-facebook
 accounts-twitter
 accounts-password
+accounts-ui

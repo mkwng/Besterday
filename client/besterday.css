@@ -104,6 +104,11 @@ body {
     -o-transform: rotate(180deg);
     transform: rotate(180deg); }
 
+#login-buttons {
+  position: absolute;
+  right: 20px;
+  z-index: 999; }
+
 /* ==========================================================================
    Journal
    ========================================================================== */
@@ -482,6 +487,10 @@ body {
       overflow-y: scroll;
       /* Font */
       /* Animation */ }
+      .sidebar-menu > li .content > li {
+        display: block;
+        list-style: none;
+        width: 100%; }
 
 li.sidebar-menu-sub-list-week {
   /* Positioning */
@@ -554,7 +563,6 @@ li.sidebar-menu-sub-list-week {
 
 li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   /* Positioning */
-  position: absolute;
   left: 0;
   width: 100%;
   /* Display & Box Model */

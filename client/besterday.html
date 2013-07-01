@@ -16,7 +16,7 @@
     <a class="nav-up" href="#">Previous</a>
     <a class="nav-dn" href="#">Next</a>
   </div>
-  {{loginButtons}}
+  {{loginButtons align="right"}}
 
   <div id="sidebar">
     {{#if showSidebar}}
@@ -64,7 +64,7 @@
         <li class="sidebar-menu-sub-list-week this"> <a href="#">This Week</a>
           <ul>
             {{#each weekThis}}
-            <li><a href="#" data-date="{{date}}" class="{{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}</a></li>
+            <li><a href="#" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}</a></li>
             {{/each}}
           </ul>
         </li>

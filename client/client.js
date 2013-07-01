@@ -8,13 +8,21 @@ Meteor.startup(function () {
   $(window).resize(function() {$("#story").verticalCenter(true);});
 
   scrollNav();
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27 && Session.get("show_sidebar")) {
+      closeSidebar();
+    }   // esc
+  });
 
 });
 
 Meteor.subscribe('default_db_data', function(){
   //Set the reactive session as true to indicate that the data have been loaded
   Session.set('data_loaded', true); 
-  if(!Session.get("session_date") && Session.get('data_loaded')) setDate(new Date(new Date().setDate(new Date().getDate() - 1)));
+  if(!Session.get("session_date")) {
+    yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    setDate(yesterday);
+  }
 });
 
 /* ==========================================================================
@@ -68,6 +76,63 @@ Template.journal.events({
     },0);
   },
   'click .media-image' : function (e) {
+    e.preventDefault();
+    console.log($(e.target).hasClass("attached"));
+    if ($(e.target).hasClass("attached") && confirm("Remove picture?")) {
+
+      $(e.target).removeClass("attached");
+
+  
+      // Remove the current picture.
+      makeBackground();
+        Stories.update(
+          { "_id": Session.get("session_story")},
+          {
+            $unset: {
+              "img": ""
+            }
+          }
+        );
+    } 
+
+    filepicker.pick({
+      mimetypes: ['image/*', 'text/plain'],
+      container: 'modal',
+      services:['COMPUTER', 'URL', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 
+      'PICASA', 'DROPBOX', 'GMAIL'],
+      },
+      function(FPFile){
+        // image = JSON.stringify(FPFile);
+        image = JSON.stringify(FPFile);
+        makeBackground(image);
+        console.log(image);
+
+        if(Session.get("session_story")) {
+          Stories.update(
+            { "_id": Session.get("session_story")},
+            {
+              $set: {
+                "img": image
+              }
+            }
+          );
+        } else {
+          Session.set("session_story",Stories.insert(
+            {
+              owner: Meteor.userId(),
+              date: Session.get("session_date"),
+              img: image,
+              public: false
+            }
+          ));
+        }
+      },
+      function(FPError){
+        console.log(FPError.toString());
+        $(e.target).addClass("error");
+      }
+    );
+
   },
   'click .controls-save' : function (e) {  
     // $(e.target).verticalCenter();
@@ -137,14 +202,15 @@ Template.journal.helpers({
 });
 
 function setDate(date) {
-  nextDate = new Date(new Date().setDate(date.getDate() + 1));
+  nextDate = new Date(new Date().setTime(date.getTime() + 24 * 60 * 60 * 1000));
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
 
+  console.log(nextDate);
   if(end < new Date()) {
 
     Session.set("session_date", date);
-    story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
+    story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}},{"date": 1});
     if(story) {
       makeBackground(story.img);
       Session.set("session_story", story._id);
@@ -260,7 +326,7 @@ function scrollNav() {
     if(dateChangeable) {
         if (event.originalEvent.wheelDelta >= 0) {
             if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<100){
-              $(".nav-up").css({"top" : "+=3px"});
+              $(".nav-up").css({"top" : "+=4px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
@@ -269,12 +335,12 @@ function scrollNav() {
             else {
               clearTimeout(cleanUp);
               dateChangeable = false;
-              animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+              animateReset(new Date(new Date().setTime(Session.get("session_date").getTime() - 24 * 60 * 60 * 1000)));
             }
         }
         else {
             if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<100){
-              $(".nav-dn").css({"bottom" : "+=3px"});
+              $(".nav-dn").css({"bottom" : "+=4px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
@@ -283,7 +349,7 @@ function scrollNav() {
             else {
               clearTimeout(cleanUp);
               dateChangeable = false;
-              animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()+1)));
+              animateReset(new Date(new Date().setTime(Session.get("session_date").getTime() + 24 * 60 * 60 * 1000)));
             }
         }
       }
@@ -328,24 +394,29 @@ Template.page.showSidebar = function () {
   return Session.get("show_sidebar");
 };
 
-var days = [1,2,3,4,5,6,7];
+var days = [0,1,2,3,4,5,6];
 Template.sidebar.weekThis = function () {
 
 
   currently = Session.get("session_date").getDay();
   console.log(currently);
 
-
   for(var i = currently;i<=6;i++) {
-    days[i] = returnStory(new Date().setDate(new Date(Session.get("session_date")).getDate()-currently+i));
+    currentTime = new Date(Session.get("session_date")).getTime();
+    newTime = new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) );
+    days[i] = returnStory(new Date(newTime));
     if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
+    console.log(i,new Date(newTime));
   }
   for(var i = currently-1;i>=0;i--) {
-    days[i] = returnStory(new Date().setDate(new Date(Session.get("session_date")).getDate()-currently+i));
+    currentTime = new Date(Session.get("session_date")).getTime();
+    newTime = new Date().setTime(currentTime + ((i-currently) * 24 * 60 * 60 * 1000) );
+    days[i] = returnStory(new Date(newTime));
     if(days[i].date) days[i].prettyDate = prettyDate(days[i].date);
+    console.log(i,new Date(newTime))
   }
   days[currently].active = "active";
-  console.log(days);
+  // console.log(days);
   if (! days)
     return []; // party hasn't loaded yet
   return days;
@@ -376,7 +447,7 @@ Template.sidebar.rendered = function() {
 
 function returnStory(date) {
   date = new Date(date);
-  nextDate = new Date(new Date().setDate(date.getDate() + 1));
+  nextDate = new Date(new Date().setTime(date.getTime() + 24 * 60 * 60 * 1000));
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
 
@@ -395,7 +466,7 @@ function scrollSidebar() {
   }
 
   $(".sidebar-menu-sub.list .content").bind('mousewheel', function(event) {
-    console.log();
+    console.log($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1);
     if(sidebarChangeable) {
         if (event.originalEvent.wheelDelta >= 0 && $(this).scrollTop() < 1) {
 
