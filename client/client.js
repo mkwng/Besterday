@@ -248,16 +248,17 @@ function makeBackground(picture) {
       }
     });
 
-    $(".bg-image").stop().animate({opacity:0},function() {
+    $(".bg").stop().animate({opacity:0},function() {
       var $img = $('<img/>').attr("src",url).one("load", function() {
-        $(".bg-image").css("background-image","url("+url+")").animate({opacity:1})
+        $(".bg-image").css("background-image","url("+url+")");
+        $(".bg").animate({opacity:1})
       });
     });
   }
-  else $(".bg-image").animate({opacity:0},function() {
+  else $(".bg").animate({opacity:0},function() {
     setTimeout(function() {
       $(".upload").removeClass("attached");
-      $(this).css("background-image","none");
+      $(".bg-image").css("background-image","none");
       $("#story").css("color","#666666");
     },2);
   });

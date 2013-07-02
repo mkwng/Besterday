@@ -19,6 +19,13 @@ $text: #666666;
           #{$property}: $value;
 }
 
+@mixin transform($args...) {
+  @include prefix( transform, $args... );
+}
+@mixin transform-origin($args...) {
+  @include prefix( transform-origin, $args... );
+}
+
 @mixin box-shadow($args) {
   @include prefix( box-shadow, $args );
 }
@@ -103,23 +110,35 @@ body {
   background:$bg;
   overflow:hidden;
 }
-
-.bg-image {
-  /* Positioning */
+.bg {
   position:absolute;
   width:100%;
   height:100%;
   z-index:-2;
+  top:0;
+  left:0;
+}
+.bg-image {
+  /* Positioning */
+  position:absolute;
+  width:20%;
+  height:20%;
+  z-index:-2;
+  top:0;
+  left:0;
 
   /* Presentation */
-  background:center center fixed;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
   background-size: cover;
   opacity:0.9;
 
   /* Animation */
   @include accelerate;
   @include filter(grayscale(10%) blur(12px));
-  // filter:(url(/img/blur.svg#blur));
+  @include transform-origin(top left);
+  @include transform(scale(5));
+  filter:(url(/img/blur.svg#blur));
 }
 
   .nav {
@@ -243,10 +262,10 @@ body {
     font-family:"ratio";
     font-weight:300;
     font-size:42px;
-    &::-webkit-input-placeholder  {opacity:.5;}
-    &:-moz-placeholder            {opacity:.5;} /* Firefox 18- */
-    &::-moz-placeholder           {opacity:.5;} /* Firefox 19+ */
-    &:-ms-input-placeholder       {opacity:.5;}  
+    &::-webkit-input-placeholder  {opacity:.5 !important;}
+    &:-moz-placeholder            {opacity:.5 !important;} /* Firefox 18- */
+    &::-moz-placeholder           {opacity:.5 !important;} /* Firefox 19+ */
+    &:-ms-input-placeholder       {opacity:.5 !important;}  
 
     /* Animation */
     @include accelerate;
