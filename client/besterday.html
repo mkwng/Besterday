@@ -5,13 +5,16 @@
 </head>
  
 <body>
-  <div class="bg"><div class="bg-image"></div></div>
-  <div class="dummy"></div>  
+
   {{> page}}
 
 </body>
 
 <template name="page">
+
+  <div class="bg"><div class="bg-image"></div></div>
+  <div class="dummy"></div>  
+  {{#isolate}}
   <div class="nav">
     <a class="nav-up" href="#">Previous</a>
     <a class="nav-dn" href="#">Next</a>
@@ -27,6 +30,7 @@
   <div id="journal">
     {{> journal }}
   </div>
+  {{/isolate}}
 </template>
 
 <template name="journal">
@@ -39,8 +43,10 @@
     </div>
     <div class="controls">
       <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
+
       <a class="controls-save" href="#">Update</a>
-      <a class="controls-share" href="#"><div class="controls-share-icon">Locked</div></a>
+      <a class="controls-share" href="#"><div class="controls-share-icon {{locked}}">Share</div></a>
+
     </div>
 
 

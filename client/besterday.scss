@@ -412,7 +412,7 @@ body {
       height:20px;
       width:21px;
       margin-left:4px;
-      margin-top:8px;
+      margin-top:7px;
       opacity:.2;
       @include background-image-retina('/img/lock', 'png', 399px, 20px);
       @include transition(margin-left .8s);
@@ -436,6 +436,38 @@ body {
      to { background-position: -399px; }
 }
 @-webkit-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-ms-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-ms-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-o-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-o-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-moz-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-moz-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-keyframes lock {
    from { background-position: -378px; }
      to { background-position:    0px; }
 }

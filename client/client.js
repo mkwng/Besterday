@@ -35,7 +35,9 @@ var dateChangeable = true;
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
   var story = Stories.findOne(Session.get("session_story"));
-  if(story){image = story.img;}
+  if(story){
+    image = story.img;
+  }
   else {story = new Object();story.text = ""}
   return story;
 }; 
@@ -77,7 +79,7 @@ Template.journal.events({
   },
   'click .media-image' : function (e) {
     e.preventDefault();
-    console.log($(e.target).hasClass("attached"));
+
     if ($(e.target).hasClass("attached") && confirm("Remove picture?")) {
 
       $(e.target).removeClass("attached");
@@ -105,7 +107,7 @@ Template.journal.events({
         // image = JSON.stringify(FPFile);
         image = JSON.stringify(FPFile);
         makeBackground(image);
-        console.log(image);
+
 
         if(Session.get("session_story")) {
           Stories.update(
@@ -163,7 +165,7 @@ Template.journal.events({
     //Hack to maintain the style
     var css = $("#story").attr("style");
 
-    console.log(css);
+
     if(!Session.get("show_sidebar")) openSidebar();
     else closeSidebar();
 
@@ -173,12 +175,33 @@ Template.journal.events({
     },0);
   },
   'click .controls-share' :function(e) {
-    $icon = $(".controls-share-icon");
-    if($icon.hasClass("unlock")) {
-      $icon.css("background-position","0 0").removeClass("unlock").addClass("lock").css();
+    if(Session.get("session_story")) {
+      var css = $("#story").attr("style");
+
+      $icon = $(".controls-share-icon");
+
+      if($icon.hasClass("unlock")) {
+        $icon.css("background-position","0 0").removeClass("unlock").addClass("lock");
+        newPublic=false;
+      } else {
+        $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock");
+        newPublic=true;
+      }
+
+      Stories.update(
+        { _id: Session.get("session_story")},
+        {
+          $set: {
+            public: newPublic
+          }
+        }
+      );
+
+      setTimeout(function() {$("#story").attr("style",css)},0);
     } else {
-      $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock");
+      alert("No story to share...");
     }
+
   }
 });
 
@@ -193,7 +216,7 @@ Template.journal.helpers({
       if ($dummy.length) {
         var h = $(window).height()-120;
         top = (h - $dummy.height()) * .5;
-        // console.log("Applying style...")
+
       }
     }
 
@@ -206,6 +229,14 @@ Template.journal.helpers({
   },
   loggedIn: function() {
     return Meteor.userId;
+  },
+  locked: function() {
+    var locked = "";
+    if (Session.get("session_story") && Session.get("data_loaded")) {
+      var story = Stories.findOne(Session.get("session_story"));
+      if(story) locked = story.public ? "unlock" : "lock";
+    }
+    return locked;
   }
 });
 
@@ -214,7 +245,6 @@ function setDate(date) {
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
 
-  console.log(nextDate);
   if(end < new Date()) {
 
     Session.set("session_date", date);
@@ -410,7 +440,7 @@ Template.sidebar.weekThis = function () {
 
 
   currently = Session.get("session_date").getDay();
-  console.log(currently);
+
 
   for(var i = currently;i<=6;i++) {
     currentTime = new Date(Session.get("session_date")).getTime();
@@ -418,7 +448,7 @@ Template.sidebar.weekThis = function () {
     newDate = new Date(newTime.getFullYear(),newTime.getMonth(),newTime.getDate());
     days[i] = returnStory(new Date(newDate));
     days[i].prettyDate = prettyDate(newDate);
-    console.log(i,days[i].date,days[i].prettyDate);
+
   }
   for(var i = currently;i>=0;i--) {
     currentTime = new Date(Session.get("session_date")).getTime();
@@ -426,10 +456,10 @@ Template.sidebar.weekThis = function () {
     newDate = new Date(newTime.getFullYear(),newTime.getMonth(),newTime.getDate());
     days[i] = returnStory(new Date(newDate));
     days[i].prettyDate = prettyDate(newDate);
-    console.log(i,days[i].date,days[i].prettyDate);
+
   }
   days[currently].active = "active";
-  // console.log(days);
+
   if (! days)
     return []; // party hasn't loaded yet
   return days;
@@ -483,48 +513,48 @@ function returnStory(date) {
 
 function scrollSidebar() {
 
-  function resetScroll() {
-    $("li.sidebar-menu-sub-list-week.next").animate({"max-height":"40px"});
-    $("li.sidebar-menu-sub-list-week.prev").animate({"max-height":"0px"},function() {
-      dateChangeable = true;
-    });
-  }
+  // function resetScroll() {
+  //   $("li.sidebar-menu-sub-list-week.next").animate({"max-height":"40px"});
+  //   $("li.sidebar-menu-sub-list-week.prev").animate({"max-height":"0px"},function() {
+  //     dateChangeable = true;
+  //   });
+  // }
 
-  $(".sidebar-menu-sub.list .content").bind('mousewheel', function(event) {
-    console.log($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1);
-    if(sidebarChangeable) {
-        if (event.originalEvent.wheelDelta >= 0 && $(this).scrollTop() < 1) {
+  // $(".sidebar-menu-sub.list .content").bind('mousewheel', function(event) {
+  //   console.log($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1);
+  //   if(sidebarChangeable) {
+  //       if (event.originalEvent.wheelDelta >= 0 && $(this).scrollTop() < 1) {
 
-            if($("li.sidebar-menu-sub-list-week.prev").css("max-height").replace(/[^-\d\.]/g, '')<=40){
-              $("li.sidebar-menu-sub-list-week.prev").css({"max-height" : "+=1px"});
-              clearTimeout(sidebarCleanup);
-              sidebarCleanup = setTimeout(function() {
-                resetScroll();
-              },100);
-            }
-            else {
-              clearTimeout(sidebarCleanup);
-              sidebarChangeable = false;
-              // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
-            }
-        }
-        else if($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1) {
+  //           if($("li.sidebar-menu-sub-list-week.prev").css("max-height").replace(/[^-\d\.]/g, '')<=40){
+  //             $("li.sidebar-menu-sub-list-week.prev").css({"max-height" : "+=1px"});
+  //             clearTimeout(sidebarCleanup);
+  //             sidebarCleanup = setTimeout(function() {
+  //               resetScroll();
+  //             },100);
+  //           }
+  //           else {
+  //             clearTimeout(sidebarCleanup);
+  //             sidebarChangeable = false;
+  //             // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+  //           }
+  //       }
+  //       else if($(this)[0].scrollHeight-$(this).outerHeight() - $(this).scrollTop() < 1) {
 
-            if($("li.sidebar-menu-sub-list-week.next").css("max-height").replace(/[^-\d\.]/g, '')<=80){
-              $("li.sidebar-menu-sub-list-week.next").css({"max-height" : "+=1px"});
-              clearTimeout(sidebarCleanup);
-              sidebarCleanup = setTimeout(function() {
-                resetScroll();
-              },100);
-            }
-            else {
-              clearTimeout(sidebarCleanup);
-              sidebarChangeable = false;
-              // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
-            }
-        }
-      }
-  });
+  //           if($("li.sidebar-menu-sub-list-week.next").css("max-height").replace(/[^-\d\.]/g, '')<=80){
+  //             $("li.sidebar-menu-sub-list-week.next").css({"max-height" : "+=1px"});
+  //             clearTimeout(sidebarCleanup);
+  //             sidebarCleanup = setTimeout(function() {
+  //               resetScroll();
+  //             },100);
+  //           }
+  //           else {
+  //             clearTimeout(sidebarCleanup);
+  //             sidebarChangeable = false;
+  //             // animateReset(new Date(new Date().setDate(Session.get("session_date").getDate()-1)));
+  //           }
+  //       }
+  //     }
+  // });
 }
 
 /* ==========================================================================
@@ -612,7 +642,6 @@ function getImageLightness(imageSrc,callback) {
 
         var brightness = Math.floor(colorSum / (this.width*this.height));
 
-    // console.log("hello");
         callback(brightness);
     }
 }
