@@ -375,6 +375,52 @@ body {
       overflow: hidden;
       /* Font */
       text-indent: -9999em; }
+    #journal .controls .controls-share-icon {
+      /* Positioning */
+      height: 20px;
+      width: 21px;
+      margin-left: 4px;
+      margin-top: 8px;
+      opacity: .2;
+      background-image: url("/img/lock.png");
+      -webkit-transition: margin-left 0.8s;
+      -moz-transition: margin-left 0.8s;
+      -ms-transition: margin-left 0.8s;
+      -o-transition: margin-left 0.8s;
+      transition: margin-left 0.8s; }
+      @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+        #journal .controls .controls-share-icon {
+          background-image: url("/img/lock@2x.png");
+          -webkit-background-size: 399px 20px; } }
+    #journal .controls .controls-share-icon.lock {
+      -webkit-animation: lock 0.4s steps(18) 1;
+      -moz-animation: lock 0.4s steps(18) 1;
+      -ms-animation: lock 0.4s steps(18) 1;
+      -o-animation: lock 0.4s steps(18) 1;
+      animation: lock 0.4s steps(18) 1;
+      background-position: 0 0 !important; }
+    #journal .controls .controls-share-icon.unlock {
+      -webkit-animation: unlock 0.4s steps(19) 1;
+      -moz-animation: unlock 0.4s steps(19) 1;
+      -ms-animation: unlock 0.4s steps(19) 1;
+      -o-animation: unlock 0.4s steps(19) 1;
+      animation: unlock 0.4s steps(19) 1;
+      background-position: -378px 0 !important;
+      margin-left: 8px; }
+
+@-webkit-keyframes unlock {
+  from {
+    background-position: 0px; }
+
+  to {
+    background-position: -399px; } }
+
+@-webkit-keyframes lock {
+  from {
+    background-position: -378px; }
+
+  to {
+    background-position: 0px; } }
 
 /* ==========================================================================
    Sidebar

@@ -171,6 +171,14 @@ Template.journal.events({
     setTimeout(function() {
       $("#story").attr("style",css);
     },0);
+  },
+  'click .controls-share' :function(e) {
+    $icon = $(".controls-share-icon");
+    if($icon.hasClass("unlock")) {
+      $icon.css("background-position","0 0").removeClass("unlock").addClass("lock").css();
+    } else {
+      $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock");
+    }
   }
 });
 
