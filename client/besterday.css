@@ -53,7 +53,6 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  opacity: 0.9;
   /* Animation */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
@@ -393,20 +392,22 @@ body {
           background-image: url("/img/lock@2x.png");
           -webkit-background-size: 399px 20px; } }
     #journal .controls .controls-share-icon.lock {
-      -webkit-animation: lock 0.4s steps(18) 1;
-      -moz-animation: lock 0.4s steps(18) 1;
-      -ms-animation: lock 0.4s steps(18) 1;
-      -o-animation: lock 0.4s steps(18) 1;
-      animation: lock 0.4s steps(18) 1;
       background-position: 0 0 !important; }
+      #journal .controls .controls-share-icon.lock.animate {
+        -webkit-animation: lock 0.4s steps(18) 1;
+        -moz-animation: lock 0.4s steps(18) 1;
+        -ms-animation: lock 0.4s steps(18) 1;
+        -o-animation: lock 0.4s steps(18) 1;
+        animation: lock 0.4s steps(18) 1; }
     #journal .controls .controls-share-icon.unlock {
-      -webkit-animation: unlock 0.4s steps(19) 1;
-      -moz-animation: unlock 0.4s steps(19) 1;
-      -ms-animation: unlock 0.4s steps(19) 1;
-      -o-animation: unlock 0.4s steps(19) 1;
-      animation: unlock 0.4s steps(19) 1;
       background-position: -378px 0 !important;
       margin-left: 8px; }
+      #journal .controls .controls-share-icon.unlock.animate {
+        -webkit-animation: unlock 0.4s steps(19) 1;
+        -moz-animation: unlock 0.4s steps(19) 1;
+        -ms-animation: unlock 0.4s steps(19) 1;
+        -o-animation: unlock 0.4s steps(19) 1;
+        animation: unlock 0.4s steps(19) 1; }
 
 @-webkit-keyframes unlock {
   from {

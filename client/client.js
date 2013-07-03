@@ -4,87 +4,111 @@
    ========================================================================== */
 
 Meteor.startup(function () {
+  // On startup, assume that data has not loaded yet.
   Session.set('data_loaded', false); 
+
+  // Let's center the #story on any window resize..
   $(window).resize(function() {$("#story").verticalCenter(true);});
 
   scrollNav();
+
+  // Escape key will close sidebar, if open.
   $(document).keyup(function(e) {
     if (e.keyCode == 27 && Session.get("show_sidebar")) {
       closeSidebar();
-    }   // esc
+    } 
   });
 
 });
 
 Meteor.subscribe('default_db_data', function(){
-  //Set the reactive session as true to indicate that the data have been loaded
+  // Set the reactive session as true to indicate that the data have been loaded
   Session.set('data_loaded', true); 
+
+  // Chances are, no date is set so we initialize with yesterday.
   if(!Session.get("session_date")) {
-    yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    yesterday = new Date(new Date().setTime(new Date().getTime() - 24 * 60 * 60 * 1000));
     setDate(yesterday);
+  } else { // Bug fix: The only time we get a session date, but date isn't set is hot code pushes.
+    setDate(Session.get("session_date"));
   }
 });
 
 /* ==========================================================================
    TEMPLATE: Journal
    ========================================================================== */
-var $dummy;
-var cleanUp;
-var dateChangeable = true;
+var $dummy;                     // Invisible div that duplicates content of the #journal.
+var $bg;
+var $bgImage;
+var $bgPreload;
+var cleanUp;                    // Timeout for scrolling navigation
+var dateChangeable = true;      // Toggle to determine whether it's ok to scroll navigate.
+var updateDelay;                // Timeout for updating the #story
+var publicDelay;                // Timeout so we can animate the share button.
 
 // Bind moviesTemplate to Movies collection
 Template.journal.story = function () {
   var story = Stories.findOne(Session.get("session_story"));
-  if(story){
-    image = story.img;
+  if(story) image = story.img; // To be honest, not sure what this line does.
+  else { // No story is found for this ID. Let's put in blank text.
+    story = new Object();
+    story.text = "";
   }
-  else {story = new Object();story.text = ""}
   return story;
 }; 
 
+// As soon as Meteor finishes rendering, let's make sure we center our type.
 Template.journal.rendered = function() {
   Meteor.defer(function () {
     if(typeof $dummy == "undefined" && $(".dummy").length) $dummy = $(".dummy");
-    if($("#story").length) $("#story").verticalCenter();
+    if($("#story").length) {$story = $("#story").verticalCenter();}
   });
 };
 
 Template.journal.events({
+  // The user typed something into #story.
   'keyup #story' : function (e) {
-    //Hack to maintain the style
-    var css = $("#story").attr("style");
-    if(Session.get("session_story")) {
-      Stories.update(
-        { _id: Session.get("session_story")},
-        {
-          $set: {
-            text: document.getElementById('story').value
+    // If they're typing a lot, let them finish before updating.
+    clearTimeout(updateDelay);
+    updateDelay = setTimeout(function(e) {
+
+      // Hack to maintain the style
+      var css = $("#story").attr("style");
+
+      if(Session.get("session_story")) {
+        Stories.update(
+          { _id: Session.get("session_story")},
+          {
+            $set: {
+              text: document.getElementById('story').value
+            }
           }
-        }
-      );
-    } else {
-      Session.set("session_story",Stories.insert(
-        {
-          owner: Meteor.userId(),
-          date: Session.get("session_date"),
-          text: document.getElementById('story').value,
-          public: false
-        }
-      ));
-    }
-    setTimeout(function() {
-      $("#story").attr("style",css);
-      $(e.target).verticalCenter(true);
-    },0);
+        );
+      } else {
+        var date = Session.get("session_date");
+        Session.set("session_story",Stories.insert(
+          {
+            owner: Meteor.userId(),
+            date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
+            created: new Date.getTime(),
+            text: document.getElementById('story').value,
+            public: false
+          }
+        ));
+      }
+
+      // Hack to maintain the style
+      setTimeout(function() {$("#story").attr("style",css).verticalCenter();},0);
+
+    },1000);
   },
+  // Uploading an image.
   'click .media-image' : function (e) {
     e.preventDefault();
 
+    // Need to provide better way of deleting picture...
     if ($(e.target).hasClass("attached") && confirm("Remove picture?")) {
-
       $(e.target).removeClass("attached");
-
-  
       // Remove the current picture.
       makeBackground();
         Stories.update(
@@ -119,11 +143,13 @@ Template.journal.events({
             }
           );
         } else {
+        var date = Session.get("session_date");
           Session.set("session_story",Stories.insert(
             {
               owner: Meteor.userId(),
-              date: Session.get("session_date"),
-              img: image,
+              date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
+              created: new Date.getTime(),
+              text: document.getElementById('story').value,
               public: false
             }
           ));
@@ -136,9 +162,13 @@ Template.journal.events({
     );
 
   },
+
+  // Honestly, this doesn't do much, because it autosaves on keypress. But we have it anyway.
   'click .controls-save' : function (e) {  
-    // $(e.target).verticalCenter();
+
+    // Hack to maintain the style
     var css = $("#story").attr("style");
+
     if(Session.get("session_story")) {
       Stories.update(
         { _id: Session.get("session_story")},
@@ -149,17 +179,24 @@ Template.journal.events({
         }
       );
     } else {
+      var date = Session.get("session_date");
       Session.set("session_story",Stories.insert(
         {
           owner: Meteor.userId(),
-          date: Session.get("session_date"),
+          date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
+          created: new Date.getTime(),
           text: document.getElementById('story').value,
           public: false
         }
       ));
     }
-    setTimeout(function() {$("#story").attr("style",css)},0);
+
+    // Hack to maintain the style
+    setTimeout(function() {$("#story").attr("style",css);},0);
+
   },
+
+  // Open up the menu...
   'click .controls-menu' : function(e) {
 
     //Hack to maintain the style
@@ -169,36 +206,49 @@ Template.journal.events({
     if(!Session.get("show_sidebar")) openSidebar();
     else closeSidebar();
 
-    //Hack to maintain the style
-    setTimeout(function() {
-      $("#story").attr("style",css);
-    },0);
+
+    // Hack to maintain the style
+    setTimeout(function() {$("#story").attr("style",css);},0);
+
   },
   'click .controls-share' :function(e) {
+    clearTimeout(publicDelay);
     if(Session.get("session_story")) {
+
+      // Hack to maintain the style
       var css = $("#story").attr("style");
 
       $icon = $(".controls-share-icon");
 
       if($icon.hasClass("unlock")) {
-        $icon.css("background-position","0 0").removeClass("unlock").addClass("lock");
+        $icon.css("background-position","0 0").removeClass("unlock").addClass("lock animate");
         newPublic=false;
       } else {
-        $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock");
+        $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock animate");
         newPublic=true;
       }
 
-      Stories.update(
-        { _id: Session.get("session_story")},
-        {
-          $set: {
-            public: newPublic
+      // Let's give the animation some time to complete before updating the server.
+      publicDelay = setTimeout(function() {
+        // The animate class has the CSS animation. 
+        // We need to remove it because otherwise when Meteor rerenders, it will animate again.
+        $icon.removeClass("animate");  
+        Stories.update(
+          { _id: Session.get("session_story")},
+          {
+            $set: {
+              public: newPublic
+            }
           }
-        }
-      );
+        );
 
-      setTimeout(function() {$("#story").attr("style",css)},0);
+        // Hack to maintain the style
+        setTimeout(function() {$("#story").attr("style",css);},0);
+
+      },800);
+
     } else {
+      // Need a better error here.
       alert("No story to share...");
     }
 
@@ -206,72 +256,76 @@ Template.journal.events({
 });
 
 Template.journal.helpers({
-  style: function() {
-    var style = "";
-    var top = 0;
-    centering = true;
-
-    if(Session.get("data_loaded") && typeof $dummy != "undefined") {
-      if($("#story").length) $("#story").verticalCenter();
-      if ($dummy.length) {
-        var h = $(window).height()-120;
-        top = (h - $dummy.height()) * .5;
-
-      }
-    }
-
-    style = "padding-top:"+top+"px";
-    return style;
-  },
+  // Let's return the date all pretty.
   date: function() {
     if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
     else return "Loading...";
   },
+  // Is the user logged in?
   loggedIn: function() {
     return Meteor.userId;
-  },
-  locked: function() {
-    var locked = "";
-    if (Session.get("session_story") && Session.get("data_loaded")) {
-      var story = Stories.findOne(Session.get("session_story"));
-      if(story) locked = story.public ? "unlock" : "lock";
-    }
-    return locked;
   }
 });
 
 function setDate(date) {
-  nextDate = new Date(new Date().setTime(date.getTime() + 24 * 60 * 60 * 1000));
-  start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
-  end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
+  if(Session.get("data_loaded")) {
+    // We need to find the lower and upper bound of the times we're searching for:
+    nextDate = new Date(new Date().setTime(date.getTime() + 24 * 60 * 60 * 1000));
+    start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+    end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
 
-  if(end < new Date()) {
+    if(end < new Date()) { // Date is within a valid range...
 
-    Session.set("session_date", date);
-    story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}},{"date": 1});
-    if(story) {
-      makeBackground(story.img);
-      Session.set("session_story", story._id);
-      $("#story").val(story.text);
+      // Regardless of whether or not we have a story, we need to make sure the session is on the right date
+      Session.set("session_date", date);
+
+      // If multiple results, (Why? How?) find the one that's created the earliest.
+      story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}},{sort: {created: 1,date: 1}});
+      if(story) {
+        makeBackground(story.img);
+        Session.set("session_story", story._id);
+        $("#story").val(story.text); // A little bug fix, because text inputs are persistent, we need to manually force in the new value.
+      }
+      else {
+        makeBackground();
+        Session.set("session_story", undefined);
+        $("#story").val(""); // A little bug fix, because text inputs are persistent, we need to clear it out.
+      }
+      setTimeout(function() {
+        if(typeof $dummy == "undefined") console.log("For some reason, Besterday is trying to center the story before the DOM is loaded...");
+        else $("#story").verticalCenter(true);
+      },0)
+      return true;
+    } else {
+      // I need a better error for trying to go beyond "Yesterday"
+      return false;
     }
-    else {
-      makeBackground();
-      Session.set("session_story", undefined);
-      $("#story").val("");
-    }
-    setTimeout(function() {$("#story").verticalCenter(true);},0)
-    return true;
   } else {
+    console.log("For some reason, Besterday is trying to set the date before the data is loaded. Hang tight."); 
     return false;
   }
+
 }
 
 function makeBackground(picture) {
+
+  if(typeof $bg == "undefined" && $(".bg").length) $bg = $(".bg");
+  if(typeof $bgImage == "undefined" && $(".bg-image").length) $bgImage = $(".bg-image");
+
+  function changeBg(url) {
+    $bgImage.css("background-image","url("+url+")");
+    $bg.animate({opacity:1})
+  }
+
+  // If there's a previous thing happening, let's cancel that.
+  // NOTE! As of 7/2 this is not cancelling. Still broken.
+  if($bgPreload) $bgPreload.unbind("load");
+
   if (typeof picture != "undefined"){
     // Wait, we gotta check if this is a URL or an object, because you can pass either one in.
     if (typeof picture == "object" && picture.url) var url = picture.url;
     else if (picture.indexOf("{") !== -1) var url = JSON.parse(picture).url;
-    else var url = picture;
+    else var url = picture; // Phew.
 
     getImageLightness(url,function(brightness){
       if(brightness<150) {
@@ -286,17 +340,16 @@ function makeBackground(picture) {
       }
     });
 
-    $(".bg").stop().animate({opacity:0},function() {
-      var $img = $('<img/>').attr("src",url).one("load", function() {
-        $(".bg-image").css("background-image","url("+url+")");
-        $(".bg").animate({opacity:1})
-      });
+    // Fade it out, once it finishes loading, fade it back in.
+    $bg.stop().animate({opacity:0},function() {
+      $bgPreload = $('<img/>').attr("src",url);
+      $bgPreload.one("load", changeBg(url));
     });
   }
-  else $(".bg").animate({opacity:0},function() {
+  else $bg.animate({opacity:0},function() {
     setTimeout(function() {
       $(".upload").removeClass("attached");
-      $(".bg-image").css("background-image","none");
+      $bgImage.css("background-image","none");
       $("#story").css("color","#666666");
     },2);
   });
@@ -506,7 +559,7 @@ function returnStory(date) {
   start = new Date(date.getFullYear(),date.getMonth(),date.getDate());
   end = new Date(nextDate.getFullYear(),nextDate.getMonth(),nextDate.getDate());
 
-  story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}});
+  story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}},{sort: {created: 1,date: 1}});
   if(story) return story;
   else return {date:date};
 }
@@ -645,14 +698,6 @@ function getImageLightness(imageSrc,callback) {
         callback(brightness);
     }
 }
-
-/*
- * Ink File Picker
- * Source: https://developers.inkfilepicker.com/docs/web/
- */
- (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
-filepicker.setKey("APd3x3sjxQiJBRAXXWeoMz");
-
 
 /*
  * Vertically Center Text In "textarea"

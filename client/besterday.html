@@ -33,10 +33,14 @@
   {{/isolate}}
 </template>
 
+
 <template name="journal">
 
   {{#if loggedIn}}
-    <textarea autofocus id="story" style="{{style}}" name="story" placeholder="What was the best thing that happened to you?">{{story.text}}</textarea>
+
+    {{#isolate}}
+    <textarea autofocus id="story" name="story" placeholder="What was the best thing that happened to you?">{{story.text}}</textarea>
+    {{/isolate}}
 
     <div class="media">
         <a class="media-image {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
@@ -44,8 +48,10 @@
     <div class="controls">
       <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
 
+
       <a class="controls-save" href="#">Update</a>
-      <a class="controls-share" href="#"><div class="controls-share-icon {{locked}}">Share</div></a>
+      <a class="controls-share" href="#"><div class="controls-share-icon {{#if story.public}}unlock{{/if}}">Share</div></a>
+
 
     </div>
 

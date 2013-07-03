@@ -135,7 +135,6 @@ body {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  opacity:0.9;
 
   /* Animation */
   @include accelerate;
@@ -418,13 +417,17 @@ body {
       @include transition(margin-left .8s);
     }
     .controls-share-icon.lock {
-      @include animation(lock .4s steps(18) 1);
       background-position:0 0 !important;
+      &.animate{
+        @include animation(lock .4s steps(18) 1);
+      }
     }
     .controls-share-icon.unlock {
-      @include animation(unlock .4s steps(19) 1);
       background-position:-378px 0 !important;
       margin-left:8px;
+      &.animate{
+        @include animation(unlock .4s steps(19) 1);
+      }
     }
 
   }
