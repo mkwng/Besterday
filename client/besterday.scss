@@ -301,8 +301,8 @@ body {
 
       &:hover {opacity:.5;}
 
-      &.attached{opacity:.75;background-position:0 -16px;}
-      &.attached:hover{opacity:1}
+      &.attached{opacity:1;background-position:0 -16px;}
+      &.attached:hover{/* Need a style here... */}
     }
   }
 

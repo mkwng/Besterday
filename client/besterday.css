@@ -272,10 +272,10 @@ body {
       #journal .media .media-image:hover {
         opacity: .5; }
       #journal .media .media-image.attached {
-        opacity: .75;
+        opacity: 1;
         background-position: 0 -16px; }
       #journal .media .media-image.attached:hover {
-        opacity: 1; }
+        /* Need a style here... */ }
   #journal .controls {
     /* Positioning */
     position: absolute;

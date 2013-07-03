@@ -90,7 +90,7 @@ Template.journal.events({
           {
             owner: Meteor.userId(),
             date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
-            created: new Date.getTime(),
+            created: new Date().getTime(),
             text: document.getElementById('story').value,
             public: false
           }
@@ -98,7 +98,7 @@ Template.journal.events({
       }
 
       // Hack to maintain the style
-      setTimeout(function() {$("#story").attr("style",css).verticalCenter();},0);
+      setTimeout(function() {$("#story").attr("style",css).verticalCenter(true);},0);
 
     },1000);
   },
@@ -148,7 +148,7 @@ Template.journal.events({
             {
               owner: Meteor.userId(),
               date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
-              created: new Date.getTime(),
+              created: new Date().getTime(),
               text: document.getElementById('story').value,
               public: false
             }
@@ -184,7 +184,7 @@ Template.journal.events({
         {
           owner: Meteor.userId(),
           date: new Date(date.getFullYear(),date.getMonth(),date.getDate()),
-          created: new Date.getTime(),
+          created: new Date().getTime(),
           text: document.getElementById('story').value,
           public: false
         }

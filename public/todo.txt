@@ -1,16 +1,34 @@
 Features
-• Calendar view
-• Share on FB/Twitter (Tumblr? Instagram? Foursquare?)
-• IFTTT support
+• Calendar view needs work. Going between weeks?
+• Share on FB/Twitter (Tumblr? Instagram? Foursquare?). Implementing Meteor Router.
 • Post streak
+• humans.txt
 
+Bug fixes
+• Binding on load of background image causes issues if you switch while image is still loading.
+• Duplicating loading of date.
+• Cowboy creates. Need to make a Meteor method to make it safer.
+• Permissions. Currently any user can do anything.
+
+Design
+• One pager
+• Style the filepicker interface
+• Sign in dialog
+• How do the dates look like?
+• Hover states
+• The loading animation while autosaving.
+• Icons
+
+Future: 
 Dashboard View
 • Most commonly used words
 • Length of entry
 • Time of day
 • Grid view of all your best things
 
-Design
-• One pager
-• Style the filepicker interface
-• Sign in dialog
+Stream view
+• See your friends' public besterdays
+
+• Chrome extension
+• Touch enabled
+• iOS app
