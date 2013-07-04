@@ -1,0 +1,39 @@
+<template name="journal">
+
+  {{#constant}}
+  <div class="dummy"></div>  
+  {{/constant}}
+  <div class="nav">
+    <a class="nav-up" href="#">Previous</a>
+    <a class="nav-dn" href="#">Next</a>
+  </div>
+
+  <div id="journal">
+    {{#if owner}}
+      {{> story story }}
+      {{> postControls story }}
+    {{/if}}
+  </div>
+
+</template>
+
+
+<template name="story">
+
+  <textarea autofocus id="story" name="story" placeholder="What was the best thing that happened to you?">{{text}}</textarea>
+
+</template>
+
+
+<template name="postControls">
+    <div class="media">
+        <a class="media-image {{#if img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
+    </div>
+    <div class="controls">
+      <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
+      <a class="controls-save" href="#">Update</a>
+      <a class="controls-share" href="#">
+        <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
+      </a>
+    </div>
+</template>

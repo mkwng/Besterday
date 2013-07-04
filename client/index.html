@@ -1,0 +1,24 @@
+<head>
+    <title>Besterday</title>
+    <script type="text/javascript" src="//use.typekit.net/gtr3ign.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+
+<body>
+  
+  <div class="bg"><div class="bg-image"></div></div>
+  
+  {{renderPage}}
+
+  {{#if showSidebar}}
+    {{> sidebar}}
+  {{/if}}
+
+  {{loginButtons  align="right"}}
+
+</body>
+
+
+<template name="sidebar">
+  <h3>Sidebar</h3>
+</template>
