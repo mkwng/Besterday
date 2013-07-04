@@ -252,7 +252,7 @@ resolveMultiple = function(storyArray) {
   }
 
 
-  Meteor.call("createStory",options,function(e,r) {});
+  Meteor.call("createStory",options,function(e,r) {console.log(e,r); sessionId = r;});
 }
 
 
