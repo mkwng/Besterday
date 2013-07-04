@@ -6,11 +6,11 @@
   Session variables:
     session_user:   User whose stories we're requesting
     session_date:   The date of the story we're requesting
-    session_story:  If a story exists for this date, its ID is here.
     show_sidebar:   Whether or not to show the sidebar
     pub_loaded:     Has public data loaded yet?
     user_loaded:    Has user data loaded yet?
 */
+sessionId = "";
 
 // Run this the first time the app is started.
 Meteor.startup(function () {
@@ -18,8 +18,8 @@ Meteor.startup(function () {
   Session.set('user_loaded', false); 
 
   // Whenever possible, make sure there's a session date and user set.
-  Session.set("session_date",incrementDate(new Date(),-1));
-  Session.set("session_user",Meteor.userId());
+  if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
+  if(!Session.get("session_user")) Session.set("session_user",Meteor.userId());
 
   // Any time any reactive data source changes, run this:
   Deps.autorun(function () {
@@ -30,7 +30,7 @@ Meteor.startup(function () {
   Meteor.subscribe('pub_data', function(){
     // Set the reactive session as true to indicate that the data have been loaded
     Session.set('pub_loaded', true); 
-    Meteor.call("setDate",Session.get("session_user"),Session.get("session_date"));
+    setDate(Session.get("session_user"),Session.get("session_date"));
   });
 });
 

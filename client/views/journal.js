@@ -6,6 +6,7 @@
 Template.journal.created = function() {
   Meteor.defer(function() {
     $dummy = $(".dummy");
+    scrollNav();
   })
 }
 
@@ -78,7 +79,7 @@ Template.journal.events({
 });
 // Helpers
 Template.journal.helpers({
-  'owner' : function() {
+  owner : function() {
     if(Meteor.userId() == Session.get("session_user")) return true;
     else return false;
   }
@@ -88,24 +89,36 @@ Template.journal.helpers({
    TEMPLATE: Story
    ========================================================================== */
 // Tasks when Story is created.
-Template.story.created = function() {}
+Template.story.created = function() {
+}
 
 
 // Tasks when Story is rendered.
+journalCss = "";
+renderOpacity = true;
 Template.story.rendered = function() {
-  Meteor.defer(function() {
-  });
+    // See cssPersist() function for explanation.
+    $story = $("#story");
+    $story.attr("style",journalCss)
+    if($story.css("opacity")==0 && renderOpacity) {
+      renderOpacity = false;
+      $story.animate({opacity:1},1000,function() {
+        $(this).cssPersist("opacity",1);
+        renderOpacity = true;
+      });
+    }
 }
 
 
 // Tasks when Story is destroyed.
-Template.story.destroyed = function() {}
+Template.story.destroyed = function() {
+  journalCss = "opacity:0;";
+}
 
 
 Template.story.preserve({
   '#story': function (node) { return node.id; }
 });
-
 
 keyupDelay = undefined;
 Template.story.events({
@@ -117,9 +130,6 @@ Template.story.events({
     clearTimeout(keyupDelay);
     keyupDelay = setTimeout(function(e) {
 
-      // Hack to maintain the style
-      var css = $("#story").attr("style");
-
       if(sessionId) {
         Meteor.call("updateText",sessionId,document.getElementById('story').value);
       } else {
@@ -130,13 +140,19 @@ Template.story.events({
           text: document.getElementById('story').value,
           public: false
         }, function(e,r) {
+          console.log(e,r);
           sessionId = r;
         });
       }
 
       setTimeout(function() {
-        $("#story").attr("style",css).verticalCenter(true);
+        $("#story").verticalCenter(true);
         toggleLoad(false);
+
+        // // Hack to maintain the style
+        // journalCss = $("#story").attr("style");
+        // console.log(journalCss);
+
       },0);
 
     },1000);
@@ -147,6 +163,12 @@ Template.story.events({
 
 // Events
 // Helpers
+Template.story.helpers({
+  prettyDate : function() {
+    if(Session.get("session_date")) return prettyDate(Session.get("session_date"),true);
+    else return "Loading...";
+  }
+});
 
 
 /* ==========================================================================
@@ -168,3 +190,9 @@ Template.postControls.events({});
 
 // Events
 // Helpers
+Template.postControls.helpers({
+  prettyDate : function() {
+    if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
+    else return "Loading...";
+  }
+});

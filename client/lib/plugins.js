@@ -97,6 +97,24 @@ getImageLightness = function(imageSrc,callback) {
 }
 
 
+
+/*
+ * JavaScript Pretty Date
+ * Copyright (c) 2011 John Resig (ejohn.org)
+ * Licensed under the MIT and GPL licenses.
+ */
+dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+// Takes an ISO time and returns a string representing how
+// long ago the date represents.
+prettyDate = function(date,week){
+  if(week)
+    return dayNames[date.getDay()] + ", " + monthNames[date.getMonth()] + " " + date.getDate();
+  else
+    return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+}
+
+
 // http://stackoverflow.com/questions/135448/how-do-i-check-to-see-if-an-object-has-a-property-in-javascript
 hasOwnProperty = function(obj, prop) {
     var proto = obj.__proto__ || obj.constructor.prototype;
