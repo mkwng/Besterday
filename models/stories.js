@@ -18,8 +18,8 @@ Stories.allow({
   // Insert: Not allowed. Must use createStory method.
   // Update: Only allow if you are the owner.
   // Remove: Not allowed. Must use destroyStory method.
-  remove: function () {
+  // remove: function () {
     // can only remove your own documents
-    return true;
-  },
+    // return true;
+  // },
 });

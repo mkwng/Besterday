@@ -25,11 +25,50 @@ Template.journal.destroyed = function() {
 
 // Bind to Stories collection.
 Template.journal.story = function() {
-  return findStory(Meteor.userId(),Session.get("session_date"));
+  return findStory(Session.get("session_user"),Session.get("session_date"));
 }
 
 // Events
+publicDelay = setTimeout();
 Template.journal.events({
+
+  'click .controls-share' :function(e) {
+    clearTimeout(publicDelay);
+    if(sessionId) {
+
+      $icon = $(".controls-share-icon");
+
+      if($icon.hasClass("unlock")) {
+        $icon.css("background-position","0 0").removeClass("unlock").addClass("lock animate");
+        newPublic=false;
+      } else {
+        $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock animate");
+        newPublic=true;
+      }
+
+      // Let's give the animation some time to complete before updating the server.
+      publicDelay = setTimeout(function() {
+        // The animate class has the CSS animation. 
+        // We need to remove it because otherwise when Meteor rerenders, it will animate again.
+        $icon.removeClass("animate");  
+        Meteor.call("updatePublic",sessionId,newPublic);
+
+      },800);
+
+    } else {
+      // Need a better error here.
+      alert("No story to share...");
+    }
+
+  },
+
+  // Open up the menu...
+  'click .controls-menu' : function(e) {
+
+    if(!Session.get("show_sidebar")) openSidebar();
+    else closeSidebar();
+
+  },
 
   'click .media-image' : function (e) {
     e.preventDefault();
