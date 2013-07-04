@@ -17,22 +17,24 @@ Meteor.startup(function () {
   Session.set('pub_loaded', false); 
   Session.set('user_loaded', false); 
 
+  // Whenever possible, make sure there's a session date and user set.
+  Session.set("session_date",incrementDate(new Date(),-1));
+  Session.set("session_user",Meteor.userId());
+
   // Any time any reactive data source changes, run this:
   Deps.autorun(function () {
-    // Whenever possible, make sure there's a session date and user set.
-    if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
-    if(!Session.get("session_user")) Session.set("session_user",Meteor.userId());
+    console.log("Deps.autorun...");
   });
 
+  // Run this when the data is loaded.
+  Meteor.subscribe('pub_data', function(){
+    // Set the reactive session as true to indicate that the data have been loaded
+    Session.set('pub_loaded', true); 
+    Meteor.call("setDate",Session.get("session_user"),Session.get("session_date"));
+  });
 });
 
 
-// Run this when the data is loaded.
-Meteor.subscribe('pub_data', function(){
-  // Set the reactive session as true to indicate that the data have been loaded
-  Session.set('pub_loaded', true); 
-  Meteor.call("setDate",Session.get("session_user"),Session.get("session_date"));
-});
 Meteor.subscribe('user_data', function(){
   // Set the reactive session as true to indicate that the data have been loaded
   Session.set('user_loaded', true); 

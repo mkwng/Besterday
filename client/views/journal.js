@@ -28,6 +28,54 @@ Template.journal.story = function() {
 }
 
 // Events
+Template.journal.events({
+
+  'click .media-image' : function (e) {
+    e.preventDefault();
+
+    // Need to provide better way of deleting picture...
+    if ($(e.target).hasClass("attached") && confirm("Remove picture?")) {
+      $(e.target).removeClass("attached");
+      // Remove the current picture.
+      makeBackground();
+
+      Meteor.call("updateImg",sessionId,"")
+
+    } 
+
+    filepicker.pick({
+      mimetypes: ['image/*', 'text/plain'],
+      container: 'modal',
+      services:['COMPUTER', 'URL', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 
+      'PICASA', 'DROPBOX', 'GMAIL'],
+      },
+      function(FPFile){
+        image = JSON.stringify(FPFile);
+        makeBackground(image);
+
+        if(sessionId) {
+          Meteor.call("updateImg",sessionId,image);
+        } else {
+          Meteor.call("createStory",{
+            owner: Meteor.userId(),
+            date: Session.get("session_date"),
+            created: new Date().getTime(),
+            text: document.getElementById('story').value,
+            img: image,
+            public: false
+          }, function(e,r) {
+            sessionId = r;
+          });
+        }
+      },
+      function(FPError){
+        console.log(FPError.toString());
+        $(e.target).addClass("error");
+      }
+    );
+
+  }  
+});
 // Helpers
 Template.journal.helpers({
   'owner' : function() {
@@ -44,34 +92,56 @@ Template.story.created = function() {}
 
 
 // Tasks when Story is rendered.
-Template.story.rendered = function() {}
+Template.story.rendered = function() {
+  Meteor.defer(function() {
+  });
+}
 
 
 // Tasks when Story is destroyed.
 Template.story.destroyed = function() {}
 
 
+Template.story.preserve({
+  '#story': function (node) { return node.id; }
+});
+
+
+keyupDelay = undefined;
 Template.story.events({
   'keyup #story' : function(e) {
-    // Hack to maintain the style
-    var css = $("#story").attr("style");
 
-    if(Session.get("session_story")) {
-      Meteor.call("updateText",Session.get("session_story"),document.getElementById('story').value);
-    } else {
-      Meteor.call("createStory",{
-        owner: Meteor.userId(),
-        date: Session.get("session_date"),
-        created: new Date().getTime(),
-        text: document.getElementById('story').value,
-        public: false
-      }, function(e,r) {
-        Session.set("session_story",r);
-      });
-    }
+    toggleLoad(true);
 
-      setTimeout(function() {$("#story").attr("style",css).verticalCenter(true);},0);
+    // If they're typing a lot, let them finish before updating.
+    clearTimeout(keyupDelay);
+    keyupDelay = setTimeout(function(e) {
+
+      // Hack to maintain the style
+      var css = $("#story").attr("style");
+
+      if(sessionId) {
+        Meteor.call("updateText",sessionId,document.getElementById('story').value);
+      } else {
+        Meteor.call("createStory",{
+          owner: Meteor.userId(),
+          date: Session.get("session_date"),
+          created: new Date().getTime(),
+          text: document.getElementById('story').value,
+          public: false
+        }, function(e,r) {
+          sessionId = r;
+        });
+      }
+
+      setTimeout(function() {
+        $("#story").attr("style",css).verticalCenter(true);
+        toggleLoad(false);
+      },0);
+
+    },1000);
   }
+
 });
 
 

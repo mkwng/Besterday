@@ -185,7 +185,7 @@ body {
   -ms-transition: left 0.5s;
   -o-transition: left 0.5s;
   transition: left 0.5s; }
-  #journal textarea {
+  #journal #story {
     /* Positioning */
     position: absolute;
     width: 100%;
@@ -202,6 +202,7 @@ body {
     padding: 0 20px;
     /* Presentation */
     background: transparent;
+    opacity: 0;
     resize: none;
     border: none;
     outline: none;
@@ -233,13 +234,13 @@ body {
     -ms-transition: padding 0.8s;
     -o-transition: padding 0.8s;
     transition: padding 0.8s; }
-    #journal textarea::-webkit-input-placeholder {
+    #journal #story::-webkit-input-placeholder {
       opacity: .5 !important; }
-    #journal textarea:-moz-placeholder {
+    #journal #story:-moz-placeholder {
       opacity: .5 !important; }
-    #journal textarea::-moz-placeholder {
+    #journal #story::-moz-placeholder {
       opacity: .5 !important; }
-    #journal textarea:-ms-input-placeholder {
+    #journal #story:-ms-input-placeholder {
       opacity: .5 !important; }
   #journal .media {
     /* Positioning */
