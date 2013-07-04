@@ -240,7 +240,7 @@ body {
   overflow:hidden;
   @include transition(left .5s);
 
-  textarea {
+  #story {
     /* Positioning */
     position:absolute;
     width:100%;
@@ -272,14 +272,14 @@ body {
 
     /* Animation */
     @include accelerate;
-    @include transition(padding .8s,opacity 2s);
+    @include transition(padding .8s,color .8s);
   }
 
   .media {
     /* Positioning */
     position:absolute;
-    bottom:10px;
-    right:10px;
+    bottom:20px;
+    right:20px;
     z-index:2;
 
     .media-image {
@@ -374,7 +374,7 @@ body {
       display:block;
       @include box-sizing;
       padding:10px 0 0;
-      margin:0 0 0 10px;
+      margin:0 0 0 5px;
 
       /* Presentation */
       background:$orange;

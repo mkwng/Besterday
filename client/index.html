@@ -3,31 +3,17 @@
     <script type="text/javascript" src="//use.typekit.net/gtr3ign.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
- 
+
 <body>
-
+  
   <div class="bg"><div class="bg-image"></div></div>
-
-  {{renderPage}}
+  {{> page }}
 
 </body>
 
-<template name="landing">
-  {{loginButtons align="right"}}
-
-  <h1>Besterday - beta</h1>
-</template>
-
 <template name="page">
-
-  <div class="dummy"></div>  
-
-  {{#isolate}}
-  <div class="nav">
-    <a class="nav-up" href="#">Previous</a>
-    <a class="nav-dn" href="#">Next</a>
-  </div>
-  {{loginButtons align="right"}}
+  
+  {{renderPage}}
 
   <div id="sidebar">
     {{#if showSidebar}}
@@ -35,38 +21,7 @@
     {{/if}}
   </div>
 
-  <div id="journal">
-    {{> journal }}
-  </div>
-  {{/isolate}}
-
-</template>
-
-
-<template name="journal">
-
-  {{#if loggedIn}}
-
-    {{#isolate}}
-    <textarea autofocus id="story" name="story" placeholder="What was the best thing that happened to you?">{{story.text}}</textarea>
-    {{/isolate}}
-
-    <div class="media">
-        <a class="media-image {{#if story.img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
-    </div>
-    <div class="controls">
-      <a class="controls-menu" href="#"><span class="controls-menu-date">{{date}}</span></a>
-
-
-      <a class="controls-save" href="#">Update</a>
-      <a class="controls-share" href="#"><div class="controls-share-icon {{#if story.public}}unlock{{/if}}">Share</div></a>
-
-
-    </div>
-
-
-  {{/if}}
-
+  {{loginButtons  align="right"}}
 </template>
 
 <template name="sidebar">
@@ -106,5 +61,4 @@
         <li>Goodbye!</li>
       </ul>
     </li>
-  </ul>
 </template>
