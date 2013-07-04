@@ -15,7 +15,7 @@ Design
 • Style the filepicker interface
 • Sign in dialog
 • How do the dates look like?
-• Hover states
+• Hover states + transitions for nearly everything
 • The loading animation while autosaving.
 • Icons
 

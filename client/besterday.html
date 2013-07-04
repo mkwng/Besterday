@@ -6,14 +6,22 @@
  
 <body>
 
-  {{> page}}
+  <div class="bg"><div class="bg-image"></div></div>
+
+  {{renderPage}}
 
 </body>
 
+<template name="landing">
+  {{loginButtons align="right"}}
+
+  <h1>Besterday - beta</h1>
+</template>
+
 <template name="page">
 
-  <div class="bg"><div class="bg-image"></div></div>
   <div class="dummy"></div>  
+
   {{#isolate}}
   <div class="nav">
     <a class="nav-up" href="#">Previous</a>
@@ -31,6 +39,7 @@
     {{> journal }}
   </div>
   {{/isolate}}
+
 </template>
 
 

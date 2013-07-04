@@ -21,6 +21,31 @@ Meteor.startup(function () {
 
 });
 
+
+Meteor.Router.add({
+  '/': function() {
+    if (Meteor.userId()){
+      return 'page';
+    } else {
+      return 'landing';
+    }
+  },
+
+  '/welcome': 'landing',
+
+  '/:user': function(user) {
+    console.log("our parameters: ",user);
+    // Session.set('postId', id);
+    return 'page';
+  },
+
+  '/:user/:year/:month/:date': function(user,year,month,date) {
+    console.log("our parameters: ",user,year,month,date);
+    // Session.set('postId', id);
+    return 'landing';
+  }
+});
+
 Meteor.subscribe('default_db_data', function(){
   // Set the reactive session as true to indicate that the data have been loaded
   Session.set('data_loaded', true); 
@@ -59,10 +84,12 @@ Template.journal.story = function () {
 
 // As soon as Meteor finishes rendering, let's make sure we center our type.
 Template.journal.rendered = function() {
+
   Meteor.defer(function () {
-    if(typeof $dummy == "undefined" && $(".dummy").length) $dummy = $(".dummy");
-    if($("#story").length) {$story = $("#story").verticalCenter();}
+    if( (typeof $dummy == "undefined" && $(".dummy").length) || !$dummy.closest("body").length ) $dummy = $(".dummy");
+    if( ($("#story").length) || !$story.closest("body").length ) {$story = $("#story").verticalCenter(true);}
   });
+
 };
 
 Template.journal.events({
@@ -279,6 +306,8 @@ function setDate(date) {
       // Regardless of whether or not we have a story, we need to make sure the session is on the right date
       Session.set("session_date", date);
 
+      console.log("date is being set...");
+
       // If multiple results, (Why? How?) find the one that's created the earliest.
       story = Stories.findOne({"owner": Meteor.userId(),"date":{"$gte": start, "$lt": end}},{sort: {created: 1,date: 1}});
       if(story) {
@@ -309,8 +338,10 @@ function setDate(date) {
 
 function makeBackground(picture) {
 
-  if(typeof $bg == "undefined" && $(".bg").length) $bg = $(".bg");
-  if(typeof $bgImage == "undefined" && $(".bg-image").length) $bgImage = $(".bg-image");
+  console.log("Changing background...");
+
+  if( (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
+  if( (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");
 
   function changeBg(url) {
     $bgImage.css("background-image","url("+url+")");
