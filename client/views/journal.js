@@ -15,6 +15,7 @@ Template.journal.created = function() {
 Template.journal.rendered = function() {
   if( !$dummy.closest("body").length ) $dummy = $(".dummy");
   Meteor.defer(function() {
+    // This addresses bug fix #3
     if(!dateSetOnce) {
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
@@ -25,6 +26,7 @@ Template.journal.rendered = function() {
 // Tasks when Journal is destroyed.
 Template.journal.destroyed = function() {
     $dummy = null;
+    dateSetOnce = false;
 }
 
 
