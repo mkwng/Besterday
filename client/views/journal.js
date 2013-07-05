@@ -13,9 +13,10 @@ Template.journal.created = function() {
 
 // Tasks when Journal is rendered.
 Template.journal.rendered = function() {
-  if( !$dummy.closest("body").length ) $dummy = $(".dummy");
+  if( $dummy == null || !$dummy.closest("body").length ) $dummy = $(".dummy");
   Meteor.defer(function() {
     // This addresses bug fix #3
+    console.log("test");
     if(!dateSetOnce) {
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
