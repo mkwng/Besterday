@@ -103,7 +103,6 @@ var sidebarCleanup;
 
 openSidebar = function () {
   Session.set("show_sidebar", true);
-  console.log("holla");
   setTimeout(function() {
     $("#sidebar").animate({"left":0});
 

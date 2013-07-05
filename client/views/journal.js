@@ -16,7 +16,6 @@ Template.journal.rendered = function() {
   if( $dummy == null || !$dummy.closest("body").length ) $dummy = $(".dummy");
   Meteor.defer(function() {
     // This addresses bug fix #3
-    console.log("test");
     if(!dateSetOnce) {
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
@@ -34,7 +33,6 @@ Template.journal.destroyed = function() {
 // Bind to Stories collection.
 Template.journal.story = function() {
   story = findStory(Session.get("session_user"),Session.get("session_date"));
-  console.log("Template.journal.story()");
   return story;
 }
 
