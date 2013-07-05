@@ -3,12 +3,22 @@ Features
 • Share on FB/Twitter (Tumblr? Instagram? Foursquare?). Implementing Meteor Router.
 • Post streak
 • humans.txt
+• Loading animation for background.
+• Need notice for log in. To replicate bug:
+  - While logged out, visit a user's public story.
+  - Log in as user.
+  - There's no indication aside from UI changing.
 
 Bug fixes
 • Binding on load of background image causes issues if you switch while image is still loading.
-• Duplicating loading of date.
 • Cowboy creates. Need to make a Meteor method to make it safer.
 • Permissions. Currently any user can do anything.
+• Background persists? To replicate bug:
+  - Log in as a user.
+  - View different user's public post with image.
+  - Click home.
+• URL is exposing userId. Should use username instead.
+
 
 Design
 • One pager
@@ -18,6 +28,7 @@ Design
 • Hover states + transitions for nearly everything
 • The loading animation while autosaving.
 • Icons
+• Visiting someone else's page needs some sort of treatment
 
 Future: 
 Dashboard View
