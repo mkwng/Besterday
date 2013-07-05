@@ -21,10 +21,6 @@ Meteor.startup(function () {
   if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
   if(!Session.get("session_user")) Session.set("session_user",Meteor.userId());
 
-  // Any time any reactive data source changes, run this:
-  Deps.autorun(function () {
-    console.log("Deps.autorun...");
-  });
 
   // Run this when the data is loaded.
   Meteor.subscribe('pub_data', function(){
@@ -39,6 +35,7 @@ Meteor.subscribe('user_data', function(){
   // Set the reactive session as true to indicate that the data have been loaded
   Session.set('user_loaded', true); 
 });
+
 
 
 
@@ -60,11 +57,11 @@ Meteor.Router.add({
     return 'journal';
   },
 
-  '/:user/:year/:month/:date': function(user,year,month,date) {
-    console.log("our parameters: ",user,year,month,date);
-    // Session.set('postId', id);
-    return 'journal';
-  }
+  '/:user/:year/:month/:date': { to: 'journal', and: function(user,year,month,date) {
+    // console.log("our parameters: ",user,year,month,date);
+    Session.set("session_date",new Date(year,month-1,date));
+  }},
+  '/404': 'landing'
 });
 
 
