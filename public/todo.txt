@@ -18,7 +18,9 @@ Bug fixes
   - Click home.
 • URL is exposing userId. Should use username instead.
 • Text not centering in certain scenarios. To replicate bug:
-  - 
+  - View landing page
+  - Log in.
+• Resolve duplicates could cause infinite loops if same window is open in two browsers.
 
 
 Design

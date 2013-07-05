@@ -73,17 +73,6 @@ Meteor.Router.add({
         return 'journal';
       }
   },
-  // { to: 'journal', and: function(user,year,month,date) {
-  //   // console.log("our parameters: ",user,year,month,date);
-  //   if (user=="null" || user==null || user===false) {
-  //     console.log("No user set");
-  //     Meteor.Router.to("/");
-  //   }
-  //   else {
-  //     console.log("User:",user);
-  //     Session.set("session_date",new Date(year,month-1,date));
-  //   }
-  // }},
   '/404': 'landing'
 });
 

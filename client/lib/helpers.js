@@ -10,7 +10,6 @@ makeBackground = function(picture) {
   if( (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");
 
   // If there's a previous thing happening, let's cancel that.
-  // NOTE! As of 7/2 this is not cancelling. Still broken.
   if($bgPreload) $bgPreload.unbind("load");
 
   if (picture && typeof picture != "undefined"){
@@ -51,29 +50,25 @@ makeBackground = function(picture) {
 
     },2);
   });
-
 }
-
-// scrollStory: Using the mousewheel to navigate.
 
 // toggleLoad: This triggers a loading animation.
 loading = false;
 toggleLoad = function(load) {
   if ( typeof load == "undefined" || load ) {
     if (loading == false) {
-      // console.log("Updating...");
+      console.log("Updating...");
       loading = true;
     } else {
-      // console.log("Still updating...");
+      console.log("Still updating...");
     }
   } else {
-    // console.log("Done.");
+    console.log("Done.");
     loading = false;
   }
 }
 
 // verticalCenter: Vertically center the story.
-centerOnce = true; // Incredibly annoying hack to center the type on first load.
 $dummy = $(".dummy");
 jQuery.fn.verticalCenter = function(force) {
   $dummy.html(formatDummyText($(this).val()));
@@ -81,7 +76,6 @@ jQuery.fn.verticalCenter = function(force) {
     $("#story").cssPersist("padding-top",calculateTop());
   },0);
 
-  // $(this).animate({opacity:1},1000);
   return $(this);
 };
 
@@ -120,11 +114,6 @@ jQuery.fn.cssPersist = function(prop,val) {
 
   return $(this);
 }
-
-
-
-
-
 
 
 
@@ -238,7 +227,6 @@ resolveMultiple = function(storyArray) {
   options.date = storyArray[0].date;
 
   for (var i = 0; i < storyArray.length; i++) {
-      //Do something
       if (storyArray[i].created < options.created) options.created = storyArray[i].created
       options.text += " " + storyArray[i].text;
       if (storyArray[i].hasOwnProperty("img") && storyArray[i].img) {

@@ -196,10 +196,6 @@ Template.story.events({
         $("#story").verticalCenter(true);
         toggleLoad(false);
 
-        // // Hack to maintain the style
-        // journalCss = $("#story").attr("style");
-        // console.log(journalCss);
-
       },0);
 
     },1000);

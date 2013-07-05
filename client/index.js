@@ -69,15 +69,7 @@ Template.sidebar.weekThis = function () {
 };
 
 Template.sidebar.helpers({
-  // "active": function() {
-  //   return "";
-  // },
-  // "story": function() {
-  //   return "";
-  // },
-  // "date":function() {
-  //   return "hi";
-  // }
+
 });
 
 Template.sidebar.events({
