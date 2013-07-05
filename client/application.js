@@ -26,7 +26,7 @@ Meteor.startup(function () {
   Meteor.subscribe('pub_data', function(){
     // Set the reactive session as true to indicate that the data have been loaded
     Session.set('pub_loaded', true); 
-    setDate(Session.get("session_user"),Session.get("session_date"));
+    if(Session.get("session_user")) setDate(Session.get("session_user"),Session.get("session_date"));
   });
 });
 
@@ -42,7 +42,9 @@ Meteor.subscribe('user_data', function(){
 // Routing to the right page.
 Meteor.Router.add({
   '/': function() {
-    if (Meteor.userId()){
+
+    if (!(Meteor.userId()==null || Meteor.userId()===false)){
+      Session.set("session_user",Meteor.userId());
       return 'journal';
     } else {
       return 'landing';
@@ -57,10 +59,27 @@ Meteor.Router.add({
     return 'journal';
   },
 
-  '/:user/:year/:month/:date': { to: 'journal', and: function(user,year,month,date) {
-    // console.log("our parameters: ",user,year,month,date);
-    Session.set("session_date",new Date(year,month-1,date));
-  }},
+  '/:user/:year/:month/:date': function(user,year,month,date) {
+    if(user=="null" || user==null || user===false) 
+      {
+        return 'landing';
+      } else {
+        Session.set("session_user",user);
+        Session.set("session_date",new Date(year,month-1,date));
+        return 'journal';
+      }
+  },
+  // { to: 'journal', and: function(user,year,month,date) {
+  //   // console.log("our parameters: ",user,year,month,date);
+  //   if (user=="null" || user==null || user===false) {
+  //     console.log("No user set");
+  //     Meteor.Router.to("/");
+  //   }
+  //   else {
+  //     console.log("User:",user);
+  //     Session.set("session_date",new Date(year,month-1,date));
+  //   }
+  // }},
   '/404': 'landing'
 });
 

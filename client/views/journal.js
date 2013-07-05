@@ -206,6 +206,10 @@ Template.story.helpers({
   prettyDate : function() {
     if(Session.get("session_date")) return prettyDate(Session.get("session_date"),true);
     else return "Loading...";
+  },
+  owner : function() {
+    if(Meteor.userId() == Session.get("session_user")) return true;
+    else return false;
   }
 });
 

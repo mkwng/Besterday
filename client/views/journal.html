@@ -3,15 +3,19 @@
   {{#constant}}
   <div class="dummy"></div>  
   {{/constant}}
+    {{#if owner}}
   <div class="nav">
     <a class="nav-up" href="#">Previous</a>
     <a class="nav-dn" href="#">Next</a>
   </div>
+    {{/if}}
 
   <div id="journal">
-    {{#if owner}}
       {{> story story }}
+    {{#if owner}}
       {{> postControls story }}
+    {{else}}
+      <a href="/"><h1>Besterday Home</h1></a>
     {{/if}}
   </div>
 
@@ -20,10 +24,9 @@
 
 <template name="story">
 
-  <textarea style="opacity:0" autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
+  <textarea style="opacity:0" {{#if owner}} {{else}}disabled {{/if}}autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
 
 </template>
-
 
 <template name="postControls">
     <div class="media">
