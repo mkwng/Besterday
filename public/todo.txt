@@ -3,7 +3,6 @@ Features
 • Share on FB/Twitter (Tumblr? Instagram? Foursquare?). Implementing Meteor Router.
 • Post streak
 • humans.txt
-• Loading animation for background.
 • Need notice for log in. To replicate bug:
   - While logged out, visit a user's public story.
   - Log in as user.
@@ -18,6 +17,8 @@ Bug fixes
   - View different user's public post with image.
   - Click home.
 • URL is exposing userId. Should use username instead.
+• Text not centering in certain scenarios. To replicate bug:
+  - 
 
 
 Design
@@ -27,6 +28,7 @@ Design
 • How do the dates look like?
 • Hover states + transitions for nearly everything
 • The loading animation while autosaving.
+• Loading animation for background.
 • Icons
 • Visiting someone else's page needs some sort of treatment
 

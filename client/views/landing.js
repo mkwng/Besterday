@@ -6,7 +6,9 @@
 
 
 // Tasks when Landing is rendered.
-
+Template.landing.rendered = function() {
+  makeBackground();
+}
 
 
 // Tasks when Landing is destroyed.

@@ -10,6 +10,8 @@
     pub_loaded:     Has public data loaded yet?
     user_loaded:    Has user data loaded yet?
 */
+
+// Why is this here?
 sessionId = "";
 
 // Run this the first time the app is started.
@@ -38,7 +40,9 @@ Meteor.subscribe('user_data', function(){
 
 
 
-
+Meteor.Router.beforeRouting = function() {
+  // console.log("hello");
+}
 // Routing to the right page.
 Meteor.Router.add({
   '/': function() {

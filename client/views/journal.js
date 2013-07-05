@@ -14,6 +14,11 @@ Template.journal.created = function() {
 // Tasks when Journal is rendered.
 Template.journal.rendered = function() {
   if( !$dummy.closest("body").length ) $dummy = $(".dummy");
+  Meteor.defer(function() {
+    if(!dateSetOnce) {
+      setDate(Session.get("session_user"),Session.get("session_date"));
+    }
+  });
 }
 
 
@@ -25,7 +30,9 @@ Template.journal.destroyed = function() {
 
 // Bind to Stories collection.
 Template.journal.story = function() {
-  return findStory(Session.get("session_user"),Session.get("session_date"));
+  story = findStory(Session.get("session_user"),Session.get("session_date"));
+  console.log("Template.journal.story()");
+  return story;
 }
 
 // Events
@@ -138,7 +145,7 @@ renderOpacity = true;
 Template.story.rendered = function() {
     // See cssPersist() function for explanation.
     $story = $("#story");
-    $story.attr("style",journalCss)
+    $story.attr("style",journalCss);
     if($story.css("opacity")==0 && renderOpacity) {
       renderOpacity = false;
       $story.animate({opacity:1},1000,function() {
