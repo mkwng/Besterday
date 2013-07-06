@@ -13,6 +13,7 @@
 
 // Why is this here?
 sessionId = "";
+sessionScreenName = "";
 
 // Run this the first time the app is started.
 Meteor.startup(function () {
@@ -68,14 +69,12 @@ Meteor.Router.add({
       {
         return 'landing';
       } else {
-        Session.set("session_user",user);
+        Session.set("session_user",getUserId(user));
         Session.set("session_date",new Date(year,month-1,date));
         return 'journal';
       }
   },
   '/404': 'landing'
 });
-
-
 
 

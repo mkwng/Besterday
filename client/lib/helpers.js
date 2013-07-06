@@ -246,7 +246,44 @@ resolveMultiple = function(storyArray) {
 
 
 
+getScreenName = function(id) {
+  if(!id) {id = Meteor.userId();}
+  user = Meteor.users.find(id).fetch()[0];
+  if(!user.hasOwnProperty("screenName") || !user.screenName || user.screenName == "null") {
+    name = prompt("Pick a screen name:");
+    for(i=0;!uniqueScreenName(name);i++){
+      name=prompt("Already in use. Pick a different screen name:");
+    }
+    Meteor.call("profileScreenName",name);
+  }
+  else {
+    name = user.screenName;
+  }
+  return name;
+}
+uniqueScreenName = function(name) {
+  if(!name) {name = sessionScreenName;}
+  return !Meteor.users.find({screenName:name}).fetch().length;
+}
+getUserId = function(name) {
+  if(!name) {
+    if(sessionScreenName) {
+      name = sessionScreenName;
+    }
+    else {
+      return false;
+    }
+  }
+  users = Meteor.users.find({screenName:name}).fetch();
+  if(users.length>1) console.log("Warning: Note that there is more than one",name);
+  if(users[0] && users[0].hasOwnProperty("_id"))
+    return users[0]._id;
+  else
+    console.log("not yet");
+    return "";
+}
 
-
-
+ownStory = function() {
+  return Meteor.userId() == Session.get("session_user");
+}
 

@@ -127,8 +127,7 @@ Template.journal.events({
 // Helpers
 Template.journal.helpers({
   owner : function() {
-    if(Meteor.userId() == Session.get("session_user")) return true;
-    else return false;
+    return ownStory();
   }
 });
 
@@ -212,8 +211,7 @@ Template.story.helpers({
     else return "Loading...";
   },
   owner : function() {
-    if(Meteor.userId() == Session.get("session_user")) return true;
-    else return false;
+    return ownStory();
   }
 });
 

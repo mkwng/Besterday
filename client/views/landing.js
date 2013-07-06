@@ -17,3 +17,4 @@ Template.landing.rendered = function() {
 
 // Events
 // Helpers
+
