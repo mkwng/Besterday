@@ -21,7 +21,9 @@
     {{/if}}
   </div>
 
-  {{loginButtons  align="right"}}
+  {{#unless loggedIn}}
+    {{loginButtons  align="right"}}
+  {{/unless}}
 </template>
 
 <template name="sidebar">

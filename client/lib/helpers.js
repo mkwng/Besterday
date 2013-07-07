@@ -20,6 +20,7 @@ makeBackground = function(picture) {
     else if (picture.indexOf("{") !== -1) var url = JSON.parse(picture).url;
     else var url = picture; // Phew.
 
+    toggleLoad(true,"bg");
     getImageLightness(url,function(brightness){
       if(brightness<150) {
         setTimeout(function() {
@@ -33,6 +34,7 @@ makeBackground = function(picture) {
 
         },2);
       }
+      toggleLoad(false,"bg");
     });
 
     // Fade it out, once it finishes loading, fade it back in.
@@ -55,18 +57,19 @@ makeBackground = function(picture) {
 }
 
 // toggleLoad: This triggers a loading animation.
-loading = false;
-toggleLoad = function(load) {
+loading = [];
+toggleLoad = function(load,target) {
+  if(typeof target == "undefined") target = "nothing";
   if ( typeof load == "undefined" || load ) {
-    if (loading == false) {
-      console.log("Updating...");
-      loading = true;
+    if (loading[target] == false) {
+      console.log("Updating",target+"...");
+      loading[target] = true;
     } else {
-      console.log("Still updating...");
+      console.log("Still updating",target+"...");
     }
   } else {
-    console.log("Done.");
-    loading = false;
+    console.log("Done updating",target+".");
+    loading[target] = false;
   }
 }
 

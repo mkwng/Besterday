@@ -39,9 +39,14 @@
 // Events
 // Helpers
 
+
 Template.page.showSidebar = function () {
   return Session.get("show_sidebar");
 };
+
+Template.page.loggedIn = function () {
+  return Meteor.userId();
+}
 
 days = [];
 Template.sidebar.weekThis = function () {
@@ -99,6 +104,17 @@ Template.sidebar.events({
     var newDate = new Date($(".sidebar-menu-sub-list-week.this li").first().find("a").data("date"));
     newDate = incrementDate(new Date(newDate),-1);
     setDate(Session.get("session_user"),newDate);
+  },
+  'click .signout' : function(e, tmpl) {
+    return Meteor.logout(function() {
+      console.log("logging out");
+      Session.set("session_user", "");
+      Session.set("session_date", incrementDate(new Date(),-1));
+      sessionId = "";
+      sessionScreenName = "";
+      closeSidebar();
+      Meteor.Router.to('/');
+    });
   }
 });
 

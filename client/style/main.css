@@ -763,3 +763,13 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     font-size: 14px; }
     li.sidebar-menu-sub-list-week.prev a:hover, li.sidebar-menu-sub-list-week.next a:hover {
       background: #e4e4e4; }
+
+/* ==========================================================================
+   Filepicker
+   ========================================================================== */
+#filepicker_shade {
+  background: none !important; }
+
+#filepicker_dialog_container {
+  border: none !important;
+  box-shadow: none !important; }
