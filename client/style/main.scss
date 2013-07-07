@@ -7,6 +7,77 @@ $orange: #ffae41;
 $hover: #f1f1f1;
 $text: #666666;
 
+/*** Config ***/
+
+/* Colors */
+$borderColor1: rgba(255,255,255,0.25); /* used for row 1 & 2 */
+$borderColor2: rgba(255,255,255,0.5);
+$borderColor3: rgba(255,255,255,0.75);
+$borderColor4: rgba(255,255,255,1);  /* used for row 1 & 2 */
+
+/* Dimensions */
+$borderWidthX: 10px;
+$borderWidthY: 10px;
+
+
+
+@-webkit-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-ms-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-o-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-moz-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+
+.border-loading-indicator {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  margin: -($borderWidthY) 0 0 -($borderWidthX);
+  border: 0px solid $borderColor4;
+  border-width: $borderWidthY $borderWidthX;
+}
+
+.border-loading-indicator.row-2 {
+  top: 75%;
+  animation: border-loading-indicator-row-2 750ms linear infinite;
+}
+
+.border-loading-indicator.col-3 {
+  width: 0px;
+  height: 0px;
+  left: 75%;
+  border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
+}
+
 /* ==========================================================================
    Helpers & Mixins
    ========================================================================== */
@@ -121,7 +192,31 @@ body {
   z-index:-2;
   top:0;
   left:0;
+  &.loading { background-color:darken($bg,5%);
+    &::after {
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-left: -$borderWidthX*5;
+      margin-top: -$borderWidthY*5;
+      content:"";
+      width: 0px;
+      height: 0px;
+
+      // margin: -($borderWidthY) 0 0 -($borderWidthX);
+      border: 0px solid $borderColor4;
+      border-width: $borderWidthY*5 $borderWidthX*5;
+
+      @include animation(border-loading-indicator-row-2 750ms linear infinite);
+      width: 0px;
+      height: 0px;
+
+      border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
+    }
+  }
 }
+.bg.loading::after {
+    }
 .bg-image {
   /* Positioning */
   position:absolute;
@@ -366,6 +461,7 @@ body {
 
     .controls-save {
       /* Positioning */
+      position:relative;
       float:right;
       height:36px;
       width:100px;
@@ -377,7 +473,7 @@ body {
       margin:0 0 0 5px;
 
       /* Presentation */
-      background:$orange;
+      background-color:$orange;
 
       /* Font */
       color:#ffffff;
@@ -388,6 +484,29 @@ body {
       font-size:12px;
       text-align:center;
       text-decoration:none;
+      @include transition(background-color .2s);
+      @include transition(color .2s);
+    }.controls-save.loading{background-color:lighten($orange,5%); color:rgba(255,255,255,.15);}
+    .controls-save.loading::after {
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-left: -$borderWidthX;
+      margin-top: -$borderWidthY;
+      content:"";
+      width: 0px;
+      height: 0px;
+
+      // margin: -($borderWidthY) 0 0 -($borderWidthX);
+      border: 0px solid $borderColor4;
+      border-width: $borderWidthY $borderWidthX;
+
+      @include animation(border-loading-indicator-row-2 750ms linear infinite);
+      width: 0px;
+      height: 0px;
+
+      border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
+
     }
     .controls-share {
       /* Positioning */
@@ -779,3 +898,9 @@ li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
   border:none !important;
   box-shadow:none !important;
 }
+
+
+
+
+
+

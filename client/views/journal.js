@@ -6,6 +6,7 @@
 Template.journal.created = function() {
   Meteor.defer(function() {
     $dummy = $(".dummy");
+    Session.set("show_sidebar",false);
     scrollNav();
   })
 }
@@ -41,6 +42,7 @@ publicDelay = setTimeout();
 Template.journal.events({
 
   'click .controls-share' :function(e) {
+    toggleLoad(true,"controls-save");
     clearTimeout(publicDelay);
     if(sessionId) {
 
@@ -59,6 +61,7 @@ Template.journal.events({
         // The animate class has the CSS animation. 
         // We need to remove it because otherwise when Meteor rerenders, it will animate again.
         $icon.removeClass("animate");  
+        toggleLoad(false,"controls-save");
         Meteor.call("updatePublic",sessionId,newPublic);
 
       },800);
@@ -122,7 +125,38 @@ Template.journal.events({
       }
     );
 
-  }  
+  },
+  'click .controls-save': function(e) {
+    e.preventDefault();
+    toggleLoad(true,"controls-save");
+
+    // If they're typing a lot, let them finish before updating.
+    clearTimeout(keyupDelay);
+    keyupDelay = setTimeout(function(e) {
+
+      if(sessionId) {
+        Meteor.call("updateText",sessionId,document.getElementById('story').value);
+      } else {
+        Meteor.call("createStory",{
+          owner: Meteor.userId(),
+          date: Session.get("session_date"),
+          created: new Date().getTime(),
+          text: document.getElementById('story').value,
+          public: false
+        }, function(e,r) {
+          console.log(e,r);
+          sessionId = r;
+        });
+      }
+
+      setTimeout(function() {
+        $("#story").verticalCenter(true);
+        toggleLoad(false,"controls-save");
+
+      },0);
+
+    },1000);
+  }
 });
 // Helpers
 Template.journal.helpers({
@@ -170,7 +204,7 @@ keyupDelay = undefined;
 Template.story.events({
   'keyup #story' : function(e) {
 
-    toggleLoad(true);
+    toggleLoad(true,"controls-save");
 
     // If they're typing a lot, let them finish before updating.
     clearTimeout(keyupDelay);
@@ -193,7 +227,7 @@ Template.story.events({
 
       setTimeout(function() {
         $("#story").verticalCenter(true);
-        toggleLoad(false);
+        toggleLoad(false,"controls-save");
 
       },0);
 

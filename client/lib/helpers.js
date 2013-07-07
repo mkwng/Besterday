@@ -60,17 +60,21 @@ makeBackground = function(picture) {
 loading = [];
 toggleLoad = function(load,target) {
   if(typeof target == "undefined") target = "nothing";
+
+  var $targetEl = $("."+target);
+
   if ( typeof load == "undefined" || load ) {
-    if (loading[target] == false) {
-      console.log("Updating",target+"...");
+    if (!loading[target]) {
+      $targetEl.addClass("loading");
       loading[target] = true;
     } else {
-      console.log("Still updating",target+"...");
+      // Don't do anything.
     }
   } else {
-    console.log("Done updating",target+".");
+    $targetEl.removeClass("loading");
     loading[target] = false;
   }
+  return $targetEl;
 }
 
 // verticalCenter: Vertically center the story.

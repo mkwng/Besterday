@@ -1,6 +1,109 @@
 /* ==========================================================================
    Colors
    ========================================================================== */
+/*** Config ***/
+/* Colors */
+/* used for row 1 & 2 */
+/* used for row 1 & 2 */
+/* Dimensions */
+@-webkit-keyframes border-loading-indicator-row-2 {
+  0% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); }
+
+  25% {
+    border-color: rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5); }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25); }
+
+  75% {
+    border-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75); }
+
+  100% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); } }
+
+@-ms-keyframes border-loading-indicator-row-2 {
+  0% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); }
+
+  25% {
+    border-color: rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5); }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25); }
+
+  75% {
+    border-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75); }
+
+  100% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); } }
+
+@-o-keyframes border-loading-indicator-row-2 {
+  0% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); }
+
+  25% {
+    border-color: rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5); }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25); }
+
+  75% {
+    border-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75); }
+
+  100% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); } }
+
+@-moz-keyframes border-loading-indicator-row-2 {
+  0% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); }
+
+  25% {
+    border-color: rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5); }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25); }
+
+  75% {
+    border-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75); }
+
+  100% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); } }
+
+@-keyframes border-loading-indicator-row-2 {
+  0% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); }
+
+  25% {
+    border-color: rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5); }
+
+  50% {
+    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) white rgba(255, 255, 255, 0.25); }
+
+  75% {
+    border-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75) rgba(255, 255, 255, 0.75); }
+
+  100% {
+    border-color: white rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.75); } }
+
+.border-loading-indicator {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  margin: -10px 0 -10px;
+  border: 0px solid white;
+  border-width: 10px 10px; }
+
+.border-loading-indicator.row-2 {
+  top: 75%;
+  animation: border-loading-indicator-row-2 750ms linear infinite; }
+
+.border-loading-indicator.col-3 {
+  width: 0px;
+  height: 0px;
+  left: 75%;
+  border-radius: 10px 10px 10px 10px; }
+
 /* ==========================================================================
    Helpers & Mixins
    ========================================================================== */
@@ -40,6 +143,27 @@ body {
   z-index: -2;
   top: 0;
   left: 0; }
+  .bg.loading {
+    background-color: #f6ede1; }
+    .bg.loading::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -50px;
+      margin-top: -50px;
+      content: "";
+      width: 0px;
+      height: 0px;
+      border: 0px solid white;
+      border-width: 50px 50px;
+      -webkit-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -moz-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -ms-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -o-animation: border-loading-indicator-row-2 750ms linear infinite;
+      animation: border-loading-indicator-row-2 750ms linear infinite;
+      width: 0px;
+      height: 0px;
+      border-radius: 50px 50px 50px 50px; }
 
 .bg-image {
   /* Positioning */
@@ -334,6 +458,7 @@ body {
         text-decoration: none; }
     #journal .controls .controls-save {
       /* Positioning */
+      position: relative;
       float: right;
       height: 36px;
       width: 100px;
@@ -347,7 +472,7 @@ body {
       padding: 10px 0 0;
       margin: 0 0 0 5px;
       /* Presentation */
-      background: #ffae41;
+      background-color: #ffae41;
       /* Font */
       color: #ffffff;
       font-family: "ratio";
@@ -356,7 +481,39 @@ body {
       letter-spacing: .2em;
       font-size: 12px;
       text-align: center;
-      text-decoration: none; }
+      text-decoration: none;
+      -webkit-transition: background-color 0.2s;
+      -moz-transition: background-color 0.2s;
+      -ms-transition: background-color 0.2s;
+      -o-transition: background-color 0.2s;
+      transition: background-color 0.2s;
+      -webkit-transition: color 0.2s;
+      -moz-transition: color 0.2s;
+      -ms-transition: color 0.2s;
+      -o-transition: color 0.2s;
+      transition: color 0.2s; }
+    #journal .controls .controls-save.loading {
+      background-color: #ffb95b;
+      color: rgba(255, 255, 255, 0.15); }
+    #journal .controls .controls-save.loading::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      content: "";
+      width: 0px;
+      height: 0px;
+      border: 0px solid white;
+      border-width: 10px 10px;
+      -webkit-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -moz-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -ms-animation: border-loading-indicator-row-2 750ms linear infinite;
+      -o-animation: border-loading-indicator-row-2 750ms linear infinite;
+      animation: border-loading-indicator-row-2 750ms linear infinite;
+      width: 0px;
+      height: 0px;
+      border-radius: 10px 10px 10px 10px; }
     #journal .controls .controls-share {
       /* Positioning */
       float: right;
