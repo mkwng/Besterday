@@ -20,29 +20,30 @@ makeBackground = function(picture) {
     else if (picture.indexOf("{") !== -1) var url = JSON.parse(picture).url;
     else var url = picture; // Phew.
 
+    toggleLoad(true,"bg");
+    var storyColor;
     getImageLightness(url,function(brightness){
       if(brightness<150) {
-        setTimeout(function() {
-          $("#story").cssPersist("color","#ffffff");
-
-        },2);
+        storyColor = "#ffffff";
       }
       else {
-        setTimeout(function() {
-          $("#story").cssPersist("color","#666666");
-
-        },2);
+        storyColor = "#666666";
       }
     });
 
-    toggleLoad(true,"bg");
     // Fade it out, once it finishes loading, fade it back in.
     $bg.stop().animate({opacity:0},function() {
+
+
       $bgPreload = $('<img/>').attr("src",url);
       $bgPreload.one("load", function() {
         $bgImage.css("background-image","url("+url+")");
-        $bg.animate({opacity:1})
-        toggleLoad(false,"bg");
+        $("#story").cssPersist("color",storyColor);
+        $bg.animate({opacity:1}, function() {
+
+            toggleLoad(false,"bg");
+
+        });
       });
     });
   }
@@ -234,6 +235,7 @@ resolveMultiple = function(storyArray) {
 
   options.owner = storyArray[0].owner;
   options.date = storyArray[0].date;
+
 
   for (var i = 0; i < storyArray.length; i++) {
       if (storyArray[i].created < options.created) options.created = storyArray[i].created

@@ -143,27 +143,34 @@ body {
   z-index: -2;
   top: 0;
   left: 0; }
-  .bg.loading {
-    background-color: #f6ede1; }
-    .bg.loading::after {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -50px;
-      margin-top: -50px;
-      content: "";
-      width: 0px;
-      height: 0px;
-      border: 0px solid white;
-      border-width: 50px 50px;
-      -webkit-animation: border-loading-indicator-row-2 750ms linear infinite;
-      -moz-animation: border-loading-indicator-row-2 750ms linear infinite;
-      -ms-animation: border-loading-indicator-row-2 750ms linear infinite;
-      -o-animation: border-loading-indicator-row-2 750ms linear infinite;
-      animation: border-loading-indicator-row-2 750ms linear infinite;
-      width: 0px;
-      height: 0px;
-      border-radius: 50px 50px 50px 50px; }
+  .bg.loading + .bg-loader {
+    opacity: 1; }
+
+.bg-loader {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  content: "";
+  width: 0px;
+  height: 0px;
+  border: 0px solid white;
+  border-width: 50px 50px;
+  width: 0px;
+  height: 0px;
+  -webkit-animation: border-loading-indicator-row-2 750ms linear infinite;
+  -moz-animation: border-loading-indicator-row-2 750ms linear infinite;
+  -ms-animation: border-loading-indicator-row-2 750ms linear infinite;
+  -o-animation: border-loading-indicator-row-2 750ms linear infinite;
+  animation: border-loading-indicator-row-2 750ms linear infinite;
+  border-radius: 50px 50px 50px 50px;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s; }
 
 .bg-image {
   /* Positioning */
@@ -461,7 +468,7 @@ body {
       position: relative;
       float: right;
       height: 36px;
-      width: 100px;
+      width: 160px;
       /* Display & Box Model */
       display: block;
       -webkit-box-sizing: border-box;
