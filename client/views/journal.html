@@ -11,11 +11,17 @@
     {{/if}}
 
   <div id="journal">
-      {{> story story }}
     {{#if owner}}
+      {{> story story }}
       {{> postControls story }}
     {{else}}
-      <a href="/"><h1>Besterday Home</h1></a>
+      {{#if story.public}}
+        {{> story story }}
+        {{> shared story }}
+      {{else}}
+        <div class="notice">Sorry, this story is not public.</div>
+      {{/if}}
+      <a href="/"><h1>Besterday</h1></a>
     {{/if}}
   </div>
 
@@ -39,4 +45,12 @@
         <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
       </a>
     </div>
+</template>
+
+<template name="shared">
+  <div class="shared">
+    <p class="shared-intro">
+      {{displayName}} has shared a story with you.
+    </p>
+  </div>
 </template>

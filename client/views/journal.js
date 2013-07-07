@@ -275,3 +275,29 @@ Template.postControls.helpers({
     else return "Loading...";
   }
 });
+
+
+/* ==========================================================================
+   TEMPLATE: Shared
+   ========================================================================== */
+// Tasks when Story is created.
+Template.shared.created = function() {}
+
+
+// Tasks when Story is rendered.
+Template.shared.rendered = function() {}
+
+
+// Tasks when Story is destroyed.
+Template.shared.destroyed = function() {}
+
+
+Template.shared.events({});
+
+// Events
+// Helpers
+Template.shared.helpers({
+  displayName : function() {
+    return getDisplayName(this.owner);
+  }
+});

@@ -20,7 +20,6 @@ makeBackground = function(picture) {
     else if (picture.indexOf("{") !== -1) var url = JSON.parse(picture).url;
     else var url = picture; // Phew.
 
-    toggleLoad(true,"bg");
     getImageLightness(url,function(brightness){
       if(brightness<150) {
         setTimeout(function() {
@@ -34,15 +33,16 @@ makeBackground = function(picture) {
 
         },2);
       }
-      toggleLoad(false,"bg");
     });
 
+    toggleLoad(true,"bg");
     // Fade it out, once it finishes loading, fade it back in.
     $bg.stop().animate({opacity:0},function() {
       $bgPreload = $('<img/>').attr("src",url);
       $bgPreload.one("load", function() {
         $bgImage.css("background-image","url("+url+")");
         $bg.animate({opacity:1})
+        toggleLoad(false,"bg");
       });
     });
   }
@@ -289,6 +289,17 @@ getUserId = function(name) {
     return users[0]._id;
   else
     return "";
+}
+getDisplayName = function(id) {
+  if(!id) {id = Meteor.userId();}
+  user = Meteor.users.find(id).fetch()[0];
+  if(!user.hasOwnProperty("displayName") || !user.displayName || user.displayName == "null") {
+    name = getScreenName(id);
+  }
+  else {
+    name = user.displayName;
+  }
+  return name;
 }
 
 ownStory = function() {

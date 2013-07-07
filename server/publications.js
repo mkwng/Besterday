@@ -6,10 +6,15 @@
 
 
 
-Meteor.startup(function () {
+Meteor.startup(function ()  {
+  publish();
+});
+
+publish = function() {
   Meteor.publish('pub_data', function(){
     console.log("publishing pub_data...");
-    return Stories.find({});
+    // console.log( );
+    return Stories.find({$or: [{owner: this.userId},{public:true}]});
   });
   Meteor.publish("user_data", function () {
     console.log("publishing user_data...");
@@ -17,7 +22,12 @@ Meteor.startup(function () {
                              {fields: {'_id': 1, 'screenName': 1, 'services': 1, 'createdAt': 1}});
     return userData;
   });
-});
+}
 
+Meteor.methods({
+  publish : function() {
+    publish();
+  }
+});
 
 // Upon user login, publish all stories that belong to the user.

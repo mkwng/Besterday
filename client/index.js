@@ -114,6 +114,7 @@ Template.sidebar.events({
       sessionId = "";
       sessionScreenName = "";
       closeSidebar();
+      Meteor.call("publish");
       Meteor.Router.to('/');
     });
   }
