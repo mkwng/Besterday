@@ -96,6 +96,7 @@ Template.sidebar.events({
     // closeSidebar();
   },
   'click .sidebar-menu-sub-list-week.next':function(e) {
+    e.preventDefault();
     var newDate = new Date($(".sidebar-menu-sub-list-week.this li").last().find("a").data("date"));
     newDate = incrementDate(new Date(newDate),1);
     setDate(Session.get("session_user"),newDate);

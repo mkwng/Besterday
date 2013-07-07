@@ -65,14 +65,16 @@ Meteor.Router.add({
   },
 
   '/:user/:year/:month/:date': function(user,year,month,date) {
+    var toDate = new Date(year,month-1,date);
     if(user=="null" || user==null || user===false) 
       {
         return 'landing';
-      } else {
-        Session.set("session_user",getUserId(user));
-        Session.set("session_date",new Date(year,month-1,date));
-        return 'journal';
+      } else if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
+        toDate = incrementDate(new Date(),-1);
       }
+      Session.set("session_user",getUserId(user));
+      Session.set("session_date",toDate);
+      return 'journal';
   },
   '/404': 'landing'
 });
