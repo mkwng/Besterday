@@ -659,16 +659,16 @@ li.sidebar-menu-sub-list-week {
     list-style: none;
     margin: 0 auto;
     padding: 0;
-    width: 210px;
-    border-top: 1px solid #e6e6e6; }
+    width: 210px; }
     li.sidebar-menu-sub-list-week > ul > li {
       display: block;
       float: left;
       width: 30px;
-      height: 30px;
+      height: 42px;
       position: relative;
-      margin: 8px 0;
+      margin: 6px 0;
       padding: 0;
+      border-bottom: 1px solid #efefef;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       -ms-box-sizing: border-box;

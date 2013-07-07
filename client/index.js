@@ -54,13 +54,11 @@ Template.sidebar.weekThis = function () {
     var newDate = incrementDate(Session.get("session_date"),i-currently);
     days[i+7] = findStory(Session.get("session_user"),newDate);
     days[i+7].prettyDate = prettyDate(newDate);
-    console.log(i+7,days[i+7].prettyDate);
   }
   for(var i = currently;i>=-7;i--) {
     var newDate = incrementDate(Session.get("session_date"),i-currently);
     days[i+7] = findStory(Session.get("session_user"),newDate);
     days[i+7].prettyDate = prettyDate(newDate);
-    console.log(i+7,days[i+7].prettyDate);
   }
   days[currently+7].active = "active";
 
@@ -75,6 +73,15 @@ Template.sidebar.helpers({
   },
   'disabled' : function() {
     return (this.date > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) );
+  },
+  'month' : function() {
+    return monthNames[Session.get("session_date").getMonth()];
+  },
+  'year' : function() {
+    return Session.get("session_date").getFullYear();
+  },
+  'dateUrl' : function() {
+    return "/"+sessionScreenName+"/"+this.date.getFullYear()+"/"+(this.date.getMonth()+1)+"/"+this.date.getDate();
   }
 });
 

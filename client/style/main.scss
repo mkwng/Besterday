@@ -657,17 +657,16 @@ li.sidebar-menu-sub-list-week {
     margin:0 auto;
     padding:0;
     width:210px;
-    border-top: 1px solid lighten($text,50%);
-
 
     > li {
       display:block;
       float:left;
       width:30px;
-      height:30px;
+      height:42px;
       position:relative;
-      margin:8px 0;
+      margin:6px 0;
       padding:0;
+      border-bottom: 1px solid #efefef;
       @include box-sizing;
       a {
         /* Positioning */
