@@ -11,7 +11,7 @@ Accounts.onCreateUser(function(options, user) {
     else return screenName;
   }
   // We still want the default hook's 'profile' behavior.
-  screenName=""
+  screenName="";
   if (options.profile)
     user.profile = options.profile;
   if (user.services.hasOwnProperty("twitter")) {
