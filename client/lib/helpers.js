@@ -4,10 +4,12 @@
 
 // makeBackground: Sets the background image.
 $bgPreload = null;
+$bg = undefined;
+$bgImage = undefined;
 makeBackground = function(picture) {
 
-  if( (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
-  if( (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");
+  if( !$bg || (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
+  if( !$bgImage || (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");
 
   // If there's a previous thing happening, let's cancel that.
   if($bgPreload) $bgPreload.unbind("load");
@@ -279,7 +281,6 @@ getUserId = function(name) {
   if(users[0] && users[0].hasOwnProperty("_id"))
     return users[0]._id;
   else
-    console.log("not yet");
     return "";
 }
 

@@ -42,7 +42,7 @@ Meteor.subscribe('user_data', function(){
 
 
 Meteor.Router.beforeRouting = function() {
-  // console.log("hello");
+  // makeBackground();
 }
 // Routing to the right page.
 Meteor.Router.add({

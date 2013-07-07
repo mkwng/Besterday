@@ -654,68 +654,88 @@ li.sidebar-menu-sub-list-week {
     display:block;
     @include box-sizing;
     list-style:none;
-    margin:0;
+    margin:0 auto;
     padding:0;
+    width:210px;
+    border-top: 1px solid lighten($text,50%);
 
 
     > li {
+      display:block;
+      float:left;
+      width:30px;
+      height:30px;
+      position:relative;
+      margin:8px 0;
+      padding:0;
+      @include box-sizing;
       a {
-        margin:5px;
         /* Positioning */
         /* Display & Box Model */
+        @include box-sizing;
         display:block;
-        padding:10px 20px;
+        width:34px;
+        height:34px;
+        margin:-2px 0 0 -2px;
         /* Presentation */
+        border-radius:17px;
         /* Font */
-        font-family:"ratio";
+        text-align:center;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         color:lighten($text,40%);
         font-weight:300;
         text-transform:uppercase;
-        font-size:16px;
+        font-size:13px;
         text-decoration:none;
         letter-spacing:.1em;
+        line-height:34px;
         /* Animation */
         @include transition(color .2s);
 
         &.story {
-          color:lighten($text,10%);
+          font-weight:600;
         }
 
         &:hover {
-          color:$orange;
+          color:lighten($text,20%);
         }
 
         &.active {
           /* Positioning */
           /* Display & Box Model */
           /* Presentation */
-          background:$orange;
+          // border:1px solid $orange;
+          // line-height:32px;
           /* Font */
-          color:#ffffff;
-          font-size:16px;
+          color:$orange;
 
           /* Animation */
+        }
+        &.disabled {
+          color:#efefef;
         }
 
       }
 
       .hasImg {
         /* Positioning */
-        float:right;
-        width:16px;
-        height:16px;
+        position:absolute;
+        width:4px;
+        height:4px;
 
         /* Display & Box Model */
         display:block;
-        margin-top:2px;
+        top:28px;
+        left:50%;
+        margin:-2px;
 
         /* Presentation */
         text-indent:-9999em;
         overflow:hidden;
-        @include background-image-retina('/img/icons', 'png', 96px, 32px);
-        background-position:0 -16px;
+        background:lighten($text,40%);
+        border-radius:2px;
 
-        &.active {background-position:0 0; @include filter(invert(100%));}
+        &.active {background:$orange;}
       }
 
     }

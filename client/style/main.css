@@ -657,66 +657,83 @@ li.sidebar-menu-sub-list-week {
     -o-box-sizing: border-box;
     box-sizing: border-box;
     list-style: none;
-    margin: 0;
-    padding: 0; }
-    li.sidebar-menu-sub-list-week > ul > li a {
-      margin: 5px;
-      /* Positioning */
-      /* Display & Box Model */
+    margin: 0 auto;
+    padding: 0;
+    width: 210px;
+    border-top: 1px solid #e6e6e6; }
+    li.sidebar-menu-sub-list-week > ul > li {
       display: block;
-      padding: 10px 20px;
-      /* Presentation */
-      /* Font */
-      font-family: "ratio";
-      color: #cccccc;
-      font-weight: 300;
-      text-transform: uppercase;
-      font-size: 16px;
-      text-decoration: none;
-      letter-spacing: .1em;
-      /* Animation */
-      -webkit-transition: color 0.2s;
-      -moz-transition: color 0.2s;
-      -ms-transition: color 0.2s;
-      -o-transition: color 0.2s;
-      transition: color 0.2s; }
-      li.sidebar-menu-sub-list-week > ul > li a.story {
-        color: gray; }
-      li.sidebar-menu-sub-list-week > ul > li a:hover {
-        color: #ffae41; }
-      li.sidebar-menu-sub-list-week > ul > li a.active {
+      float: left;
+      width: 30px;
+      height: 30px;
+      position: relative;
+      margin: 8px 0;
+      padding: 0;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      -o-box-sizing: border-box;
+      box-sizing: border-box; }
+      li.sidebar-menu-sub-list-week > ul > li a {
         /* Positioning */
         /* Display & Box Model */
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        width: 34px;
+        height: 34px;
+        margin: -2px 0 0 -2px;
         /* Presentation */
-        background: #ffae41;
+        border-radius: 17px;
         /* Font */
-        color: #ffffff;
-        font-size: 16px;
-        /* Animation */ }
-    li.sidebar-menu-sub-list-week > ul > li .hasImg {
-      /* Positioning */
-      float: right;
-      width: 16px;
-      height: 16px;
-      /* Display & Box Model */
-      display: block;
-      margin-top: 2px;
-      /* Presentation */
-      text-indent: -9999em;
-      overflow: hidden;
-      background-image: url("/img/icons.png");
-      background-position: 0 -16px; }
-      @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-        li.sidebar-menu-sub-list-week > ul > li .hasImg {
-          background-image: url("/img/icons@2x.png");
-          -webkit-background-size: 96px 32px; } }
-      li.sidebar-menu-sub-list-week > ul > li .hasImg.active {
-        background-position: 0 0;
-        -webkit-filter: invert(100%);
-        -moz-filter: invert(100%);
-        -o-filter: invert(100%);
-        -ms-filter: invert(100%);
-        filter: invert(100%); }
+        text-align: center;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #cccccc;
+        font-weight: 300;
+        text-transform: uppercase;
+        font-size: 13px;
+        text-decoration: none;
+        letter-spacing: .1em;
+        line-height: 34px;
+        /* Animation */
+        -webkit-transition: color 0.2s;
+        -moz-transition: color 0.2s;
+        -ms-transition: color 0.2s;
+        -o-transition: color 0.2s;
+        transition: color 0.2s; }
+        li.sidebar-menu-sub-list-week > ul > li a.story {
+          font-weight: 600; }
+        li.sidebar-menu-sub-list-week > ul > li a:hover {
+          color: #999999; }
+        li.sidebar-menu-sub-list-week > ul > li a.active {
+          /* Positioning */
+          /* Display & Box Model */
+          /* Presentation */
+          /* Font */
+          color: #ffae41;
+          /* Animation */ }
+        li.sidebar-menu-sub-list-week > ul > li a.disabled {
+          color: #efefef; }
+      li.sidebar-menu-sub-list-week > ul > li .hasImg {
+        /* Positioning */
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        /* Display & Box Model */
+        display: block;
+        top: 28px;
+        left: 50%;
+        margin: -2px;
+        /* Presentation */
+        text-indent: -9999em;
+        overflow: hidden;
+        background: #cccccc;
+        border-radius: 2px; }
+        li.sidebar-menu-sub-list-week > ul > li .hasImg.active {
+          background: #ffae41; }
 
 li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   /* Positioning */

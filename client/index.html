@@ -35,7 +35,7 @@
         <li class="sidebar-menu-sub-list-week this"> <a href="#">Current Week</a>
           <ul>
             {{#each weekThis}}
-            <li><a href="#" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{prettyDate}}{{#if img}}<div class="hasImg {{#if active}}active{{/if}}"></div>{{/if}}</a></li>
+            <li><a href="#" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{day}}{{#if img}}<div class="hasImg {{#if active}}active{{/if}}"></div>{{/if}}</a></li>
             {{/each}}
           </ul>
         </li>

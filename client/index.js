@@ -43,25 +43,26 @@ Template.page.showSidebar = function () {
   return Session.get("show_sidebar");
 };
 
-var days = [0,1,2,3,4,5,6];
+days = [];
 Template.sidebar.weekThis = function () {
 
 
   currently = Session.get("session_date").getDay();
 
 
-  for(var i = currently;i<=6;i++) {
+  for(var i = currently;i<=13;i++) {
     var newDate = incrementDate(Session.get("session_date"),i-currently);
-    days[i] = findStory(Session.get("session_user"),newDate);
-    days[i].prettyDate = prettyDate(newDate);
-
+    days[i+7] = findStory(Session.get("session_user"),newDate);
+    days[i+7].prettyDate = prettyDate(newDate);
+    console.log(i+7,days[i+7].prettyDate);
   }
-  for(var i = currently;i>=0;i--) {
+  for(var i = currently;i>=-7;i--) {
     var newDate = incrementDate(Session.get("session_date"),i-currently);
-    days[i] = findStory(Session.get("session_user"),newDate);
-    days[i].prettyDate = prettyDate(newDate);
+    days[i+7] = findStory(Session.get("session_user"),newDate);
+    days[i+7].prettyDate = prettyDate(newDate);
+    console.log(i+7,days[i+7].prettyDate);
   }
-  days[currently].active = "active";
+  days[currently+7].active = "active";
 
   if (! days)
     return []; // party hasn't loaded yet
@@ -69,7 +70,12 @@ Template.sidebar.weekThis = function () {
 };
 
 Template.sidebar.helpers({
-
+  'day' : function() {
+    return this.date.getDate();
+  },
+  'disabled' : function() {
+    return (this.date > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) );
+  }
 });
 
 Template.sidebar.events({
