@@ -399,7 +399,11 @@ body {
       @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
         #journal .media .media-image {
           background-image: url("/img/icons@2x.png");
-          -webkit-background-size: 96px 32px; } }
+          -webkit-background-size: 96px 32px;
+          -moz-background-size: 96px 32px;
+          -ms-background-size: 96px 32px;
+          -o-background-size: 96px 32px;
+          background-size: 96px 32px; } }
       #journal .media .media-image:hover {
         opacity: .5; }
       #journal .media .media-image.attached {
@@ -524,6 +528,7 @@ body {
     #journal .controls .controls-share {
       /* Positioning */
       float: right;
+      position: relative;
       height: 36px;
       width: 36px;
       /* Display & Box Model */
@@ -539,6 +544,7 @@ body {
       /* Font */
       text-indent: -9999em; }
     #journal .controls .controls-share-icon {
+      display: block;
       /* Positioning */
       height: 20px;
       width: 21px;
@@ -554,7 +560,11 @@ body {
       @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
         #journal .controls .controls-share-icon {
           background-image: url("/img/lock@2x.png");
-          -webkit-background-size: 399px 20px; } }
+          -webkit-background-size: 399px 20px;
+          -moz-background-size: 399px 20px;
+          -ms-background-size: 399px 20px;
+          -o-background-size: 399px 20px;
+          background-size: 399px 20px; } }
     #journal .controls .controls-share-icon.lock {
       background-position: 0 0 !important; }
       #journal .controls .controls-share-icon.lock.animate {
@@ -572,6 +582,110 @@ body {
         -ms-animation: unlock 0.4s steps(19) 1;
         -o-animation: unlock 0.4s steps(19) 1;
         animation: unlock 0.4s steps(19) 1; }
+    #journal .controls .controls-share-buttons {
+      font-family: "ratio";
+      position: relative;
+      font-size: 11px;
+      float: right;
+      clear: both;
+      margin-top: 10px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      -o-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 201px;
+      padding: 20px;
+      background: #666666;
+      color: #ffffff;
+      -webkit-transition: opacity 0.2s;
+      -moz-transition: opacity 0.2s;
+      -ms-transition: opacity 0.2s;
+      -o-transition: opacity 0.2s;
+      transition: opacity 0.2s; }
+      #journal .controls .controls-share-buttons .after {
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none; }
+      #journal .controls .controls-share-buttons .after {
+        border-color: rgba(0, 0, 0, 0);
+        border-bottom-color: #666666;
+        border-width: 5px;
+        left: 18px;
+        margin-left: -5px; }
+      #journal .controls .controls-share-buttons label {
+        font-family: inherit;
+        font-size: 11px;
+        color: #888888; }
+      #journal .controls .controls-share-buttons input {
+        outline: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 10px;
+        line-height: 24px;
+        font-family: "ratio";
+        font-weight: 300;
+        color: #d8d8d8;
+        background: #888888;
+        border: 1px solid #888888;
+        border: none;
+        font-size: 14px;
+        margin-bottom: 20px; }
+        #journal .controls .controls-share-buttons input:focus {
+          border: 1px solid #ffae41;
+          padding: 4px 9px; }
+      #journal .controls .controls-share-buttons .controls-share-buttons-social {
+        color: #e1e1e1;
+        text-decoration: none;
+        display: block;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        float: left;
+        width: 75px;
+        line-height: 28px;
+        height: 28px;
+        padding-left: 20px;
+        position: relative;
+        -webkit-transition: background 0.2s;
+        -moz-transition: background 0.2s;
+        -ms-transition: background 0.2s;
+        -o-transition: background 0.2s;
+        transition: background 0.2s; }
+        #journal .controls .controls-share-buttons .controls-share-buttons-social::after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 6px;
+          width: 16px;
+          height: 16px;
+          opacity: .25;
+          -webkit-background-size: 16px 16px;
+          -moz-background-size: 16px 16px;
+          -ms-background-size: 16px 16px;
+          -o-background-size: 16px 16px;
+          background-size: 16px 16px; }
+        #journal .controls .controls-share-buttons .controls-share-buttons-social.fb {
+          margin-right: 10px; }
+          #journal .controls .controls-share-buttons .controls-share-buttons-social.fb::after {
+            background: no-repeat top left url(/img/fb.png); }
+        #journal .controls .controls-share-buttons .controls-share-buttons-social.tw::after {
+          background: no-repeat top left url(/img/tw.png); }
+        #journal .controls .controls-share-buttons .controls-share-buttons-social:hover {
+          color: #ffffff; }
+          #journal .controls .controls-share-buttons .controls-share-buttons-social:hover::after {
+            opacity: .5; }
 
 @-webkit-keyframes unlock {
   from {

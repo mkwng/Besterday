@@ -145,7 +145,8 @@ $borderWidthY: 10px;
   @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
     & {
       background-image: url($file + '@2x.' + $type);
-      -webkit-background-size: $width $height;
+      @include prefix( background-size, $width $height );
+
     }
   }
 }
@@ -513,6 +514,7 @@ body {
     .controls-share {
       /* Positioning */
       float:right;
+      position:relative;
       height:36px;
       width:36px;
 
@@ -528,6 +530,7 @@ body {
       text-indent:-9999em;
     }
     .controls-share-icon {
+      display:block;
       /* Positioning */
       height:20px;
       width:21px;
@@ -548,6 +551,109 @@ body {
       margin-left:8px;
       &.animate{
         @include animation(unlock .4s steps(19) 1);
+      }
+    }
+
+    .controls-share-buttons {
+      font-family:"ratio";
+      // text-transform:uppercase;
+      position:relative;
+      font-size:11px;
+      float:right;
+      clear:both;
+      margin-top:10px;
+      @include box-sizing;
+      width: 201px;
+      padding: 20px;
+      background:$text;
+      color:#ffffff;
+      @include transition(opacity .2s);
+
+
+      .after {
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .after {
+        border-color: rgba(0, 0, 0, 0);
+        border-bottom-color: $text;
+        border-width: 5px;
+        left: 18px;
+        margin-left: -5px;
+      }
+
+
+      label {
+        font-family:inherit;
+        font-size:11px;
+        color:#888888;
+      }
+      input {
+        outline: none;
+        @include box-sizing;
+
+        width:100%;
+        padding:5px 10px;
+        line-height:24px;
+        font-family:"ratio";
+        font-weight:300;
+        color:#d8d8d8;
+        background:#888888;
+        border:1px solid #888888;
+        border:none;
+        font-size:14px;
+        margin-bottom:20px;
+        &:focus {
+          border:1px solid $orange;
+          padding:4px 9px;
+        }
+      }
+
+
+      .controls-share-buttons-social {
+          color: #e1e1e1;
+        text-decoration:none;
+        display:block;
+        @include box-sizing;
+        float:left;
+        width: 75px;
+        line-height:28px;
+        height:28px;
+        // text-align:center;
+        padding-left:20px;
+        position:relative;
+        // background:#d1d1d1;
+        @include transition(background .2s, color .2s);
+        &::after {
+          content:"";
+          display:block;
+          position:absolute;
+          left:0;
+          top:6px;
+          width:16px;
+          height:16px;
+          opacity:.25;
+
+            @include prefix( background-size, 16px 16px );
+        }
+        &.fb {
+          margin-right:10px;
+          &::after { background:no-repeat top left url(/img/fb.png);}
+        }
+        &.tw {
+          &::after { background:no-repeat top left url(/img/tw.png); }
+        }
+        &:hover{
+          color: #ffffff;
+          &::after { opacity:.5}
+        }
+
       }
     }
 

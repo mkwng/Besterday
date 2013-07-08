@@ -44,6 +44,14 @@
       <a class="controls-share" href="#">
         <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
       </a>
+      {{#constant}}<div class="controls-share-buttons">
+        <label for="share-url">Link to this Besterday</label>
+        <input class="controls-share-buttons-link" name="share-url" type="text" value="http://besterday.com/mkwng/2013/8/1">
+        <label>Share on your social networks</label>
+        <a href="#" class="controls-share-buttons-social fb">Facebook</a>
+        <a href="#" class="controls-share-buttons-social tw">Twitter</a>
+        <div class="after"></div>
+      </div>{{/constant}}
     </div>
 </template>
 
