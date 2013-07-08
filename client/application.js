@@ -57,6 +57,8 @@ Meteor.Router.add({
 
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
       Session.set("session_user",Meteor.userId());
+      console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+      dateSetOnce = false;
       return 'journal';
     } else {
       return 'landing';
