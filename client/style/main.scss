@@ -639,15 +639,16 @@ body {
           width:16px;
           height:16px;
           opacity:.25;
-
-            @include prefix( background-size, 16px 16px );
+          background:no-repeat top left url(/img/fb.png);
+          @include prefix( background-size, 16px 16px );
+          @include transition( opacity .5s );
         }
         &.fb {
           margin-right:10px;
-          &::after { background:no-repeat top left url(/img/fb.png);}
+          &::after { background-image:url(/img/fb.png);}
         }
         &.tw {
-          &::after { background:no-repeat top left url(/img/tw.png); }
+          &::after { background-image:url(/img/tw.png); }
         }
         &:hover{
           color: #ffffff;

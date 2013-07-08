@@ -671,17 +671,23 @@ body {
           width: 16px;
           height: 16px;
           opacity: .25;
+          background: no-repeat top left url(/img/fb.png);
           -webkit-background-size: 16px 16px;
           -moz-background-size: 16px 16px;
           -ms-background-size: 16px 16px;
           -o-background-size: 16px 16px;
-          background-size: 16px 16px; }
+          background-size: 16px 16px;
+          -webkit-transition: opacity 0.5s;
+          -moz-transition: opacity 0.5s;
+          -ms-transition: opacity 0.5s;
+          -o-transition: opacity 0.5s;
+          transition: opacity 0.5s; }
         #journal .controls .controls-share-buttons .controls-share-buttons-social.fb {
           margin-right: 10px; }
           #journal .controls .controls-share-buttons .controls-share-buttons-social.fb::after {
-            background: no-repeat top left url(/img/fb.png); }
+            background-image: url(/img/fb.png); }
         #journal .controls .controls-share-buttons .controls-share-buttons-social.tw::after {
-          background: no-repeat top left url(/img/tw.png); }
+          background-image: url(/img/tw.png); }
         #journal .controls .controls-share-buttons .controls-share-buttons-social:hover {
           color: #ffffff; }
           #journal .controls .controls-share-buttons .controls-share-buttons-social:hover::after {
