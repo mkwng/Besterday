@@ -9,6 +9,8 @@ Template.journal.created = function() {
     Session.set("show_sidebar",false);
     scrollNav();
   })
+  dateSetOnce = false;
+      console.log("created:",Session.get("session_user"),prettyDate(Session.get("session_date")));
 }
 
 
@@ -18,6 +20,8 @@ Template.journal.rendered = function() {
   Meteor.defer(function() {
     // This addresses bug fix #3
     if(!dateSetOnce) {
+      // This should be the second time setDate() is ever called
+      console.log("journal.rendered:",Session.get("session_user"),prettyDate(Session.get("session_date")));
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
   });
@@ -268,11 +272,27 @@ Template.postControls.destroyed = function() {}
 Template.postControls.events({});
 
 // Events
+Template.postControls.events({
+  'click .fb': function() {
+    alert("Still working on it!");
+  },
+  'click .tw': function() {
+    alert("Still working on it!");
+  }
+});
 // Helpers
 Template.postControls.helpers({
   prettyDate : function() {
     if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
     else return "Loading...";
+  },
+  formattedUrl : function() {
+    if(this.hasOwnProperty("owner")) {
+      url = "http://besterday.meteor.com/"+getScreenName(this.owner)+"/"+this.date.getFullYear()+"/"+(this.date.getMonth()+1)+"/"+this.date.getDate();
+      return url;
+    }
+    else
+      return "loading..."
   }
 });
 

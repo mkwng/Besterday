@@ -108,6 +108,7 @@ monthNames = ["January","February","March","April","May","June","July","August",
 // Takes an ISO time and returns a string representing how
 // long ago the date represents.
 prettyDate = function(date,week){
+  if(!date) return false;
   if(week)
     return dayNames[date.getDay()] + ", " + monthNames[date.getMonth()] + " " + date.getDate();
   else

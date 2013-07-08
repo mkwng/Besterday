@@ -603,15 +603,14 @@ body {
       -ms-transition: opacity 0.2s;
       -o-transition: opacity 0.2s;
       transition: opacity 0.2s; }
-      #journal .controls .controls-share-buttons .after {
+      #journal .controls .controls-share-buttons::after {
         bottom: 100%;
         border: solid transparent;
         content: " ";
         height: 0;
         width: 0;
         position: absolute;
-        pointer-events: none; }
-      #journal .controls .controls-share-buttons .after {
+        pointer-events: none;
         border-color: rgba(0, 0, 0, 0);
         border-bottom-color: #666666;
         border-width: 5px;
@@ -629,7 +628,7 @@ body {
         -o-box-sizing: border-box;
         box-sizing: border-box;
         width: 100%;
-        padding: 5px 10px;
+        padding: 5px 28px 5px 8px;
         line-height: 24px;
         font-family: "ratio";
         font-weight: 300;
@@ -641,7 +640,35 @@ body {
         margin-bottom: 20px; }
         #journal .controls .controls-share-buttons input:focus {
           border: 1px solid #ffae41;
-          padding: 4px 9px; }
+          padding: 4px 27px 4px 7px; }
+      #journal .controls .controls-share-buttons .controls-share-buttons-copy {
+        display: block;
+        height: 16px;
+        width: 16px;
+        overflow: hidden;
+        background-image: url("/img/icons.png");
+        background-position: -64px 0;
+        opacity: .2;
+        position: absolute;
+        top: 44px;
+        right: 27px;
+        -webkit-transition: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        -ms-transition: opacity 0.2s;
+        -o-transition: opacity 0.2s;
+        transition: opacity 0.2s; }
+        @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+          #journal .controls .controls-share-buttons .controls-share-buttons-copy {
+            background-image: url("/img/icons@2x.png");
+            -webkit-background-size: 96px 48px;
+            -moz-background-size: 96px 48px;
+            -ms-background-size: 96px 48px;
+            -o-background-size: 96px 48px;
+            background-size: 96px 48px; } }
+        #journal .controls .controls-share-buttons .controls-share-buttons-copy:hover {
+          opacity: .5; }
+        #journal .controls .controls-share-buttons .controls-share-buttons-copy embed {
+          opacity: 0; }
       #journal .controls .controls-share-buttons .controls-share-buttons-social {
         color: #e1e1e1;
         text-decoration: none;

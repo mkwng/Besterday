@@ -570,7 +570,7 @@ body {
       @include transition(opacity .2s);
 
 
-      .after {
+      &::after {
         bottom: 100%;
         border: solid transparent;
         content: " ";
@@ -578,9 +578,6 @@ body {
         width: 0;
         position: absolute;
         pointer-events: none;
-      }
-
-      .after {
         border-color: rgba(0, 0, 0, 0);
         border-bottom-color: $text;
         border-width: 5px;
@@ -599,7 +596,7 @@ body {
         @include box-sizing;
 
         width:100%;
-        padding:5px 10px;
+        padding:5px 28px 5px 8px;
         line-height:24px;
         font-family:"ratio";
         font-weight:300;
@@ -611,10 +608,25 @@ body {
         margin-bottom:20px;
         &:focus {
           border:1px solid $orange;
-          padding:4px 9px;
+          padding:4px 27px 4px 7px;
         }
       }
-
+      .controls-share-buttons-copy {
+        display:block;
+        height:16px;
+        width:16px;
+        overflow:hidden;
+        // text-indent:-9999em;
+        @include background-image-retina('/img/icons', 'png', 96px, 48px);
+        background-position:-64px 0;
+        opacity:.2;
+        position:absolute;
+        top: 44px;
+        right: 27px;
+        @include transition(opacity .2s);
+        &:hover {opacity:.5;}
+        embed {opacity:0;}
+      }
 
       .controls-share-buttons-social {
           color: #e1e1e1;

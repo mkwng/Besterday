@@ -12,32 +12,39 @@
 */
 
 // Why is this here?
-sessionId = "";
-sessionScreenName = "";
+sessionId = undefined;
+sessionScreenName = undefined;
 
 // Run this the first time the app is started.
 Meteor.startup(function () {
   Session.set('pub_loaded', false); 
   Session.set('user_loaded', false); 
 
-  // Whenever possible, make sure there's a session date and user set.
-  if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
-  if(!Session.get("session_user")) Session.set("session_user",Meteor.userId());
-
-
   // Run this when the data is loaded.
   Meteor.subscribe('pub_data', function(){
     // Set the reactive session as true to indicate that the data have been loaded
     Session.set('pub_loaded', true); 
-    if(Session.get("session_user")) setDate(Session.get("session_user"),Session.get("session_date"));
+    if(Session.get('user_loaded')) initialize();
   });
+
+  Meteor.subscribe('user_data', function(){
+    // Set the reactive session as true to indicate that the data have been loaded
+    Session.set('user_loaded', true); 
+    if(Session.get('pub_loaded')) initialize();
+  });
+
 });
 
+initialize = function() {
+  if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
 
-Meteor.subscribe('user_data', function(){
-  // Set the reactive session as true to indicate that the data have been loaded
-  Session.set('user_loaded', true); 
-});
+  if(!Session.get("session_user") && sessionScreenName) Session.set("session_user",getUserId(sessionScreenName));
+  else if(!Session.get("session_user")) Session.set("session_user",Meteor.userId());
+
+  console.log("initialize:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+  setDate(Session.get("session_user"),Session.get("session_date"));
+}
+
 
 
 
@@ -72,8 +79,9 @@ Meteor.Router.add({
       } else if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
         toDate = incrementDate(new Date(),-1);
       }
-      Session.set("session_user",getUserId(user));
+      sessionScreenName = user;
       Session.set("session_date",toDate);
+      console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
       return 'journal';
   },
   '/404': 'landing'

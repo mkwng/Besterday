@@ -21,7 +21,7 @@
       {{else}}
         <div class="notice">Sorry, this story is not public.</div>
       {{/if}}
-      <a href="/"><h1>Besterday</h1></a>
+      <a href="/"><h1 style="position:absolute;z-index:999999">Besterday</h1></a>
     {{/if}}
   </div>
 
@@ -44,14 +44,39 @@
       <a class="controls-share" href="#">
         <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
       </a>
-      {{#constant}}<div class="controls-share-buttons">
+      {{#if public}}
+      <div class="controls-share-buttons">
         <label for="share-url">Link to this Besterday</label>
-        <input class="controls-share-buttons-link" name="share-url" type="text" value="http://besterday.com/mkwng/2013/8/1">
+        <input class="controls-share-buttons-link" name="share-url" type="text" value="{{formattedUrl}}" />
+        <a href="#" class="controls-share-buttons-copy">
+          <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+                  width="110"
+                  height="14"
+                  id="clippy" >
+          <param name="movie" value="/clippy.swf"/>
+          <param name="allowScriptAccess" value="always" />
+          <param name="quality" value="high" />
+          <param name="scale" value="noscale" />
+          <param NAME="FlashVars" value="text={{formattedUrl}}">
+          <param name="bgcolor" value="#888888">
+          <embed src="/clippy.swf"
+                 width="110"
+                 height="16"
+                 name="clippy"
+                 quality="high"
+                 allowScriptAccess="always"
+                 type="application/x-shockwave-flash"
+                 pluginspage="http://www.macromedia.com/go/getflashplayer"
+                 FlashVars="text={{formattedUrl}}"
+                 bgcolor="#888888"
+          />
+          </object>
+        </a>
         <label>Share on your social networks</label>
         <a href="#" class="controls-share-buttons-social fb">Facebook</a>
         <a href="#" class="controls-share-buttons-social tw">Twitter</a>
-        <div class="after"></div>
-      </div>{{/constant}}
+      </div>
+      {{/if}}
     </div>
 </template>
 
