@@ -260,18 +260,8 @@ resolveMultiple = function(storyArray) {
 getScreenName = function(id) {
   if(!id) {id = Meteor.userId();}
   user = Meteor.users.find(id).fetch()[0];
-  if(!user) Meteor.Error(500,"No such user");
-  if(!user.hasOwnProperty("screenName") || !user.screenName || user.screenName == "null") {
-    if(id != Meteor.userId()) Meteor.Error(500,"You're getting the screen name of someone who doesn't have a screen name. What?")
-    name = prompt("Pick a screen name:");
-    for(i=0;!uniqueScreenName(name);i++){
-      name=prompt("Already in use. Pick a different screen name:");
-    }
-    Meteor.call("profileScreenName",name);
-  }
-  else {
-    name = user.screenName;
-  }
+  if(hasScreenName(user)) name = user.screenName;
+  else debugger;
   return name;
 }
 uniqueScreenName = function(name) {
@@ -304,6 +294,13 @@ getDisplayName = function(id) {
     name = user.displayName;
   }
   return name;
+}
+hasScreenName = function(user) {
+  if(!user) return false;
+  if(!user.hasOwnProperty("screenName") || !user.screenName || user.screenName == "null") {
+    return false;
+  }
+  else return true;
 }
 
 ownStory = function() {
