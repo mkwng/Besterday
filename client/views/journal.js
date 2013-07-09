@@ -7,7 +7,6 @@ Template.journal.created = function() {
   Meteor.defer(function() {
     $dummy = $(".dummy");
     Session.set("show_sidebar",false);
-    scrollNav();
   })
   dateSetOnce = false;
   console.log("created:",Session.get("session_user"),prettyDate(Session.get("session_date")));
@@ -21,10 +20,10 @@ Template.journal.rendered = function() {
     // This addresses bug fix #3
     // debugger;
     if(!dateSetOnce) {
-      // This should be the second time setDate() is ever called
       console.log("journal.rendered:",Session.get("session_user"),prettyDate(Session.get("session_date")));
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
+    setTimeout(scrollNav,10);
   });
 }
 

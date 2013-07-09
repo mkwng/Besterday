@@ -129,8 +129,16 @@ jQuery.fn.cssPersist = function(prop,val) {
 
 cleanUp = "";              // Timeout for scrolling navigation
 dateChangeable = true;     // Toggle to determine whether it's ok to scroll navigate.
+$navUp = [];
+$navDn = [];
 scrollNav = function () {
+  if ($navUp.length && $navUp.closest("body").length) return false;
 
+  // Bug fixing, because sometimes when the page re renders, we lose it.
+  $("#journal").unbind("mousewheel wheel");
+  $navUp = $(".nav-up");
+  $navDn = $(".nav-dn");
+  
   function resetScroll() {
 
     $(".nav-up").animate({"top":"-48px"});
