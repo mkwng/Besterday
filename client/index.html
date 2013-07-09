@@ -25,7 +25,7 @@
   </div>
 
   {{#unless loggedIn}}
-    {{loginButtons  align="right"}}
+    {{> loginForm}}
   {{/unless}}
 </template>
 
@@ -62,4 +62,24 @@
         <li>Goodbye!</li>
       </ul>
     </li>
+</template>
+
+<template name="loginForm">
+  <form id="login-form" action="action">
+    <div>
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <input type="submit" id="login-button" value="Sign in" />
+   </div>
+ </form> 
+
+ <form id="register-form" action="action">
+  <div>
+   <input type="email" id="account-email"  placeholder="Email" />
+   <input type="password" id="account-password"  placeholder="Password" />
+   <input type="submit" id="create-account" value="Create an Account" />
+ </div>
+</form>
+
+
 </template>

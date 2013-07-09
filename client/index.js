@@ -143,3 +143,70 @@ closeSidebar = function() {
   },500);
   $()
 }
+
+
+/* ==========================================================================
+   TEMPLATE: loginForm
+   ========================================================================== */
+
+  Template.loginForm.events({
+
+    'submit #login-form' : function(e, t){
+      e.preventDefault();
+      // retrieve the input field values
+      var email = t.find('#login-email').value
+        , password = t.find('#login-password').value;
+
+        // Trim and validate your fields here.... 
+        var email = trimInput(email);
+
+        // If validation passes, supply the appropriate fields to the
+        // Meteor.loginWithPassword() function.
+        Meteor.loginWithPassword(email, password, function(err){
+          if (err)
+            alert("fail");
+          else
+            alert("login");
+            dateSetOnce = false;
+        });
+         return false; 
+      },
+      'submit #register-form' : function(e, t) {
+      e.preventDefault();
+      var email = t.find('#account-email').value
+        , password = t.find('#account-password').value;
+
+        // Trim and validate the input
+        var email = trimInput(email);
+        if (isValidPassword(password)) {
+          alert("Account creation is temporarily disabled");
+          // // Then use the Meteor.createUser() function
+          // Accounts.createUser({email: email, password : password}, function(err){
+          //   if (err) {
+          //     alert("fail");
+          //   } else {
+          //     // Success. Account has been created and the user
+          //     // has logged in successfully. 
+          //     alert("login");
+          //   }
+          // });
+        }
+
+
+      return false;
+    }
+  });
+
+  // trim helper
+  var trimInput = function(val) {
+    return val.replace(/^\s*|\s*$/g, "");
+  }
+
+var isValidPassword = function(val, field) {
+    if (val.length >= 6) {
+      return true;
+    } else {
+      Session.set('displayMessage', 'Error &amp; Too short.')
+      return false; 
+    }
+  }

@@ -18,6 +18,20 @@ Meteor.startup(function () {
 
 });
 
+Meteor.autorun(function() {
+  // Whenever this session variable changes, run this function.
+  var message = Session.get('displayMessage');
+  if (message) {
+    var stringArray = message.split('&amp;');
+    // ui.notify(stringArray[0], stringArray[1])
+    //   .effect('slide')
+    //   .closable();
+    alert(stringArray);
+
+    Session.set('displayMessage', null);
+  }
+});
+
 initialize = function() {
   // If no date, default date is yesterday.
   if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));

@@ -260,6 +260,7 @@ resolveMultiple = function(storyArray) {
 getScreenName = function(id) {
   if(!id) {id = Meteor.userId();}
   user = Meteor.users.find(id).fetch()[0];
+  if(!user) return;
   if(hasScreenName(user)) name = user.screenName;
   else debugger;
   return name;
