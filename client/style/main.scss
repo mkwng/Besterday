@@ -164,11 +164,11 @@ $borderWidthY: 10px;
 .right {float:right !important;}
 
 .smallcaps {
-    font-family:"ratio";
-    font-weight:400;
     text-transform:uppercase;
     letter-spacing:.2em;
+    font-weight:400;
     font-size:12px;
+    font-family:"ratio";
 }
 
 /* ==========================================================================
@@ -179,20 +179,20 @@ $borderWidthY: 10px;
 body,html {
   margin:0;
   padding:0;
-  height:100%;
   min-height:100%;
+  height:100%;
 }
 body {
-  background:$bg;
   overflow:hidden;
+  background:$bg;
 }
 .bg {
   position:absolute;
-  width:100%;
-  height:100%;
-  z-index:-2;
   top:0;
   left:0;
+  z-index:-2;
+  width:100%;
+  height:100%;
   &.loading { 
     &+ .bg-loader {
       opacity:1;
@@ -200,39 +200,35 @@ body {
   }
 }
 .bg-loader {
-  opacity:0;
+  @include animation(border-loading-indicator-row-2 750ms linear infinite);
+  @include transition(opacity .5s);
   position:absolute;
   top:50%;
   left:50%;
-  margin-left: -$borderWidthX*5;
   margin-top: -$borderWidthY*5;
-  content:"";
+  margin-left: -$borderWidthX*5;
   width: 0px;
   height: 0px;
-
   // margin: -($borderWidthY) 0 0 -($borderWidthX);
   border: 0px solid $borderColor4;
   border-width: $borderWidthY*5 $borderWidthX*5;
-  width: 0px;
-  height: 0px;
-  @include animation(border-loading-indicator-row-2 750ms linear infinite);
-
   border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
-  @include transition(opacity .5s);
+  content:"";
+  opacity:0;
 }
 .bg-image {
   /* Positioning */
   position:absolute;
-  width:20%;
-  height:20%;
-  z-index:-2;
   top:0;
   left:0;
+  z-index:-2;
+  width:20%;
+  height:20%;
 
   /* Presentation */
-  background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
+  background-repeat: no-repeat;
 
   /* Animation */
   @include accelerate;
@@ -247,11 +243,11 @@ body {
     position:absolute;
     top:0;
     left:50%;
-    width:48px;
-    height:100%;
-    margin-left:-24px;
     z-index:0;
     overflow:hidden;
+    margin-left:-24px;
+    width:48px;
+    height:100%;
 
     .nav-up,.nav-dn {
       /* Positioning */
@@ -264,10 +260,10 @@ body {
       display:block;
 
       /* Presentation */
-      background:transparent url(/img/arrow.svg) center no-repeat;
-      border:1px solid $orange;
       overflow:hidden;
+      border:1px solid $orange;
       border-radius:24px;
+      background:transparent url(/img/arrow.svg) center no-repeat;
 
       /* Font */
       text-indent:-999em;
@@ -299,13 +295,13 @@ body {
 .dummy {
   /* Positioning */
   position:absolute;
+  left:-99999px;
   width:100%;
   height:auto;
-  left:-99999px;
 
   /* Display & Box Model */
-  display:block;
   @include box-sizing;
+  display:block;
   margin:40px 0;
   padding:0 20px;
 
@@ -315,54 +311,54 @@ body {
 
   /* Font */
   color:$text;
-  font-family:"ratio";
   font-weight:300;
   font-size:42px;
+  font-family:"ratio";
 }
 
 #journal {
   /* Positioning */
   position:absolute;
-  width:100%;
-  height:100%;
   top:0;
   left:0;
+  width:100%;
+  height:100%;
 
   /* Display & Box Model */
-  display:block;
   @include box-sizing;
+  display:block;
   border:20px solid #ffffff;
 
   /* Presentation */
-  color:$text;
-  overflow:hidden;
   @include transition(left .5s);
+  overflow:hidden;
+  color:$text;
 
   #story {
     /* Positioning */
     position:absolute;
+    z-index:1;
     width:100%;
     height:100%;
-    z-index:1;
 
     /* Display & Box Model */
-    display:block;
     @include box-sizing;
+    display:block;
     margin:40px 0;
     padding:0 20px;
 
     /* Presentation */
+    outline:none;
+    border:none;
     background:transparent;
     opacity:0;
     resize:none;
-    border:none;
-    outline:none;
 
     /* Font */
     color:inherit;
-    font-family:"ratio";
     font-weight:300;
     font-size:42px;
+    font-family:"ratio";
     &::-webkit-input-placeholder  {opacity:.5 !important;}
     &:-moz-placeholder            {opacity:.5 !important;} /* Firefox 18- */
     &::-moz-placeholder           {opacity:.5 !important;} /* Firefox 19+ */
@@ -376,8 +372,8 @@ body {
   .media {
     /* Positioning */
     position:absolute;
-    bottom:20px;
     right:20px;
+    bottom:20px;
     z-index:2;
 
     .media-image {
@@ -409,8 +405,8 @@ body {
     position:absolute;
     top:0;
     left:0;
-    width:100%;
     z-index:2;
+    width:100%;
 
     /* Display & Box Model */
     @include box-sizing;
@@ -449,12 +445,12 @@ body {
 
       /* Font */
       color:$text;
-      font-family:"ratio";
-      font-weight:400;
+      text-decoration:none;
       text-transform:uppercase;
       letter-spacing:.2em;
+      font-weight:400;
       font-size:12px;
-      text-decoration:none;
+      font-family:"ratio";
 
       }
       &:hover {
@@ -480,13 +476,13 @@ body {
 
       /* Font */
       color:#ffffff;
-      font-family:"ratio";
-      font-weight:400;
-      text-transform:uppercase;
-      letter-spacing:.2em;
-      font-size:12px;
       text-align:center;
       text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-weight:400;
+      font-size:12px;
+      font-family:"ratio";
       @include transition(background-color .2s);
       @include transition(color .2s);
     }.controls-save.loading{background-color:lighten($orange,5%); color:rgba(255,255,255,.15);}
@@ -494,11 +490,11 @@ body {
       position:absolute;
       top:50%;
       left:50%;
-      margin-left: -$borderWidthX;
       margin-top: -$borderWidthY;
-      content:"";
+      margin-left: -$borderWidthX;
       width: 0px;
       height: 0px;
+      content:"";
 
       // margin: -($borderWidthY) 0 0 -($borderWidthX);
       border: 0px solid $borderColor4;
@@ -532,13 +528,13 @@ body {
     .controls-share-icon {
       display:block;
       /* Positioning */
-      height:20px;
-      width:21px;
-      margin-left:4px;
-      margin-top:7px;
-      opacity:.2;
       @include background-image-retina('/img/lock', 'png', 399px, 20px);
       @include transition(margin-left .8s);
+      margin-top:7px;
+      margin-left:4px;
+      width:21px;
+      height:20px;
+      opacity:.2;
     }
     .controls-share-icon.lock {
       background-position:0 0 !important;
@@ -555,19 +551,19 @@ body {
     }
 
     .controls-share-buttons {
-      font-family:"ratio";
+      @include box-sizing;
+      @include transition(opacity .2s);
       // text-transform:uppercase;
       position:relative;
-      font-size:11px;
       float:right;
       clear:both;
       margin-top:10px;
-      @include box-sizing;
-      width: 201px;
       padding: 20px;
+      width: 201px;
       background:$text;
       color:#ffffff;
-      @include transition(opacity .2s);
+      font-size:11px;
+      font-family:"ratio";
 
 
       &::after {
@@ -592,68 +588,67 @@ body {
         color:#888888;
       }
       input {
-        outline: none;
         @include box-sizing;
-
-        width:100%;
+        margin-bottom:20px;
         padding:5px 28px 5px 8px;
-        line-height:24px;
-        font-family:"ratio";
-        font-weight:300;
-        color:#d8d8d8;
-        background:#888888;
+        width:100%;
+        outline: none;
         border:1px solid #888888;
         border:none;
+        background:#888888;
+        color:#d8d8d8;
+        font-weight:300;
         font-size:14px;
-        margin-bottom:20px;
+        font-family:"ratio";
+        line-height:24px;
         &:focus {
           border:1px solid $orange;
           padding:4px 27px 4px 7px;
         }
       }
       .controls-share-buttons-copy {
-        display:block;
-        height:16px;
-        width:16px;
-        overflow:hidden;
         // text-indent:-9999em;
         @include background-image-retina('/img/icons', 'png', 96px, 48px);
-        background-position:-64px 0;
-        opacity:.2;
+        @include transition(opacity .2s);
         position:absolute;
         top: 44px;
         right: 27px;
-        @include transition(opacity .2s);
+        display:block;
+        overflow:hidden;
+        width:16px;
+        height:16px;
+        background-position:-64px 0;
+        opacity:.2;
         &:hover {opacity:.5;}
         embed {opacity:0;}
       }
 
       .controls-share-buttons-social {
-          color: #e1e1e1;
-        text-decoration:none;
-        display:block;
         @include box-sizing;
+        position:relative;
+        display:block;
         float:left;
-        width: 75px;
-        line-height:28px;
-        height:28px;
         // text-align:center;
         padding-left:20px;
-        position:relative;
+        width: 75px;
+        height:28px;
+          color: #e1e1e1;
+        text-decoration:none;
+        line-height:28px;
         // background:#d1d1d1;
         @include transition(background .2s, color .2s);
         &::after {
-          content:"";
-          display:block;
-          position:absolute;
-          left:0;
-          top:6px;
-          width:16px;
-          height:16px;
-          opacity:.25;
-          background:no-repeat top left url(/img/fb.png);
           @include prefix( background-size, 16px 16px );
           @include transition( opacity .5s );
+          position:absolute;
+          top:6px;
+          left:0;
+          display:block;
+          width:16px;
+          height:16px;
+          background:no-repeat top left url(/img/fb.png);
+          content:"";
+          opacity:.25;
         }
         &.fb {
           margin-right:10px;
@@ -728,11 +723,11 @@ body {
 #sidebar {
   /* Positioning */
   position:absolute;
+  top:0;
+  left:-270px;
+  z-index:3;
   width:240px;
   height:100%;
-  left:-270px;
-  top:0;
-  z-index:3;
 
   /* Display & Box Model */
   @include box-sizing;
@@ -748,10 +743,10 @@ body {
 }
 .sidebar-menu {
   /* Positioning */
-  width:240px;
-  height:100%;
   top:0;
   left:0;
+  width:240px;
+  height:100%;
   /* Display & Box Model */
   display:block;
   margin:0;
@@ -763,9 +758,9 @@ body {
 
   > li {
     /* Positioning */
+    float:left;
     width:80px;
     height:80px;
-    float:left;
     /* Display & Box Model */
     @include box-sizing;
     display:block;
@@ -779,9 +774,9 @@ body {
     }
 
     [type=radio]:checked ~ label {
-      background: white;
-      border-bottom: 1px solid white;
       z-index: 2;
+      border-bottom: 1px solid white;
+      background: white;
     }
     [type=radio]:checked ~ label ~ .content {
       z-index: 1;
@@ -801,21 +796,21 @@ body {
       height:100%;
 
       /* Display & Box Model */
-      display:block;
       @include box-sizing;
+      display:block;
 
       /* Presentation */
       background:$hover;
       cursor:pointer;
 
       /* Font */
-      line-height:80px;
-      text-align:center;
-      font-family:"ratio";
       color:lighten($text,20%);
+      text-align:center;
       text-transform:uppercase;
-      font-size:12px;
       letter-spacing:.2em;
+      font-size:12px;
+      font-family:"ratio";
+      line-height:80px;
 
       /* Animation */
       &:hover {background:darken($hover,4%);}
@@ -825,22 +820,22 @@ body {
       /* Positioning */
       position: absolute;
       top: 80px;
-      left: 0;
-      width:240px;
       right: 0;
       bottom: 0;
+      left: 0;
       padding: 20px;
+      width:240px;
 
       /* Display & Box Model */
       @include box-sizing;
-      list-style:none;
       margin:0;
       padding:0;
+      list-style:none;
 
       /* Presentation */
-      background: white;
       overflow-x: hidden;
       overflow-y:scroll;
+      background: white;
 
       /* Font */
       /* Animation */
@@ -857,11 +852,11 @@ li.sidebar-menu-sub-list-week {
   /* Positioning */
 
   /* Display & Box Model */
-  display:block;
   @include box-sizing;
-  list-style:none;
+  display:block;
   margin:0;
   padding:0;
+  list-style:none;
 
   /* Presentation */
 
@@ -876,13 +871,13 @@ li.sidebar-menu-sub-list-week {
     padding:10px;
     /* Presentation */
     /* Font */
-    text-align:center;
-    font-family:"ratio";
     color:lighten($text,20%);
-    font-weight:300;
-    text-transform:uppercase;
-    font-size:16px;
+    text-align:center;
     text-decoration:none;
+    text-transform:uppercase;
+    font-weight:300;
+    font-size:16px;
+    font-family:"ratio";
 
     /* Animation */
   }
@@ -891,42 +886,42 @@ li.sidebar-menu-sub-list-week {
     /* Positioning */
 
     /* Display & Box Model */
-    display:block;
     @include box-sizing;
-    list-style:none;
+    display:block;
     margin:0 auto;
     padding:0;
     width:210px;
+    list-style:none;
 
     > li {
+      @include box-sizing;
+      position:relative;
       display:block;
       float:left;
-      width:30px;
-      height:42px;
-      position:relative;
       margin:6px 0;
       padding:0;
+      width:30px;
+      height:42px;
       border-bottom: 1px solid #efefef;
-      @include box-sizing;
       a {
         /* Positioning */
         /* Display & Box Model */
         @include box-sizing;
         display:block;
+        margin:-2px 0 0 -2px;
         width:34px;
         height:34px;
-        margin:-2px 0 0 -2px;
         /* Presentation */
         border-radius:17px;
         /* Font */
-        text-align:center;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         color:lighten($text,40%);
-        font-weight:300;
-        text-transform:uppercase;
-        font-size:13px;
+        text-align:center;
         text-decoration:none;
+        text-transform:uppercase;
         letter-spacing:.1em;
+        font-weight:300;
+        font-size:13px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         line-height:34px;
         /* Animation */
         @include transition(color .2s);
@@ -959,20 +954,20 @@ li.sidebar-menu-sub-list-week {
       .hasImg {
         /* Positioning */
         position:absolute;
+        top:28px;
+        left:50%;
         width:4px;
         height:4px;
 
         /* Display & Box Model */
         display:block;
-        top:28px;
-        left:50%;
         margin:-2px;
 
         /* Presentation */
-        text-indent:-9999em;
         overflow:hidden;
-        background:lighten($text,40%);
         border-radius:2px;
+        background:lighten($text,40%);
+        text-indent:-9999em;
 
         &.active {background:$orange;}
       }
@@ -995,9 +990,9 @@ li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
   a{
   /* Display & Box Model */
   @include box-sizing;
-  background:$hover;
   margin:15px;
   padding:10px 20px;
+  background:$hover;
   font-size:14px;
   &:hover {
   background:darken($hover,5%);

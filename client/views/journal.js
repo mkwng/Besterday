@@ -42,7 +42,7 @@ Template.journal.story = function() {
 }
 
 // Events
-publicDelay = setTimeout();
+publicDelay = setTimeout(function(){},1);
 Template.journal.events({
 
   'click .controls-share' :function(e) {
