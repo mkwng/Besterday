@@ -5,8 +5,9 @@
 // Tasks when Journal is created.
 Template.journal.created = function() {
   Meteor.defer(function() {
-    $dummy = $(".dummy");
     Session.set("show_sidebar",false);
+    $dummy = $(".dummy");
+    $("#story").cssPersist("width","+="+getScrollBarWidth());
   })
   dateSetOnce = false;
   console.log("created:",Session.get("session_user"),prettyDate(Session.get("session_date")));
@@ -250,6 +251,10 @@ Template.story.helpers({
   },
   owner : function() {
     return ownStory();
+  },
+  long : function() {
+    $dummy.html(formatDummyText(this.text));
+    return !(calculateTop() > 0);
   }
 });
 

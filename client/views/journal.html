@@ -30,7 +30,7 @@
 
 <template name="story">
 
-  <textarea style="opacity:0" {{#if owner}} {{else}}disabled {{/if}}autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
+  <textarea style="opacity:0" {{#if long}}class="long" {{/if}}{{#unless owner}}disabled {{/unless}}autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
 
 </template>
 
