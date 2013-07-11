@@ -401,11 +401,11 @@ body {
       @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
         #journal .media .media-image {
           background-image: url("/img/icons@2x.png");
-          -webkit-background-size: 96px 32px;
-          -moz-background-size: 96px 32px;
-          -ms-background-size: 96px 32px;
-          -o-background-size: 96px 32px;
-          background-size: 96px 32px; } }
+          -webkit-background-size: 96px 48px;
+          -moz-background-size: 96px 48px;
+          -ms-background-size: 96px 48px;
+          -o-background-size: 96px 48px;
+          background-size: 96px 48px; } }
       #journal .media .media-image:hover {
         opacity: .5; }
       #journal .media .media-image.attached {

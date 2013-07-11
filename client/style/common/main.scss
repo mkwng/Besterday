@@ -396,7 +396,7 @@ body {
       /* Presentation */
       text-indent:-9999em;
       overflow:hidden;
-      @include background-image-retina('/img/icons', 'png', 96px, 32px);
+      @include background-image-retina('/img/icons', 'png', 96px, 48px);
       background-position:0 0;
       opacity:.25;
 
