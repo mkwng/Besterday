@@ -10,7 +10,7 @@ Template.landing.rendered = function() {
   // makeBackground();
   $window = $(window);
   $window.scroll(function(e) {
-    if($window.scrollTop() > 300) $(".landing-hero-example").addClass("active");
+    if($window.scrollTop() > 250) $(".landing-hero-example").addClass("active");
     else $(".landing-hero-example").removeClass("active");
   });
 }
