@@ -133,6 +133,7 @@ body, html {
   height: 100%; }
 
 body {
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   background: #fcf9f5; }
@@ -1088,24 +1089,35 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
    Filepicker
    ========================================================================== */
 .landing-hero {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
   position: relative;
   margin: 0;
-  padding: 0;
+  padding: 40px;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background: #efefef; }
   .landing-hero h1 {
     display: block;
     margin: 0;
-    padding: 80px 80px 40px;
+    padding: 40px;
     color: #cecece;
     font-weight: 800;
     font-size: 24px;
     font-family: "ratio"; }
   .landing-hero p {
+    -webkit-transition: left 1s;
+    -moz-transition: left 1s;
+    -ms-transition: left 1s;
+    -o-transition: left 1s;
+    transition: left 1s;
+    position: relative;
     display: block;
     margin: 0;
-    padding: 40px 80px;
+    padding: 40px;
     color: #666666;
     font-weight: 300;
     font-size: 48px;
@@ -1122,7 +1134,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -o-box-sizing: border-box;
       box-sizing: border-box;
       padding: 10px 0 0;
-      margin: 20px 0 0 0;
+      margin: 20px 0;
       /* Presentation */
       background-color: #ffae41;
       /* Font */
@@ -1145,19 +1157,29 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -o-transition: color 0.2s;
       transition: color 0.2s; }
 
-.landing-example {
+.landing-hero-example {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+  -ms-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+  -o-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+  -webkit-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -moz-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -ms-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -o-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
   position: relative;
-  top: -400px;
-  margin: 0 auto;
+  margin: 80px auto;
   padding: 20px;
+  max-width: 90%;
+  max-height: 90%;
   width: 800px;
   height: 600px;
-  max-width: 90%;
   border: 20px solid #ffffff;
   background: #fcf9f5;
   color: #cecece;
@@ -1165,8 +1187,37 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   font-size: 36px;
   font-family: "ratio";
   line-height: 520px;
-  -webkit-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
-  -ms-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
-  -o-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.05); }
+  -webkit-transition: -webkit-transform 1s;
+  -moz-transition: -webkit-transform 1s;
+  -ms-transition: -webkit-transform 1s;
+  -o-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s; }
+  .landing-hero-example.active {
+    -webkit-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(-100px);
+    -moz-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(-100px);
+    -ms-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(-100px);
+    -o-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(-100px);
+    transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(-100px); }
+
+#login {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  height: 500px;
+  padding: 200px 80px 80px;
+  -webkit-transition: left 1s;
+  -moz-transition: left 1s;
+  -ms-transition: left 1s;
+  -o-transition: left 1s;
+  transition: left 1s; }
+  #login #login-form, #login #account-form {
+    display: block;
+    width: 50%;
+    float: left; }

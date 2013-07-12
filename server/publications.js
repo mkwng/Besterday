@@ -19,7 +19,7 @@ publish = function() {
   Meteor.publish("user_data", function () {
     console.log("publishing user_data...");
     userData = Meteor.users.find({},
-                             {fields: {'_id': 1, 'screenName': 1, 'services': 1, 'createdAt': 1}});
+                             {fields: {'_id': 1, 'username': 1, 'services': 1, 'createdAt': 1}});
     return userData;
   });
 }

@@ -154,42 +154,45 @@ closeSidebar = function() {
     'submit #login-form' : function(e, t){
       e.preventDefault();
       // retrieve the input field values
-      var email = t.find('#login-email').value
+      var username = t.find('#login-username').value
         , password = t.find('#login-password').value;
 
         // Trim and validate your fields here.... 
-        var email = trimInput(email);
+        // var email = trimInput(email);
 
         // If validation passes, supply the appropriate fields to the
         // Meteor.loginWithPassword() function.
-        Meteor.loginWithPassword(email, password, function(err){
+        Meteor.loginWithPassword(username, password, function(err){
           if (err)
             alert("fail");
           else
-            alert("login");
+            // alert("login");
             dateSetOnce = false;
+            Meteor.Router.to("/");
         });
          return false; 
       },
-      'submit #register-form' : function(e, t) {
+      'submit #account-form' : function(e, t) {
       e.preventDefault();
       var email = t.find('#account-email').value
-        , password = t.find('#account-password').value;
+        , password = t.find('#account-password').value
+        , username = t.find('#account-username').value;
 
         // Trim and validate the input
         var email = trimInput(email);
         if (isValidPassword(password)) {
-          alert("Account creation is temporarily disabled");
-          // // Then use the Meteor.createUser() function
-          // Accounts.createUser({email: email, password : password}, function(err){
-          //   if (err) {
-          //     alert("fail");
-          //   } else {
-          //     // Success. Account has been created and the user
-          //     // has logged in successfully. 
-          //     alert("login");
-          //   }
-          // });
+          // alert("Account creation is temporarily disabled");
+          // Then use the Meteor.createUser() function
+          Accounts.createUser({username: username, email: email, password : password}, function(err){
+            if (err) {
+              alert("fail");
+            } else {
+              // Success. Account has been created and the user
+              // has logged in successfully. 
+              alert("Account created");
+              Meteor.Router.to("/");
+            }
+          });
         }
 
 

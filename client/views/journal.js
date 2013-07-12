@@ -253,6 +253,7 @@ Template.story.helpers({
     return ownStory();
   },
   long : function() {
+    if ($dummy==null) return false;
     $dummy.html(formatDummyText(this.text));
     return !(calculateTop() > 0);
   }

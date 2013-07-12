@@ -16,6 +16,10 @@ Meteor.startup(function () {
     if(Session.get('pub_loaded')) initialize();
   });
 
+  $(window).resize(function() {
+    $("#story").verticalCenter(true);
+  })
+
 });
 
 Meteor.autorun(function() {
@@ -43,7 +47,7 @@ initialize = function() {
     else if(Meteor.userId()) id = Meteor.userId();
 
     if(id) Session.set("session_user",id);
-    else Meteor.Router.to('/404');
+    else Meteor.Router.to('/');
 
     // return false;
   }
@@ -75,8 +79,16 @@ Meteor.Router.add({
 
   '/welcome': 'landing',
 
+  '/#': 'journal',
+
   '/404': function() {
     return 'landing'; 
+  },
+
+  '/404#': 'journal',
+
+  '/youdonthaveausername': function() {
+    return 'youdonthaveausername';
   },
 
   '/:user': function(user) {

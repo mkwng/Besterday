@@ -269,13 +269,13 @@ getScreenName = function(id) {
   if(!id) {id = Meteor.userId();}
   user = Meteor.users.find(id).fetch()[0];
   if(!user) return;
-  if(hasScreenName(user)) name = user.screenName;
-  else debugger;
+  if(hasScreenName(user)) name = user.username;
+  else return;
   return name;
 }
 uniqueScreenName = function(name) {
   if(!name) {name = sessionScreenName;}
-  return !Meteor.users.find({screenName:name}).fetch().length;
+  return !Meteor.users.find({username:name}).fetch().length;
 }
 getUserId = function(name) {
   if(!name) {
@@ -286,7 +286,7 @@ getUserId = function(name) {
       return false;
     }
   }
-  users = Meteor.users.find({screenName:name}).fetch();
+  users = Meteor.users.find({username:name}).fetch();
   if(users.length>1) console.log("Warning: Note that there is more than one",name);
   if(users[0] && users[0].hasOwnProperty("_id"))
     return users[0]._id;
@@ -306,7 +306,9 @@ getDisplayName = function(id) {
 }
 hasScreenName = function(user) {
   if(!user) return false;
-  if(!user.hasOwnProperty("screenName") || !user.screenName || user.screenName == "null") {
+  if(!user.hasOwnProperty("username") || !user.username || user.username == "null") {
+    Meteor.Router.to("/youdonthaveausername");
+    console.log("holdon!!!");
     return false;
   }
   else return true;
