@@ -140,7 +140,8 @@ scrollNav = function () {
   $navDn = $(".nav-dn");
   
   function resetScroll() {
-
+    $bg.animate({"top":"0px"});
+    $("#journal").animate({"border-top-width":"20px","border-bottom-width":"20px","top":"0px","height":"100%"});
     $(".nav-up").animate({"top":"-48px"});
     $(".nav-dn").animate({"bottom":"-48px"},function() {
       $(".nav-up").css({ WebkitTransform: 'rotate(0deg)'});
@@ -206,8 +207,10 @@ scrollNav = function () {
         if (delta >= 0) {
             if ($story.scrollTop() > 0) return;
             else event.preventDefault();
-            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<100){
-              $(".nav-up").css({"top" : "+=4px"});
+            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<200){
+              $(".nav-up").css({"top" : "+=8px"});
+              $("#journal").css({"border-top-width":"+=2px"});
+              $bg.css({"top":"+=1px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
@@ -222,11 +225,14 @@ scrollNav = function () {
         else {
             if ($story.scrollTop()+$story.innerHeight()<$story[0].scrollHeight) return;
             else event.preventDefault();
-            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<100){
-              $(".nav-dn").css({"bottom" : "+=4px"});
+            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<200){
+              $(".nav-dn").css({"bottom" : "+=8px"});
+              $("#journal").css({"border-bottom-width":"+=2px","top":"-=2px","height":"+=2px"});
+              $bg.css({"top":"-=1px"});
               clearTimeout(cleanUp);
               cleanUp = setTimeout(function() {
                 resetScroll();
+                $story.scrollTop($story[0].scrollHeight-$story.innerHeight());
               },100);
             }
             else {

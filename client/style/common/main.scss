@@ -333,6 +333,7 @@ body {
 
   /* Presentation */
   @include transition(left .5s);
+  // @include transition(border .1s);
   overflow:hidden;
   color:$text;
 
@@ -375,7 +376,7 @@ body {
 
     /* Animation */
     @include accelerate;
-    @include transition(padding .8s,color .8s);
+    @include transition(padding-top .8s,color .8s);
   }
 
   .media {

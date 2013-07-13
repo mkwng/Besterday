@@ -358,11 +358,11 @@ body {
     -moz-perspective: 1000;
     -o-perspective: 1000;
     -ms-perspective: 1000;
-    -webkit-transition: padding 0.8s;
-    -moz-transition: padding 0.8s;
-    -ms-transition: padding 0.8s;
-    -o-transition: padding 0.8s;
-    transition: padding 0.8s; }
+    -webkit-transition: padding-top 0.8s;
+    -moz-transition: padding-top 0.8s;
+    -ms-transition: padding-top 0.8s;
+    -o-transition: padding-top 0.8s;
+    transition: padding-top 0.8s; }
     #journal #story::-webkit-input-placeholder {
       opacity: .5 !important; }
     #journal #story:-moz-placeholder {
