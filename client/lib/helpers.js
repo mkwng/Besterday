@@ -136,6 +136,7 @@ scrollNav = function () {
 
   // Bug fixing, because sometimes when the page re renders, we lose it.
   $("#journal").unbind("mousewheel wheel");
+  $(document).unbind("touchstart touchmove");
   $navUp = $(".nav-up");
   $navDn = $(".nav-dn");
   
@@ -193,6 +194,67 @@ scrollNav = function () {
       })
     });
   }
+  
+  var y;
+  var touchVelocity = 0;
+  $(document).bind("touchstart touchmove", function(e) {  
+    //Disable scrolling by preventing default touch behaviour  
+    e.preventDefault();  
+    var orig = e.originalEvent;  
+    // Move a div with id "rect"  
+    var newY = orig.changedTouches[0].pageY;
+
+    if(y>newY) {
+      touchVelocity += 1;
+      if (touchVelocity%3==0) up();
+    }
+    else if(y<newY) {
+      touchVelocity -= 1     
+      if (touchVelocity%3==0) dn(); 
+    }
+ 
+    y = newY;
+  }); 
+
+  up = function() {
+    if ($story.scrollTop() > 0) return;
+    else event.preventDefault();
+    if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<200){
+      $(".nav-up").css({"top" : "+=8px"});
+      $("#journal").css({"border-top-width":"+=2px"});
+      $bg.css({"top":"+=1px"});
+      clearTimeout(cleanUp);
+      cleanUp = setTimeout(function() {
+        resetScroll();
+      },100);
+    }
+    else {
+      clearTimeout(cleanUp);
+      dateChangeable = false;
+      animateReset( incrementDate(Session.get("session_date"),-1) );
+    }
+  }
+
+  dn = function() {
+    if ($story.scrollTop()+$story.innerHeight()<$story[0].scrollHeight) return;
+    else event.preventDefault();
+    if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<200){
+      $(".nav-dn").css({"bottom" : "+=8px"});
+      $("#journal").css({"border-bottom-width":"+=2px","top":"-=2px","height":"+=2px"});
+      $bg.css({"top":"-=1px"});
+      clearTimeout(cleanUp);
+      cleanUp = setTimeout(function() {
+        resetScroll();
+        $story.scrollTop($story[0].scrollHeight-$story.innerHeight());
+      },100);
+    }
+    else {
+      clearTimeout(cleanUp);
+      dateChangeable = false;
+      animateReset( incrementDate(Session.get("session_date"),1) );
+    }
+  }
+
 
   $("#journal").bind('mousewheel wheel', function(event) {
 
@@ -204,44 +266,10 @@ scrollNav = function () {
     if(event.originalEvent.wheelDelta) delta = event.originalEvent.wheelDelta;
     else delta = -event.originalEvent.deltaY;
     if(dateChangeable) {
-        if (delta >= 0) {
-            if ($story.scrollTop() > 0) return;
-            else event.preventDefault();
-            if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<200){
-              $(".nav-up").css({"top" : "+=8px"});
-              $("#journal").css({"border-top-width":"+=2px"});
-              $bg.css({"top":"+=1px"});
-              clearTimeout(cleanUp);
-              cleanUp = setTimeout(function() {
-                resetScroll();
-              },100);
-            }
-            else {
-              clearTimeout(cleanUp);
-              dateChangeable = false;
-              animateReset( incrementDate(Session.get("session_date"),-1) );
-            }
-        }
-        else {
-            if ($story.scrollTop()+$story.innerHeight()<$story[0].scrollHeight) return;
-            else event.preventDefault();
-            if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<200){
-              $(".nav-dn").css({"bottom" : "+=8px"});
-              $("#journal").css({"border-bottom-width":"+=2px","top":"-=2px","height":"+=2px"});
-              $bg.css({"top":"-=1px"});
-              clearTimeout(cleanUp);
-              cleanUp = setTimeout(function() {
-                resetScroll();
-                $story.scrollTop($story[0].scrollHeight-$story.innerHeight());
-              },100);
-            }
-            else {
-              clearTimeout(cleanUp);
-              dateChangeable = false;
-              animateReset( incrementDate(Session.get("session_date"),1) );
-            }
-        }
-      }
+
+      if (delta >= 0) up()
+      else dn()
+    }
   });
 }
 
