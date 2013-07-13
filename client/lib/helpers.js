@@ -194,10 +194,18 @@ scrollNav = function () {
   }
 
   $("#journal").bind('mousewheel wheel', function(event) {
+
+    if(!$story.closest("body").length) $story = $("#story");
+
+    // console.log($story.scrollTop()+$story.innerHeight(),$story[0].scrollHeight);
+
+
     if(event.originalEvent.wheelDelta) delta = event.originalEvent.wheelDelta;
     else delta = -event.originalEvent.deltaY;
     if(dateChangeable) {
         if (delta >= 0) {
+            if ($story.scrollTop() > 0) return;
+            else event.preventDefault();
             if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<100){
               $(".nav-up").css({"top" : "+=4px"});
               clearTimeout(cleanUp);
@@ -212,6 +220,8 @@ scrollNav = function () {
             }
         }
         else {
+            if ($story.scrollTop()+$story.innerHeight()<$story[0].scrollHeight) return;
+            else event.preventDefault();
             if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<100){
               $(".nav-dn").css({"bottom" : "+=4px"});
               clearTimeout(cleanUp);

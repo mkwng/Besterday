@@ -1168,11 +1168,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   -ms-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
   -o-box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
-  -webkit-transform: perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7);
-  -moz-transform: perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7);
-  -ms-transform: perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7);
-  -o-transform: perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7);
-  transform: perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7);
+  -webkit-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -moz-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -ms-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  -o-transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
+  transform: perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px);
   position: relative;
   margin: 80px auto;
   padding: 20px;
@@ -1193,11 +1193,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   -o-transition: -webkit-transform 1s;
   transition: -webkit-transform 1s; }
   .landing-hero-example.active {
-    -webkit-transform: perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8);
-    -moz-transform: perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8);
-    -ms-transform: perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8);
-    -o-transform: perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8);
-    transform: perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8); }
+    -webkit-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
+    -moz-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
+    -ms-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
+    -o-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
+    transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px); }
 
 #login {
   -webkit-box-sizing: border-box;
@@ -1205,22 +1205,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  perspective: 1000;
-  -webkit-perspective: 1000;
-  -moz-perspective: 1000;
-  -o-perspective: 1000;
-  -ms-perspective: 1000;
-  z-index: 3;
   position: absolute;
   top: 0;
   left: 100%;

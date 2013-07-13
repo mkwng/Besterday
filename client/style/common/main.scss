@@ -1093,7 +1093,7 @@ li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
 .landing-hero-example {
   @include box-sizing;
   @include box-shadow(0 0 80px rgba(0,0,0,.05));
-  @include transform(perspective(1500px) rotateX(-30deg) translateZ(100px) translateY(0px) scale(0.7));
+  @include transform(perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px));
   position:relative;
   margin:80px auto;
   padding:20px;
@@ -1108,18 +1108,15 @@ li.sidebar-menu-sub-list-week.prev,li.sidebar-menu-sub-list-week.next {
   font-size:36px;
   font-family:"ratio";
   line-height:520px;
-
   @include transition(-webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s);
   &.active {
-    @include transform(perspective(1500px) rotateX(0deg) translateZ(380px) translateY(0px) scale(0.8));
+    @include transform(perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px));
   }
 }
 
 
 #login {
   @include box-sizing;
-  @include accelerate;
-  z-index:3;
   position: absolute;
   top:0;
   left:100%;
