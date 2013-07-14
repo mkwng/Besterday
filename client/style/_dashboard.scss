@@ -8,11 +8,6 @@
   overflow-x:hidden;
 }
 
-.week-0 {
-  .active {
-    background:#f9f9f9;
-  }
-}
 .dashboard-day {
   text-decoration:none;
   display:block;
@@ -24,6 +19,9 @@
   border-top:2px solid #dedede;
   border-bottom:2px solid #dedede;
   cursor:pointer;
+  &.active {
+    background:#f9f9f9;
+  }
   &:hover {
     background:white;
     .dashboard-date {

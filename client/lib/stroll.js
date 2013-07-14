@@ -505,6 +505,7 @@
         bind: function( target, options ) {
             if( isCapable() ) {
                 batch( target, add, options );
+                console.log("test");
             }
         },
 

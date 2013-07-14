@@ -12,15 +12,13 @@ Template.dashboard.rendered = function() {
   // Duplicate week until window is filled
   for(var i=1;i<fillNumber+1;i++) {
     var $newWeek = $dashboardWeek.clone().removeClass("week-0");
-    $newWeek.addClass("week-minus-"+i).insertBefore($(".dashboard-week:first")).find("li").removeClass("active").unwrap();
+    $newWeek.addClass("week-minus-"+i).insertBefore($(".dashboard-week:first")).find("li").removeClass("active");
     var $newWeek = $dashboardWeek.clone().removeClass("week-0");
-    $newWeek.addClass("week-plus-"+i).insertAfter($(".dashboard-week:last")).find("li").removeClass("active").unwrap();
+    $newWeek.addClass("week-plus-"+i).insertAfter($(".dashboard-week:last")).find("li").removeClass("active");
   }
 
   // Initialize position.
   $dashboard.scrollTop($dashboardActive.position().top - parentHeight/2 + dayHeight/2);
-
-  $dashboardWeek.find("li").unwrap();
 
 
 }
@@ -45,5 +43,7 @@ fillDays = function() {
     $this.find(".dashboard-date-month").html(monNames[thisDate.getMonth()]);
     $this.find(".dashboard-date-day").html(thisDate.getDate());
   }
+
+  $allDays.unwrap();
 
 }

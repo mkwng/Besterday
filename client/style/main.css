@@ -1221,9 +1221,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   overflow-y: scroll;
   overflow-x: hidden; }
 
-.week-0 .active {
-  background: #f9f9f9; }
-
 .dashboard-day {
   text-decoration: none;
   display: block;
@@ -1239,6 +1236,8 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   border-top: 2px solid #dedede;
   border-bottom: 2px solid #dedede;
   cursor: pointer; }
+  .dashboard-day.active {
+    background: #f9f9f9; }
   .dashboard-day:hover {
     background: white; }
     .dashboard-day:hover .dashboard-date {
