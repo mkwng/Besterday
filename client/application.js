@@ -53,7 +53,7 @@ initialize = function() {
   }
 
   console.log("initialize:",Session.get("session_user"),prettyDate(Session.get("session_date")));
-  setDate(Session.get("session_user"),Session.get("session_date"));
+  setDate(Session.get("session_user"),Session.get("session_date"),false);
 
   return true;
 
@@ -94,7 +94,7 @@ Meteor.Router.add({
   '/:user': function(user) {
     console.log("our parameters: ",user);
     sessionScreenName = user;
-    return 'journal';
+    return 'dashboard';
   },
 
   '/:user/:year/:month/:date': function(user,year,month,date) {

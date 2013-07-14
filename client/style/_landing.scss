@@ -1,0 +1,84 @@
+
+
+.landing-hero {
+  @include box-sizing;
+  position:relative;
+  margin:0;
+  padding:40px;
+  width:100%;
+  min-height:100%;
+  background:#efefef;
+  h1 {
+    display:block;
+    margin:0;
+    padding:40px;
+    color:#cecece;
+    font-weight:800;
+    font-size:24px;
+    font-family:"ratio";
+  }
+
+  p {
+    @include transition(left 1s);
+    position:relative;
+    display:block;
+    margin:0;
+    padding:40px;
+    color:#666666;
+    font-weight:300;
+    font-size:48px;
+    font-family:"ratio";
+    a.cta {      
+      /* Positioning */
+      height:36px;
+      width:160px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:10px 0 0;
+      margin:20px 0;
+
+      /* Presentation */
+      background-color:$orange;
+
+      /* Font */
+      color:#ffffff;
+      text-align:center;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-weight:400;
+      font-size:12px;
+      font-family:"ratio";
+      @include transition(background-color .2s);
+      @include transition(color .2s);
+    }
+  }
+}
+
+
+.landing-hero-example {
+  @include box-sizing;
+  @include box-shadow(0 0 80px rgba(0,0,0,.05));
+  @include transform(perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px));
+  position:relative;
+  margin:80px auto;
+  padding:20px;
+  max-width:90%;
+  max-height:90%;
+  width:800px;
+  height:600px;
+  border:20px solid #ffffff;
+  background:$bg;
+  color:#cecece;
+  font-weight:300;
+  font-size:36px;
+  font-family:"ratio";
+  line-height:520px;
+  @include transition(-webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s);
+  &.active {
+    @include transform(perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px));
+  }
+}
+

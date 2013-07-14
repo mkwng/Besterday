@@ -1,0 +1,204 @@
+/*** Config ***/
+
+/* Colors */
+$borderColor1: rgba(255,255,255,0.25); /* used for row 1 & 2 */
+$borderColor2: rgba(255,255,255,0.5);
+$borderColor3: rgba(255,255,255,0.75);
+$borderColor4: rgba(255,255,255,1);  /* used for row 1 & 2 */
+
+/* Dimensions */
+$borderWidthX: 10px;
+$borderWidthY: 10px;
+
+
+
+@-webkit-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-ms-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-o-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-moz-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+
+.border-loading-indicator {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  margin: -($borderWidthY) 0 0 -($borderWidthX);
+  border: 0px solid $borderColor4;
+  border-width: $borderWidthY $borderWidthX;
+}
+
+.border-loading-indicator.row-2 {
+  top: 75%;
+  animation: border-loading-indicator-row-2 750ms linear infinite;
+}
+
+.border-loading-indicator.col-3 {
+  width: 0px;
+  height: 0px;
+  left: 75%;
+  border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
+}
+
+
+/* ==========================================================================
+   Global styles
+   ========================================================================== */
+
+
+body,html {
+  margin:0;
+  padding:0;
+  min-height:100%;
+  height:100%;
+}
+body {
+  overflow-x:hidden;
+  margin:0;
+  padding:0;
+  background:$bg;
+}
+.bg {
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:-2;
+  width:100%;
+  height:100%;
+  &.loading { 
+    &+ .bg-loader {
+      opacity:1;
+    }
+  }
+}
+.bg-loader {
+  @include animation(border-loading-indicator-row-2 750ms linear infinite);
+  @include transition(opacity .5s);
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top: -$borderWidthY*5;
+  margin-left: -$borderWidthX*5;
+  width: 0px;
+  height: 0px;
+  // margin: -($borderWidthY) 0 0 -($borderWidthX);
+  border: 0px solid $borderColor4;
+  border-width: $borderWidthY*5 $borderWidthX*5;
+  border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
+  content:"";
+  opacity:0;
+}
+.bg-image {
+  /* Positioning */
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:-2;
+  width:20%;
+  height:20%;
+
+  /* Presentation */
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  /* Animation */
+  @include accelerate;
+  @include filter(grayscale(10%) blur(12px));
+  @include transform-origin(top left);
+  @include transform(scale(5));
+  filter:(url(/img/blur.svg#blur));
+}
+
+  .nav {
+    /* Positioning */
+    position:absolute;
+    top:0;
+    left:50%;
+    z-index:0;
+    overflow:hidden;
+    margin-left:-24px;
+    width:48px;
+    height:100%;
+
+    .nav-up,.nav-dn {
+      /* Positioning */
+      position:absolute;
+      @include box-sizing;
+      height:48px;
+      width:48px;
+
+      /* Display & Box Model */
+      display:block;
+
+      /* Presentation */
+      overflow:hidden;
+      border:1px solid $orange;
+      border-radius:24px;
+      background:transparent url(/img/arrow.svg) center no-repeat;
+
+      /* Font */
+      text-indent:-999em;
+    }
+    .nav-up {
+      top:-48px;
+    }
+    .nav-dn {
+      bottom:-48px;
+      @include transform(rotate(180deg));
+    }
+  }
+
+#login-buttons{
+  position:absolute;
+  right:20px;
+  z-index:999
+}
+
+
+#login {
+  @include box-sizing;
+  position: absolute;
+  top:0;
+  left:100%;
+  width:100%;
+  height:100%;
+  height:500px;
+  padding:200px 80px 80px;
+  @include transition(left 1s);
+  // background:rgba(240,240,240,.5);
+  #login-form,#account-form{
+    display:block;
+    width:50%;
+    float:left;
+  }
+}

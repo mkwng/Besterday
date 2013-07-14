@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Colors
+   ========================================================================== */
+
+$bg: #FCF9F5;
+$orange: #ffae41;
+$hover: #f1f1f1;
+$text: #666666;
+
+
+/* ==========================================================================
+   Helpers & Mixins
+   ========================================================================== */
+
+@mixin prefix ( $property, $value ) {
+  -webkit-#{$property}: $value;
+     -moz-#{$property}: $value;
+      -ms-#{$property}: $value;
+       -o-#{$property}: $value;
+          #{$property}: $value;
+}
+
+@mixin animation($args...) {
+  @include prefix( animation, $args... );
+}
+
+@mixin transform($args...) {
+  @include prefix( transform, $args... );
+}
+@mixin transform-origin($args...) {
+  @include prefix( transform-origin, $args... );
+}
+
+@mixin box-shadow($args) {
+  @include prefix( box-shadow, $args );
+}
+
+@mixin accelerate {
+  // Enable 3D transforms, activating hardware acceleration
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  // Fixing flickering bug
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  // Some bug fix, I forget why this is in here.
+  perspective: 1000;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -o-perspective: 1000;
+  -ms-perspective: 1000;
+}
+
+@mixin filter($args) {
+  -webkit-filter: $args;
+  -moz-filter: $args;
+  -o-filter: $args;
+  -ms-filter: $args;
+  filter: $args;
+}
+
+@mixin box-sizing($value:border-box) {
+  // Box sizing makes padding and margins inclusive of declared width/height
+  @include prefix( box-sizing, $value );
+}
+
+@mixin background-image-retina($file, $type, $width, $height) {
+  // If on retina device, load retina image as background.
+  background-image: url($file + '.' + $type);
+  @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+    & {
+      background-image: url($file + '@2x.' + $type);
+      @include prefix( background-size, $width $height );
+
+    }
+  }
+}
+
+@mixin transition($args...) {
+  @include prefix( transition, $args... );
+}
+
+@mixin transform($args...) {
+  @include prefix( transform, $args... );
+}
+
+.opaque {opacity:1;}
+.left {float:left !important;}
+.right {float:right !important;}
+
+.smallcaps {
+    text-transform:uppercase;
+    letter-spacing:.2em;
+    font-weight:400;
+    font-size:12px;
+    font-family:"ratio";
+}

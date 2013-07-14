@@ -1,0 +1,435 @@
+/* ==========================================================================
+   Journal
+   ========================================================================== */
+  /* Positioning */
+  /* Display & Box Model */
+  /* Presentation */
+  /* Font */
+  /* Animation */
+
+.dummy {
+  /* Positioning */
+  position:absolute;
+  left:-99999px;
+  width:100%;
+  height:auto;
+
+  /* Display & Box Model */
+  @include box-sizing;
+  display:block;
+  // margin:40px 0;
+  padding:0 20px;
+
+  /* Presentation */
+  background:red;
+  outline:none;
+
+  /* Font */
+  color:$text;
+  font-weight:300;
+  font-size:42px;
+  font-family:"ratio";
+}
+
+#journal {
+  /* Positioning */
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+
+  /* Display & Box Model */
+  @include box-sizing;
+  display:block;
+  border:20px solid #ffffff;
+
+  /* Presentation */
+  @include transition(left .5s);
+  // @include transition(border .1s);
+  overflow:hidden;
+  color:$text;
+
+  #story {
+    /* Positioning */
+    position:absolute;
+    z-index:1;
+    width:100%;
+    height:100%;
+
+    /* Display & Box Model */
+    @include box-sizing;
+    display:block;
+    // margin:40px 0;
+    padding:0 20px;
+
+    /* Presentation */
+    outline:none;
+    border:none;
+    background:transparent;
+    opacity:0;
+    resize:none;
+
+    /* Font */
+    color:inherit;
+    font-weight:300;
+    font-size:42px;
+    font-family:"ratio";
+    &::-webkit-input-placeholder  {opacity:.5 !important;}
+    &:-moz-placeholder            {opacity:.5 !important;} /* Firefox 18- */
+    &::-moz-placeholder           {opacity:.5 !important;} /* Firefox 19+ */
+    &:-ms-input-placeholder       {opacity:.5 !important;}  
+
+    &.long {
+      padding: 140px 140px 70px;
+      padding-top:140px !important;
+      font-size: 24px;
+      line-height: 34px;
+    }
+
+    /* Animation */
+    @include accelerate;
+    @include transition(padding-top .8s,color .8s);
+  }
+
+  .media {
+    /* Positioning */
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    z-index:2;
+
+    .media-image {
+      /* Positioning */
+      width:16px;
+      height:16px;
+
+      /* Display & Box Model */
+      display:block;
+
+      /* Presentation */
+      text-indent:-9999em;
+      overflow:hidden;
+      @include background-image-retina('/img/icons', 'png', 96px, 48px);
+      background-position:0 0;
+      opacity:.25;
+
+      @include transition(opacity .25s);
+
+      &:hover {opacity:.5;}
+
+      &.attached{opacity:1;background-position:0 -16px;}
+      &.attached:hover{/* Need a style here... */}
+    }
+  }
+
+  .controls {
+    /* Positioning */
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    width:100%;
+
+    /* Display & Box Model */
+    @include box-sizing;
+    padding:20px;
+
+    .controls-menu {
+      /* Positioning */
+      float:left;
+      height:36px;
+      // max-width:36px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:0 0 0 36px;
+
+      /* Presentation */
+      background:#ffffff;
+      overflow:hidden;
+
+      @include transition(max-width 1s);
+
+      .controls-menu-date {
+
+      /* Positioning */
+      float:left;
+      height:36px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:10px 16px;
+
+      /* Presentation */
+      background:$hover;
+
+      /* Font */
+      color:$text;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-weight:400;
+      font-size:12px;
+      font-family:"ratio";
+
+      }
+      &:hover {
+        // max-width:300px;
+      }
+    }
+
+    .controls-save {
+      /* Positioning */
+      position:relative;
+      float:right;
+      height:36px;
+      width:160px;
+
+      /* Display & Box Model */
+      display:block;
+      @include box-sizing;
+      padding:10px 0 0;
+      margin:0 0 0 5px;
+
+      /* Presentation */
+      background-color:$orange;
+
+      /* Font */
+      color:#ffffff;
+      text-align:center;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      font-weight:400;
+      font-size:12px;
+      font-family:"ratio";
+      @include transition(background-color .2s);
+      @include transition(color .2s);
+    }.controls-save.loading{background-color:lighten($orange,5%); color:rgba(255,255,255,.15);}
+    .controls-save.loading::after {
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-top: -$borderWidthY;
+      margin-left: -$borderWidthX;
+      width: 0px;
+      height: 0px;
+      content:"";
+
+      // margin: -($borderWidthY) 0 0 -($borderWidthX);
+      border: 0px solid $borderColor4;
+      border-width: $borderWidthY $borderWidthX;
+
+      @include animation(border-loading-indicator-row-2 750ms linear infinite);
+      width: 0px;
+      height: 0px;
+
+      border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
+
+    }
+    .controls-share {
+      /* Positioning */
+      float:right;
+      position:relative;
+      height:36px;
+      width:36px;
+
+      /* Display & Box Model */
+      @include box-sizing;
+      display:block;
+
+      /* Presentation */
+      background:#ffffff;
+      overflow:hidden;
+
+      /* Font */
+      text-indent:-9999em;
+    }
+    .controls-share-icon {
+      display:block;
+      /* Positioning */
+      @include background-image-retina('/img/lock', 'png', 399px, 20px);
+      @include transition(margin-left .8s);
+      margin-top:7px;
+      margin-left:4px;
+      width:21px;
+      height:20px;
+      opacity:.2;
+    }
+    .controls-share-icon.lock {
+      background-position:0 0 !important;
+      &.animate{
+        @include animation(lock .4s steps(18) 1);
+      }
+    }
+    .controls-share-icon.unlock {
+      background-position:-378px 0 !important;
+      margin-left:8px;
+      &.animate{
+        @include animation(unlock .4s steps(19) 1);
+      }
+    }
+
+    .controls-share-buttons {
+      @include box-sizing;
+      @include transition(opacity .2s);
+      // text-transform:uppercase;
+      position:relative;
+      float:right;
+      clear:both;
+      margin-top:10px;
+      padding: 20px;
+      width: 201px;
+      background:$text;
+      color:#ffffff;
+      font-size:11px;
+      font-family:"ratio";
+
+
+      &::after {
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(0, 0, 0, 0);
+        border-bottom-color: $text;
+        border-width: 5px;
+        left: 18px;
+        margin-left: -5px;
+      }
+
+
+      label {
+        font-family:inherit;
+        font-size:11px;
+        color:#888888;
+      }
+      input {
+        @include box-sizing;
+        margin-bottom:20px;
+        padding:5px 28px 5px 8px;
+        width:100%;
+        outline: none;
+        border:1px solid #888888;
+        border:none;
+        background:#888888;
+        color:#d8d8d8;
+        font-weight:300;
+        font-size:14px;
+        font-family:"ratio";
+        line-height:24px;
+        &:focus {
+          border:1px solid $orange;
+          padding:4px 27px 4px 7px;
+        }
+      }
+      .controls-share-buttons-copy {
+        // text-indent:-9999em;
+        @include background-image-retina('/img/icons', 'png', 96px, 48px);
+        @include transition(opacity .2s);
+        position:absolute;
+        top: 44px;
+        right: 27px;
+        display:block;
+        overflow:hidden;
+        width:16px;
+        height:16px;
+        background-position:-64px 0;
+        opacity:.2;
+        &:hover {opacity:.5;}
+        embed {opacity:0;}
+      }
+
+      .controls-share-buttons-social {
+        @include box-sizing;
+        position:relative;
+        display:block;
+        float:left;
+        // text-align:center;
+        padding-left:20px;
+        width: 75px;
+        height:28px;
+          color: #e1e1e1;
+        text-decoration:none;
+        line-height:28px;
+        // background:#d1d1d1;
+        @include transition(background .2s, color .2s);
+        &::after {
+          @include prefix( background-size, 16px 16px );
+          @include transition( opacity .5s );
+          position:absolute;
+          top:6px;
+          left:0;
+          display:block;
+          width:16px;
+          height:16px;
+          background:no-repeat top left url(/img/fb.png);
+          content:"";
+          opacity:.25;
+        }
+        &.fb {
+          margin-right:10px;
+          &::after { background-image:url(/img/fb.png);}
+        }
+        &.tw {
+          &::after { background-image:url(/img/tw.png); }
+        }
+        &:hover{
+          color: #ffffff;
+          &::after { opacity:.5}
+        }
+
+      }
+    }
+
+  }
+
+}
+
+@-webkit-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-webkit-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-ms-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-ms-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-o-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-o-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-moz-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-moz-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+@-keyframes unlock {
+   from { background-position:    0px; }
+     to { background-position: -399px; }
+}
+@-keyframes lock {
+   from { background-position: -378px; }
+     to { background-position:    0px; }
+}
+

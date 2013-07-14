@@ -1,0 +1,83 @@
+.dashboard {
+  position:relative;
+  margin:0;
+  padding:0;
+  background:#efefef;
+  height:100%;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+.week-0 {
+  .active {
+    background:#f9f9f9;
+  }
+}
+.dashboard-day {
+  text-decoration:none;
+  display:block;
+  position:relative;
+  @include box-sizing;
+  clear:both;
+  padding:10px;
+  height:83px;
+  border-top:2px solid #dedede;
+  border-bottom:2px solid #dedede;
+  cursor:pointer;
+  &:hover {
+    background:white;
+    .dashboard-date {
+      @include box-shadow(0 3px 0 $orange);
+    }
+  }
+
+}
+  .dashboard-image {
+    display:none;
+    float:left;
+    clear:left;
+  }
+  .dashboard-date{
+    position:relative;
+    float:left;
+    margin:10px;
+    width:40px;
+    height:40px;
+    background:#ffffff;
+    text-align:center;
+    @include box-shadow(0 3px 0 rgba(0,0,0,0.1))
+  }
+    .dashboard-date-month {
+      display:block;
+      padding:5px 3px 0px;
+      color:#cdcdcd;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:900;
+      font-size:9px;
+    }
+    .dashboard-date-day{
+      position:relative;
+      top:-2px;
+      color:#666666;
+      font-weight:900;
+      font-size:24px;
+    }
+  .dashboard-blurb {
+    color:#666666;
+    white-space: nowrap;
+    font-weight:400;
+    font-family: "ratio";
+    line-height:60px;
+    span {
+      display:inline-block;
+      margin-right:10px;
+      color:#ababab;
+      &::after {
+        display:inline-block;
+        padding-left:10px;
+        color:$orange;
+        content:"/";
+      }
+    }
+  }

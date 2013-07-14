@@ -136,7 +136,8 @@ getScrollBarWidth = function() {
  * Licensed under the MIT and GPL licenses.
  */
 dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+monNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 // Takes an ISO time and returns a string representing how
 // long ago the date represents.
 prettyDate = function(date,week){
@@ -146,4 +147,9 @@ prettyDate = function(date,week){
   else
     return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 }
+
+
+
+
+
 
