@@ -633,17 +633,17 @@
 /**
  * Fade styles
  */
-.fade a {
+.fade li {
   -webkit-transition: opacity .35s ease-in-out;
      -moz-transition: opacity .35s ease-in-out;
       -ms-transition: opacity .35s ease-in-out;
        -o-transition: opacity .35s ease-in-out;
           transition: opacity .35s ease-in-out;
 }
-  .fade a.past {
+  .fade li.past {
         opacity: 0;
   }
-  .fade a.future {
+  .fade li.future {
         opacity: 0;
   }
 

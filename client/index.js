@@ -86,7 +86,7 @@ Template.sidebar.helpers({
     return Session.get("session_date").getFullYear();
   },
   'dateUrl' : function() {
-    return "/"+sessionScreenName+"/"+this.date.getFullYear()+"/"+(this.date.getMonth()+1)+"/"+this.date.getDate();
+    return "/"+sessionScreenName+"/"+getDateUrl(this.date);
   }
 });
 

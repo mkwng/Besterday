@@ -117,7 +117,9 @@ incrementDate = function(date,increment) {
 floorDate = function(date) {
   return new Date(date.getFullYear(),date.getMonth(),date.getDate());
 }
-
+dayDiff = function(first, second) {
+    return Math.floor(( second - first ) / 86400000);
+}
 
 jQuery.fn.cssPersist = function(prop,val) {
   journalCss = $(this).attr("style",journalCss).css(prop,val).attr("style");
@@ -361,4 +363,13 @@ hasScreenName = function(user) {
 ownStory = function() {
   return Meteor.userId() == Session.get("session_user");
 }
+
+getDateUrl = function(date) {
+  return "/"+date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+}
+
+
+
+
+
 

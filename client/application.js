@@ -55,6 +55,8 @@ initialize = function() {
   console.log("initialize:",Session.get("session_user"),prettyDate(Session.get("session_date")));
   setDate(Session.get("session_user"),Session.get("session_date"),false);
 
+  $allDays = $(".dashboard-day").fillDay();
+
   return true;
 
 }
