@@ -1222,12 +1222,89 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   z-index: 1;
   width: 300px;
   background: #666666;
-  padding: 40px;
   min-height: 100%;
-  text-align: center; }
+  float: left;
+  font-family: "ratio";
+  color: #dedede;
+  height: 100%;
+  overflow-y: scroll; }
+  .profile h3.name {
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    padding: 5px 40px;
+    color: #ffffff; }
+  .profile p.subtitle {
+    margin: 0 40px 20px;
+    font-weight: 200; }
 
 .profile-image {
-  border-radius: 75px; }
+  display: block;
+  border-radius: 75px;
+  margin: 40px auto 15px auto; }
+
+.profile-stat {
+  display: block;
+  padding: 0px 0 15px 0;
+  width: 90px;
+  float: left;
+  border-bottom: solid 5px #787878;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
+  .profile-stat:nth-child(even) {
+    margin: 10px 10px 10px 40px; }
+  .profile-stat:nth-child(odd) {
+    margin: 10px 40px 10px 10px; }
+  .profile-stat .profile-stat-num {
+    font-weight: 100;
+    font-size: 48px;
+    margin: 0; }
+  .profile-stat .profile-stat-cap {
+    margin: 0;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #b0b0b0; }
+
+.profile-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .profile-buttons a {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    margin: 5px;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: #909090;
+    background: #565656; }
+    .profile-buttons a:hover {
+      color: #d6d6d6;
+      background: #808088; }
+
+.dashboard-title {
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  margin-left: 300px;
+  padding: 5px 20px 5px 20px;
+  height: 20px;
+  background: #cdcdcd;
+  color: #ffffff;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 900;
+  font-size: 10px; }
 
 .dashboard {
   -webkit-box-sizing: border-box;
@@ -1241,7 +1318,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   overflow-x: hidden;
   overflow-y: scroll;
   margin: 0;
-  padding: 0 0 0 300px;
+  padding: 30px 0 0 300px;
   width: 100%;
   height: 100%;
   background: #dddddd;
@@ -1253,13 +1330,13 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   perspective: 400px; }
 
 .dashboard-day {
-  display: block;
-  position: relative;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   -o-box-sizing: border-box;
   box-sizing: border-box;
+  position: relative;
+  display: block;
   clear: both;
   padding: 0;
   height: 83px;
@@ -1292,8 +1369,9 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -ms-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
       -o-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
       box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1); }
-  .dashboard-day.first-of-month::before {
+  .dashboard-day.first-of-month + li::before {
     position: absolute;
+    z-index: 9;
     top: -10px;
     display: block;
     padding-left: 20px;
@@ -1355,7 +1433,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
 
 .dashboard-blurb {
   display: block;
-  overflow: hidden;
+  overflow-x: hidden;
   color: #666666;
   text-decoration: none;
   white-space: nowrap;

@@ -16,13 +16,11 @@ Template.dashboard.rendered = function() {
   // Duplicate week until window is filled
   for(var i=1;i<fillNumber+1;i++) {
     var $newWeek = $dashboardWeek.clone().removeClass("week-0");
-    $newWeek.addClass("week-minus-"+i).insertBefore($(".dashboard-week:first")).find("li").removeClass("active");
-    // var $newWeek = $dashboardWeek.clone().removeClass("week-0");
-    // $newWeek.addClass("week-plus-"+i).insertAfter($(".dashboard-week:last")).find("li").removeClass("active");
+    $newWeek.insertAfter($(".dashboard-week:first")).find("li").removeClass("active");
   }
 
   // Initialize position.
-  $dashboard.scrollTop($dashboardActive.position().top - parentHeight + 2*dayHeight);
+  $dashboard.scrollTop($dashboardActive.position().top - 30);
   $allDays = $(".dashboard-day");
   currentMiddle = $allDays.index($dashboardActive);
 
@@ -43,21 +41,21 @@ Template.dashboard.helpers({
 
 moreDays = function(direction) {
     stroll.unbind( '.dashboard' );
-    var $newWeek = $allDays.filter(":lt(2)").clone().removeClass("active");
+    var $newWeek = $allDays.filter(":lt(7)").clone().removeClass("active");
     currentPos = $dashboard.scrollTop();
     if (direction=="before") {
-      currentMiddle+=2;
-      $newWeek.addClass("past").insertBefore($(".dashboard-day:first")).fillDay();
-      $allDays.slice(-2).remove();
-      $dashboard.scrollTop(currentPos + dayHeight*2 + 1);
+      if (currentMiddle<0) {
+        currentMiddle+=7;
+        $newWeek.addClass("past").insertBefore($(".dashboard-day:first")).fillDay();
+        $allDays.slice(-7).remove();
+        $dashboard.scrollTop(currentPos + dayHeight*7 + 1);
+      }
     }
     else {
-      if (!noMore) {
-        $newWeek.addClass("future").insertAfter($(".dashboard-day:last")).fillDay();
-        currentMiddle-=2;
-        $allDays.filter(":lt(2)").remove();
-        $dashboard.scrollTop(currentPos - dayHeight*2 - 1);
-      }
+      $newWeek.addClass("future").insertAfter($(".dashboard-day:last")).fillDay();
+      currentMiddle-=7;
+      $allDays.filter(":lt(7)").remove();
+      $dashboard.scrollTop(currentPos - dayHeight*7 - 1);
     }
 
     stroll.bind( '.dashboard' );
@@ -67,10 +65,7 @@ moreDays = function(direction) {
 infoFill = function($e,thisDate) {
 
   var url;
-  // Date is outside valid range...) 
-  if(thisDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) {
-    $e.addClass("disabled").attr("href","#");
-  }
+
   $e.find(".dashboard-date-month").html(monNames[thisDate.getMonth()]);
   $e.find(".dashboard-date-day").html(thisDate.getDate());
 
@@ -86,7 +81,8 @@ infoFill = function($e,thisDate) {
     var blurb = "Loading&hellip;";
 
     if(thisDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) {
-      $e.addClass("disabled");
+      // $dashboard.scrollTop($dashboard.scrollTop()-dayHeight);
+      $e.addClass("disabled").attr("href","#");
       noMore = true;
       url="#";
     } else {
@@ -126,7 +122,7 @@ jQuery.fn.fillDay = function() {
     diff = $allDays.index(this) - currentMiddle;
     if(diff==0) $(this).addClass("active");
 
-    var thisDate = incrementDate(activeDate,diff)
+    var thisDate = incrementDate(activeDate,-diff)
     infoFill($(this),thisDate);
   });
 
@@ -136,7 +132,7 @@ jQuery.fn.fillDay = function() {
 
 scrollDash = function() {
   $dashboard.scroll(function(e) {
-    if($(this).scrollTop() == 0) {
+    if($(this).scrollTop() <= 80) {
       moreDays("before");
     } else if($(this).scrollTop() == this.scrollHeight - $(window).height()) {
       moreDays("after");
