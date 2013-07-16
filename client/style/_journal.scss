@@ -31,6 +31,13 @@
   font-family:"ratio";
 }
 
+.journal-wrapper {
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+}
 #journal {
   /* Positioning */
   position:absolute;
@@ -61,7 +68,7 @@
     @include box-sizing;
     display:block;
     // margin:40px 0;
-    padding:0 20px;
+    padding:0 40px;
 
     /* Presentation */
     outline:none;
@@ -71,6 +78,7 @@
     resize:none;
 
     /* Font */
+    text-align:center;
     color:inherit;
     font-weight:300;
     font-size:42px;
@@ -136,49 +144,36 @@
     padding:20px;
 
     .controls-menu {
-      /* Positioning */
-      float:left;
-      height:36px;
-      // max-width:36px;
 
-      /* Display & Box Model */
-      display:block;
-      @include box-sizing;
-      padding:0 0 0 36px;
+      .controls-date {
+        position:absolute;
+        left:50%;
+        margin:40px -20px 0;
+        width:40px;
+        height:40px;
+        background:#ffffff;
+        text-align:center;
+        @include box-shadow(0 3px 0 $orange);
+        }
+          .controls-date-month {
+            display:block;
+            padding:5px 3px 0px;
+            color:#cdcdcd;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            font-weight:900;
+            font-size:9px;
+          }
+          .controls-date-day{
+            position:relative;
+            top:-2px;
+            color:#666666;
+            font-weight:900;
+            font-size:24px;
+          }
 
-      /* Presentation */
-      background:#ffffff;
-      overflow:hidden;
 
-      @include transition(max-width 1s);
 
-      .controls-menu-date {
-
-      /* Positioning */
-      float:left;
-      height:36px;
-
-      /* Display & Box Model */
-      display:block;
-      @include box-sizing;
-      padding:10px 16px;
-
-      /* Presentation */
-      background:$hover;
-
-      /* Font */
-      color:$text;
-      text-decoration:none;
-      text-transform:uppercase;
-      letter-spacing:.2em;
-      font-weight:400;
-      font-size:12px;
-      font-family:"ratio";
-
-      }
-      &:hover {
-        // max-width:300px;
-      }
     }
 
     .controls-save {

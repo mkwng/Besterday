@@ -12,6 +12,9 @@ Template.dashboard.rendered = function() {
   activeDate = new Date($dashboardActive.attr("data-date"));
   currentMiddle = 0;
 
+  // // Hide the scrollbar
+  // $(".profile").css("width","+="+getScrollBarWidth());
+
 
   // Duplicate week until window is filled
   for(var i=1;i<fillNumber+1;i++) {
@@ -48,14 +51,14 @@ moreDays = function(direction) {
         currentMiddle+=7;
         $newWeek.addClass("past").insertBefore($(".dashboard-day:first")).fillDay();
         $allDays.slice(-7).remove();
-        $dashboard.scrollTop(currentPos + dayHeight*7 + 1);
+        $dashboard.scrollTop(currentPos + dayHeight*7 + 30);
       }
     }
     else {
       $newWeek.addClass("future").insertAfter($(".dashboard-day:last")).fillDay();
       currentMiddle-=7;
       $allDays.filter(":lt(7)").remove();
-      $dashboard.scrollTop(currentPos - dayHeight*7 - 1);
+      $dashboard.scrollTop(currentPos - dayHeight*7 - 30);
     }
 
     stroll.bind( '.dashboard' );
@@ -134,7 +137,7 @@ scrollDash = function() {
   $dashboard.scroll(function(e) {
     if($(this).scrollTop() <= 80) {
       moreDays("before");
-    } else if($(this).scrollTop() == this.scrollHeight - $(window).height()) {
+    } else if($(this).scrollTop() >= this.scrollHeight - $(window).height()) {
       moreDays("after");
     }
   })

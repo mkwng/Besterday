@@ -140,6 +140,7 @@ body {
 
 .bg {
   position: absolute;
+  overflow: hidden;
   top: 0;
   left: 0;
   z-index: -2;
@@ -426,6 +427,13 @@ body {
   font-size: 42px;
   font-family: "ratio"; }
 
+.journal-wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; }
+
 #journal {
   /* Positioning */
   position: absolute;
@@ -462,7 +470,7 @@ body {
     -o-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
-    padding: 0 20px;
+    padding: 0 40px;
     /* Presentation */
     outline: none;
     border: none;
@@ -470,6 +478,7 @@ body {
     opacity: 0;
     resize: none;
     /* Font */
+    text-align: center;
     color: inherit;
     font-weight: 300;
     font-size: 42px;
@@ -562,48 +571,33 @@ body {
     -o-box-sizing: border-box;
     box-sizing: border-box;
     padding: 20px; }
-    #journal .controls .controls-menu {
-      /* Positioning */
-      float: left;
-      height: 36px;
-      /* Display & Box Model */
-      display: block;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -ms-box-sizing: border-box;
-      -o-box-sizing: border-box;
-      box-sizing: border-box;
-      padding: 0 0 0 36px;
-      /* Presentation */
+    #journal .controls .controls-menu .controls-date {
+      position: absolute;
+      left: 50%;
+      margin: 40px -20px 0;
+      width: 40px;
+      height: 40px;
       background: #ffffff;
-      overflow: hidden;
-      -webkit-transition: max-width 1s;
-      -moz-transition: max-width 1s;
-      -ms-transition: max-width 1s;
-      -o-transition: max-width 1s;
-      transition: max-width 1s; }
-      #journal .controls .controls-menu .controls-menu-date {
-        /* Positioning */
-        float: left;
-        height: 36px;
-        /* Display & Box Model */
-        display: block;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        -o-box-sizing: border-box;
-        box-sizing: border-box;
-        padding: 10px 16px;
-        /* Presentation */
-        background: #f1f1f1;
-        /* Font */
-        color: #666666;
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: .2em;
-        font-weight: 400;
-        font-size: 12px;
-        font-family: "ratio"; }
+      text-align: center;
+      -webkit-box-shadow: 0 3px 0 #ffae41;
+      -moz-box-shadow: 0 3px 0 #ffae41;
+      -ms-box-shadow: 0 3px 0 #ffae41;
+      -o-box-shadow: 0 3px 0 #ffae41;
+      box-shadow: 0 3px 0 #ffae41; }
+    #journal .controls .controls-menu .controls-date-month {
+      display: block;
+      padding: 5px 3px 0px;
+      color: #cdcdcd;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 900;
+      font-size: 9px; }
+    #journal .controls .controls-menu .controls-date-day {
+      position: relative;
+      top: -2px;
+      color: #666666;
+      font-weight: 900;
+      font-size: 24px; }
     #journal .controls .controls-save {
       /* Positioning */
       position: relative;
@@ -1226,8 +1220,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   float: left;
   font-family: "ratio";
   color: #dedede;
-  height: 100%;
-  overflow-y: scroll; }
+  height: 100%; }
   .profile h3.name {
     display: block;
     text-align: center;
@@ -1297,14 +1290,15 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   z-index: 2;
   margin-left: 300px;
   padding: 5px 20px 5px 20px;
-  height: 20px;
-  background: #cdcdcd;
+  height: 40px;
+  background: #ff905a;
   color: #ffffff;
-  line-height: 20px;
+  line-height: 40px;
+  text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 900;
-  font-size: 10px; }
+  letter-spacing: 2px;
+  font-weight: 100;
+  font-size: 14px; }
 
 .dashboard {
   -webkit-box-sizing: border-box;
@@ -1318,7 +1312,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   overflow-x: hidden;
   overflow-y: scroll;
   margin: 0;
-  padding: 30px 0 0 300px;
+  padding: 50px 0 0 300px;
   width: 100%;
   height: 100%;
   background: #dddddd;
@@ -1338,10 +1332,8 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   position: relative;
   display: block;
   clear: both;
-  padding: 0;
-  height: 83px;
-  border-top: 2px solid #dedede;
-  border-bottom: 2px solid #dedede;
+  padding: 4px;
+  height: 80px;
   background: #efefef; }
   .dashboard-day.active {
     background: #f9f9f9; }
@@ -1373,6 +1365,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     position: absolute;
     z-index: 9;
     top: -10px;
+    left: 0;
     display: block;
     padding-left: 20px;
     width: 100%;

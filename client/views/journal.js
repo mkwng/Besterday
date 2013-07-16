@@ -78,13 +78,13 @@ Template.journal.events({
 
   },
 
-  // Open up the menu...
-  'click .controls-menu' : function(e) {
+  // // Open up the menu...
+  // 'click .controls-menu' : function(e) {
 
-    if(!Session.get("show_sidebar")) openSidebar();
-    else closeSidebar();
+  //   if(!Session.get("show_sidebar")) openSidebar();
+  //   else closeSidebar();
 
-  },
+  // },
 
   'click .media-image' : function (e) {
     e.preventDefault();
@@ -291,6 +291,12 @@ Template.postControls.helpers({
   prettyDate : function() {
     if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
     else return "Loading...";
+  },
+  month : function() {
+    if(Session.get("session_date")) return monNames[Session.get("session_date").getMonth()];
+  },
+  day : function() {
+    if(Session.get("session_date")) return Session.get("session_date").getDate();
   },
   formattedUrl : function() {
     if(this.hasOwnProperty("owner")) {

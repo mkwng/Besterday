@@ -9,7 +9,7 @@
     <a class="nav-dn" href="#">Next</a>
   </div>
     {{/if}}
-
+<div class="journal-wrapper">
   <div id="journal">
     {{#if owner}}
       {{> story story }}
@@ -24,7 +24,7 @@
       <a href="/"><h1 style="position:absolute;z-index:999999">Besterday</h1></a>
     {{/if}}
   </div>
-
+</div>
 </template>
 
 
@@ -39,9 +39,14 @@
         <a class="media-image {{#if img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
     </div>
     <div class="controls">
-      <a class="controls-menu" href="#"><span class="controls-menu-date">{{prettyDate}}</span></a>
+      <div class="controls-menu" href="#">
+        <div class="controls-date">
+          <span class="controls-date-month">{{month}}</span>
+          <span class="controls-date-day">{{day}}</span>
+        </div>
+      </div>
       {{#constant}}<a class="controls-save" href="#">Autosave</a>{{/constant}}
-      <a class="controls-share" href="#">
+      <!-- <a class="controls-share" href="#">
         <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
       </a>
       {{#if public}}
@@ -76,7 +81,7 @@
         <a href="#" class="controls-share-buttons-social fb">Facebook</a>
         <a href="#" class="controls-share-buttons-social tw">Twitter</a>
       </div>
-      {{/if}}
+      {{/if}} -->
     </div>
 </template>
 

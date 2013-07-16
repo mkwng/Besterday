@@ -143,7 +143,7 @@ scrollNav = function () {
   $navDn = $(".nav-dn");
   
   function resetScroll() {
-    $bg.animate({"top":"0px"});
+    if(!!$bgImage) $bgImage.animate({"top":"0px"});
     $("#journal").animate({"border-top-width":"20px","border-bottom-width":"20px","top":"0px","height":"100%"});
     $(".nav-up").animate({"top":"-48px"});
     $(".nav-dn").animate({"bottom":"-48px"},function() {
@@ -224,7 +224,7 @@ scrollNav = function () {
     if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<200){
       $(".nav-up").css({"top" : "+=8px"});
       $("#journal").css({"border-top-width":"+=2px"});
-      $bg.css({"top":"+=1px"});
+      if(!!$bgImage) $bgImage.css({"top":"+=1px"});
       clearTimeout(cleanUp);
       cleanUp = setTimeout(function() {
         resetScroll();
@@ -243,7 +243,7 @@ scrollNav = function () {
     if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<200){
       $(".nav-dn").css({"bottom" : "+=8px"});
       $("#journal").css({"border-bottom-width":"+=2px","top":"-=2px","height":"+=2px"});
-      $bg.css({"top":"-=1px"});
+      if(!!$bgImage) $bgImage.css({"top":"-=1px"});
       clearTimeout(cleanUp);
       cleanUp = setTimeout(function() {
         resetScroll();
