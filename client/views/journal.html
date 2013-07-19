@@ -3,49 +3,60 @@
   {{#constant}}
   <div class="dummy"></div>  
   {{/constant}}
-    {{#if owner}}
-  <div class="nav">
-    <a class="nav-up" href="#">Previous</a>
-    <a class="nav-dn" href="#">Next</a>
-  </div>
-    {{/if}}
-<div class="journal-wrapper">
-  <div id="journal">
-    {{#if owner}}
-      {{> story story }}
-      {{> postControls story }}
-    {{else}}
-      {{#if story.public}}
+  {{#if owner}}
+    <div class="nav">
+      <a class="nav-up" href="#">Previous</a>
+      <a class="nav-dn" href="#">Next</a>
+    </div>
+
+    {{#unless edit}}
+      {{> details story}}
+    {{/unless}}
+
+  {{else}}
+    {{> shared story }}
+
+  {{/if}}
+
+
+  <div class="journal-wrapper{{#if edit}} edit{{/if}}">
+
+    <div id="journal">
+      {{#if owner}}
         {{> story story }}
-        {{> shared story }}
+        {{#if edit}}
+          {{> postControls story }}
+        {{/if}}
       {{else}}
-        <div class="notice">Sorry, this story is not public.</div>
+        {{#if story.public}}
+          {{> story story }}
+        {{else}}
+          <div class="notice">Sorry, this story is not public.</div>
+        {{/if}}
       {{/if}}
-      <a href="/"><h1 style="position:absolute;z-index:999999">Besterday</h1></a>
-    {{/if}}
+    </div>
   </div>
-</div>
 </template>
 
 
 <template name="story">
 
-  <textarea style="opacity:0" {{#if long}}class="long" {{/if}}{{#unless owner}}disabled {{/unless}}autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
+  <div class="controls-date">
+    <span class="controls-date-month">{{month}}</span>
+    <span class="controls-date-day">{{day}}</span>
+  </div>
+
+  <textarea style="opacity:0" {{#if long}}class="long" {{/if}}{{#unless edit}}disabled {{/unless}}autofocus id="story" name="story" placeholder="What was the best thing that happened to you {{prettyDate}}?">{{text}}</textarea>
 
 </template>
 
 <template name="postControls">
     <div class="media">
-        <a class="media-image {{#if img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
+      <a class="media-image {{#if img}}attached{{/if}}" href="#" alt="Upload Pictures">Upload Picture</a>
     </div>
     <div class="controls">
-      <div class="controls-menu" href="#">
-        <div class="controls-date">
-          <span class="controls-date-month">{{month}}</span>
-          <span class="controls-date-day">{{day}}</span>
-        </div>
-      </div>
-      {{#constant}}<a class="controls-save" href="#">Autosave</a>{{/constant}}
+
+    {{#constant}}<a class="controls-save" href="#">Done</a>{{/constant}}
       <!-- <a class="controls-share" href="#">
         <div class="controls-share-icon {{#if public}}unlock{{/if}}">Share</div>
       </a>
@@ -85,10 +96,22 @@
     </div>
 </template>
 
+
+<template name="details">
+  <div class="details">
+
+    <img class="profile-image" src="http://placehold.it/50x50" />
+    <a href="/{{screenName}}">{{displayName}}</a>'s besterday.
+    <a class="pure-button button edit" href="#">Edit</a>
+    <a class="pure-button button share" href="#">Share</a>
+  </div>
+</template>
+
 <template name="shared">
-  <div class="shared">
-    <p class="shared-intro">
-      {{displayName}} has shared a story with you.
-    </p>
+  <div class="details">
+
+    <img class="profile-image" src="http://placehold.it/50x50" />
+    <a href="/{{screenName}}">{{displayName}}</a>'s besterday. <a href="/">What's a besterday?</a>
+    <a class="pure-button button make" href="/">Make your own.</a>
   </div>
 </template>

@@ -46,37 +46,37 @@ Template.journal.story = function() {
 publicDelay = setTimeout(function(){},1);
 Template.journal.events({
 
-  'click .controls-share' :function(e) {
-    toggleLoad(true,"controls-save");
-    clearTimeout(publicDelay);
-    if(sessionId) {
+  // 'click .controls-share' :function(e) {
+  //   toggleLoad(true,"controls-save");
+  //   clearTimeout(publicDelay);
+  //   if(sessionId) {
 
-      $icon = $(".controls-share-icon");
+  //     $icon = $(".controls-share-icon");
 
-      if($icon.hasClass("unlock")) {
-        $icon.css("background-position","0 0").removeClass("unlock").addClass("lock animate");
-        newPublic=false;
-      } else {
-        $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock animate");
-        newPublic=true;
-      }
+  //     if($icon.hasClass("unlock")) {
+  //       $icon.css("background-position","0 0").removeClass("unlock").addClass("lock animate");
+  //       newPublic=false;
+  //     } else {
+  //       $icon.css("background-position","-378px 0").removeClass("lock").addClass("unlock animate");
+  //       newPublic=true;
+  //     }
 
-      // Let's give the animation some time to complete before updating the server.
-      publicDelay = setTimeout(function() {
-        // The animate class has the CSS animation. 
-        // We need to remove it because otherwise when Meteor rerenders, it will animate again.
-        $icon.removeClass("animate");  
-        toggleLoad(false,"controls-save");
-        Meteor.call("updatePublic",sessionId,newPublic);
+  //     // Let's give the animation some time to complete before updating the server.
+  //     publicDelay = setTimeout(function() {
+  //       // The animate class has the CSS animation. 
+  //       // We need to remove it because otherwise when Meteor rerenders, it will animate again.
+  //       $icon.removeClass("animate");  
+  //       toggleLoad(false,"controls-save");
+  //       Meteor.call("updatePublic",sessionId,newPublic);
 
-      },800);
+  //     },800);
 
-    } else {
-      // Need a better error here.
-      alert("No story to share...");
-    }
+  //   } else {
+  //     // Need a better error here.
+  //     alert("No story to share...");
+  //   }
 
-  },
+  // },
 
   // // Open up the menu...
   // 'click .controls-menu' : function(e) {
@@ -157,16 +157,23 @@ Template.journal.events({
       setTimeout(function() {
         $("#story").verticalCenter(true);
         toggleLoad(false,"controls-save");
+        Meteor.Router.to("/"+sessionScreenName+getDateUrl(Session.get("session_date")));
 
       },0);
 
     },1000);
+  },
+  'click .edit' : function() {
+    Meteor.Router.to("/"+sessionScreenName+getDateUrl(Session.get("session_date"))+"/edit")
   }
 });
 // Helpers
 Template.journal.helpers({
   owner : function() {
     return ownStory();
+  },
+  edit : function() {
+    return (ownStory() && Session.get("edit"));
   }
 });
 
@@ -252,10 +259,19 @@ Template.story.helpers({
   owner : function() {
     return ownStory();
   },
+  edit : function() {
+    return (ownStory() && Session.get("edit"));
+  },
   long : function() {
     if ($dummy==null) return false;
     $dummy.html(formatDummyText(this.text));
-    return !(calculateTop() > 0);
+    return !(calculateTop() >= 0);
+  },
+  month : function() {
+    if(Session.get("session_date")) return monNames[Session.get("session_date").getMonth()];
+  },
+  day : function() {
+    if(Session.get("session_date")) return Session.get("session_date").getDate();
   }
 });
 
@@ -292,11 +308,8 @@ Template.postControls.helpers({
     if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
     else return "Loading...";
   },
-  month : function() {
-    if(Session.get("session_date")) return monNames[Session.get("session_date").getMonth()];
-  },
-  day : function() {
-    if(Session.get("session_date")) return Session.get("session_date").getDate();
+  edit : function() {
+    return (ownStory() && Session.get("edit"));
   },
   formattedUrl : function() {
     if(this.hasOwnProperty("owner")) {
@@ -330,6 +343,19 @@ Template.shared.events({});
 // Helpers
 Template.shared.helpers({
   displayName : function() {
-    return getDisplayName(this.owner);
+    return getDisplayName();
+  },
+  screenName : function() {
+    return sessionScreenName;
+  }
+});
+// Events
+// Helpers
+Template.details.helpers({
+  displayName : function() {
+    return getDisplayName();
+  },
+  screenName : function() {
+    return sessionScreenName;
   }
 });

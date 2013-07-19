@@ -1,0 +1,12 @@
+<template name="profile_grid">
+  <div class="profile-grid">
+    {{#each stories}}
+    <div class="profile-grid-stories">
+      <div class="profile-grid-stories-story{{#if img}} img{{/if}}">
+        {{#if img}}<img src="{{imgUrl}}" />{{/if}}
+        {{text}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>

@@ -17,7 +17,7 @@ makeBackground = function(picture) {
   if (picture && typeof picture != "undefined"){
     // Wait, we gotta check if this is a URL or an object, because you can pass either one in.
     if (typeof picture == "object" && picture.hasOwnProperty("url")) var url = picture.url;
-    else if (picture.indexOf("{") !== -1) var url = JSON.parse(picture).url;
+    else if (picture.indexOf("{") !== -1) var url = jQuery.parseJSON(picture).url;
     else var url = picture; // Phew.
 
     toggleLoad(true,"bg");
@@ -81,7 +81,7 @@ toggleLoad = function(load,target) {
 // verticalCenter: Vertically center the story.
 $dummy = $(".dummy");
 jQuery.fn.verticalCenter = function(force) {
-  $dummy.html(formatDummyText($(this).val()));
+  if(!!$dummy) $dummy.html(formatDummyText($(this).val()));
   setTimeout(function() { 
     $("#story").cssPersist("padding-top",calculateTop());
   },0);
@@ -161,7 +161,7 @@ scrollNav = function () {
     $(".nav-up").rotate(180);
     $(".nav-dn").rotate(180);
     setTimeout(function() {
-      if(setDate(Session.get("session_user"),date)) {
+      if(setDate(Session.get("session_user"),date,true)) {
         resetScroll();
       } else {
         animateFail();
@@ -233,7 +233,7 @@ scrollNav = function () {
     else {
       clearTimeout(cleanUp);
       dateChangeable = false;
-      animateReset( incrementDate(Session.get("session_date"),-1) );
+      animateReset( incrementDate(Session.get("session_date"),1) );
     }
   }
 
@@ -253,7 +253,7 @@ scrollNav = function () {
     else {
       clearTimeout(cleanUp);
       dateChangeable = false;
-      animateReset( incrementDate(Session.get("session_date"),1) );
+      animateReset( incrementDate(Session.get("session_date"),-1) );
     }
   }
 
@@ -342,11 +342,15 @@ getUserId = function(name) {
 getDisplayName = function(id) {
   if(!id) {id = Meteor.userId();}
   user = Meteor.users.find(id).fetch()[0];
-  if(!user.hasOwnProperty("displayName") || !user.displayName || user.displayName == "null") {
-    name = getScreenName(id);
-  }
-  else {
-    name = user.displayName;
+  var name = "";
+  if(user!=undefined) {
+    if(!user.hasOwnProperty("displayName") || !user.displayName || user.displayName == "null") {
+      name = getScreenName(id);
+    }
+
+    else {
+      name = user.displayName;
+    }
   }
   return name;
 }

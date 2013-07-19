@@ -17,7 +17,10 @@ Meteor.startup(function () {
   });
 
   $(window).resize(function() {
-    $("#story").verticalCenter(true);
+    $("#story").cssPersist("width","100%").verticalCenter(true);
+    setTimeout(function(){
+      $("#story").cssPersist("width","+="+getScrollBarWidth());
+    },0)
   })
 
 });
@@ -53,7 +56,7 @@ initialize = function() {
   }
 
   console.log("initialize:",Session.get("session_user"),prettyDate(Session.get("session_date")));
-  setDate(Session.get("session_user"),Session.get("session_date"),false);
+  setDate(Session.get("session_user"),Session.get("session_date"));
 
   $allDays = $(".dashboard-day").fillDay();
 
@@ -61,7 +64,9 @@ initialize = function() {
 
 }
 
-
+Meteor.Router.beforeRouting = function() {
+  Session.set("edit",false);
+}
 
 
 // Routing to the right page.
@@ -99,6 +104,12 @@ Meteor.Router.add({
     return 'dashboard';
   },
 
+  '/:user/beta': function(user) {
+    console.log("our parameters: ",user);
+    sessionScreenName = user;
+    return 'profile';
+  },
+
   '/:user/:year/:month/:date': function(user,year,month,date) {
     var toDate = new Date(year,month-1,date);
     if(user=="null" || user==null || user===false) return 'landing';
@@ -107,6 +118,18 @@ Meteor.Router.add({
     }
     sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
     Session.set("session_date",toDate);
+    console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+    return 'journal';
+  },
+  '/:user/:year/:month/:date/edit': function(user,year,month,date) {
+    var toDate = new Date(year,month-1,date);
+    if(user=="null" || user==null || user===false) return 'landing';
+    if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
+      toDate = incrementDate(new Date(),-1);
+    }
+    sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
+    Session.set("session_date",toDate);
+    Session.set("edit",true);
     console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
     return 'journal';
   },

@@ -42,6 +42,22 @@ Template.dashboard.helpers({
   }
 });
 
+Template.dashboard.events({
+
+  'click .profile-signout' : function(e, tmpl) {
+    return Meteor.logout(function() {
+      console.log("logging out");
+      Session.set("session_user", "");
+      Session.set("session_date", incrementDate(new Date(),-1));
+      sessionId = "";
+      sessionScreenName = "";
+      closeSidebar();
+      Meteor.call("publish");
+      Meteor.Router.to('/');
+    });
+  }
+});
+
 moreDays = function(direction) {
     stroll.unbind( '.dashboard' );
     var $newWeek = $allDays.filter(":lt(7)").clone().removeClass("active");
