@@ -88,11 +88,12 @@ $columnWidth: 24.9%;
     line-height:normal;
     cursor:pointer;
     @media screen and (max-width: $break-md) {
-      width:$columnWidth*2;
+      width:$columnWidth*2 !important;
+      height:$rowHeight !important;
     }
     @media screen and (max-width: $break-sm) {
-      width:100%;
-      &.wide{width:100%;height:$rowHeight;}
+      width:100% !important;
+      height:$rowHeight !important;
     }
     @media screen and (min-width: $break-lg) {
       height:$rowHeight*1.5;
@@ -107,7 +108,7 @@ $columnWidth: 24.9%;
 
     &.large{height:$rowHeight*2;}
     &.wide{width:$columnWidth*2;height:$rowHeight*2; 
-      .profile-grid-stories-story {font-size:32px;padding:100px 40px;}
+      .profile-grid-stories-story {font-size:32px;}
     }
     &.img{color:#ffffff;}
 
@@ -143,15 +144,15 @@ $columnWidth: 24.9%;
       z-index:2;
       display:inline-block;
       overflow:hidden;
-      width:80%;
-      line-height:1.2em;
-      text-overflow: ellipsis;
       max-height: 4.9em;
+      width:80%;
       vertical-align: middle;
       text-align:center;
+      text-overflow: ellipsis;
       font-weight:100;
       font-size:24px;
       font-family:"ratio";
+      line-height:1.2em;
     }
     .profile-grid-stories-date {
       position:absolute;

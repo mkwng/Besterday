@@ -1315,13 +1315,12 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     vertical-align: middle; }
   @media screen and (max-width: 768px) {
     .profile-grid-stories {
-      width: 49.8%; } }
+      width: 49.8% !important;
+      height: 180px !important; } }
   @media screen and (max-width: 320px) {
     .profile-grid-stories {
-      width: 100%; }
-      .profile-grid-stories.wide {
-        width: 100%;
-        height: 180px; } }
+      width: 100% !important;
+      height: 180px !important; } }
   @media screen and (min-width: 1200px) {
     .profile-grid-stories {
       height: 270px; }
@@ -1346,8 +1345,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     width: 49.8%;
     height: 360px; }
     .profile-grid-stories.wide .profile-grid-stories-story {
-      font-size: 32px;
-      padding: 100px 40px; }
+      font-size: 32px; }
   .profile-grid-stories.img {
     color: #ffffff; }
   .profile-grid-stories:hover .profile-grid-stories-story {
@@ -1383,15 +1381,15 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   z-index: 2;
   display: inline-block;
   overflow: hidden;
-  width: 80%;
-  line-height: 1.2em;
-  text-overflow: ellipsis;
   max-height: 4.9em;
+  width: 80%;
   vertical-align: middle;
   text-align: center;
+  text-overflow: ellipsis;
   font-weight: 100;
   font-size: 24px;
-  font-family: "ratio"; }
+  font-family: "ratio";
+  line-height: 1.2em; }
 
 .profile-grid-stories-date {
   position: absolute;
