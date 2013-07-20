@@ -5,6 +5,7 @@
 Meteor.startup(function () {
   Session.set('pub_loaded', false); 
   Session.set('user_loaded', false); 
+  Session.set("grid_count", 10);
 
   // This isn't immediately intuitive, but essentially, run initialize() only when both data sources return.
   Meteor.subscribe('pub_data', function(){
@@ -20,7 +21,9 @@ Meteor.startup(function () {
     $("#story").cssPersist("width","100%").verticalCenter(true);
     setTimeout(function(){
       $("#story").cssPersist("width","+="+getScrollBarWidth());
-    },0)
+    },0);
+    $profileGridInner.isotope({itemSelector:'.profile-grid-stories'});
+
   })
 
 });
@@ -66,6 +69,7 @@ initialize = function() {
 
 Meteor.Router.beforeRouting = function() {
   Session.set("edit",false);
+  Session.set("grid_count", 10);
 }
 
 

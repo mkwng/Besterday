@@ -1,6 +1,8 @@
 {
   "packages": {
     "filepicker": {},
-    "router": {}
+    "router": {},
+    "jquery-masonry": {},
+    "isotope": {}
   }
 }

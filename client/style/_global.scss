@@ -1,72 +1,8 @@
-/*** Config ***/
-
-/* Colors */
-$borderColor1: rgba(255,255,255,0.25); /* used for row 1 & 2 */
-$borderColor2: rgba(255,255,255,0.5);
-$borderColor3: rgba(255,255,255,0.75);
-$borderColor4: rgba(255,255,255,1);  /* used for row 1 & 2 */
-
-/* Dimensions */
-$borderWidthX: 10px;
-$borderWidthY: 10px;
 
 
-@-webkit-keyframes border-loading-indicator-row-2 {
-  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
-  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
-  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
-  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-}
-@-ms-keyframes border-loading-indicator-row-2 {
-  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
-  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
-  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
-  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-}
-@-o-keyframes border-loading-indicator-row-2 {
-  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
-  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
-  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
-  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-}
-@-moz-keyframes border-loading-indicator-row-2 {
-  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
-  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
-  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
-  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-}
-@-keyframes border-loading-indicator-row-2 {
-  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
-  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
-  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
-  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
-}
 
-.border-loading-indicator {
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  margin: -($borderWidthY) 0 0 -($borderWidthX);
-  border: 0px solid $borderColor4;
-  border-width: $borderWidthY $borderWidthX;
-}
 
-.border-loading-indicator.row-2 {
-  top: 75%;
-  animation: border-loading-indicator-row-2 750ms linear infinite;
-}
 
-.border-loading-indicator.col-3 {
-  width: 0px;
-  height: 0px;
-  left: 75%;
-  border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
-}
 
 
 /* ==========================================================================
@@ -85,6 +21,7 @@ body {
   margin:0;
   padding:0;
   background:$bg;
+  color: $grey1;
 }
 .bg {
   position:absolute;
@@ -99,23 +36,6 @@ body {
       opacity:1;
     }
   }
-}
-.bg-loader {
-  @include animation(border-loading-indicator-row-2 750ms linear infinite);
-  @include transition(opacity .5s);
-  position:absolute;
-  top:50%;
-  left:50%;
-  margin-top: -$borderWidthY*5;
-  margin-left: -$borderWidthX*5;
-  width: 0px;
-  height: 0px;
-  // margin: -($borderWidthY) 0 0 -($borderWidthX);
-  border: 0px solid $borderColor4;
-  border-width: $borderWidthY*5 $borderWidthX*5;
-  border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
-  content:"";
-  opacity:0;
 }
 .bg-image {
   /* Positioning */
@@ -201,4 +121,126 @@ body {
     width:50%;
     float:left;
   }
+}
+
+
+/* ==========================================================================
+   Text styles
+   ========================================================================== */
+
+
+@mixin text-h1{
+  font-family:"ratio";
+  font-weight:100;
+  font-size:42px;
+
+}
+
+@mixin text-subtitle {
+  font-family:"rooney-web";
+  font-weight:400;
+  font-size:14px;
+}
+
+@mixin text-smallcaps {
+  font-family:"futura-pt",Arial;
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:16px;
+  letter-spacing:2px;
+}
+
+/* ==========================================================================
+   Loader styles
+   ========================================================================== */
+
+
+/*** Config ***/
+
+/* Colors */
+$borderColor1: rgba(255,255,255,0.25); /* used for row 1 & 2 */
+$borderColor2: rgba(255,255,255,0.5);
+$borderColor3: rgba(255,255,255,0.75);
+$borderColor4: rgba(255,255,255,1);  /* used for row 1 & 2 */
+
+/* Dimensions */
+$borderWidthX: 10px;
+$borderWidthY: 10px;
+
+
+@-webkit-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-ms-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-o-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-moz-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+@-keyframes border-loading-indicator-row-2 {
+  0% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+  25% {border-color: $borderColor3 $borderColor4 $borderColor1 $borderColor2;}
+  50% {border-color: $borderColor2 $borderColor3 $borderColor4 $borderColor1;}
+  75% {border-color: $borderColor1 $borderColor2 $borderColor3 $borderColor3;}
+  100% {border-color: $borderColor4 $borderColor1 $borderColor2 $borderColor3;}
+}
+
+.border-loading-indicator {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  margin: -($borderWidthY) 0 0 -($borderWidthX);
+  border: 0px solid $borderColor4;
+  border-width: $borderWidthY $borderWidthX;
+}
+
+.border-loading-indicator.row-2 {
+  top: 75%;
+  animation: border-loading-indicator-row-2 750ms linear infinite;
+}
+
+.border-loading-indicator.col-3 {
+  width: 0px;
+  height: 0px;
+  left: 75%;
+  border-radius: $borderWidthY $borderWidthX $borderWidthY $borderWidthX // $borderWidthX $borderWidthY $borderWidthX $borderWidthY;
+}
+
+
+
+.bg-loader {
+  @include animation(border-loading-indicator-row-2 750ms linear infinite);
+  @include transition(opacity .5s);
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top: -$borderWidthY*5;
+  margin-left: -$borderWidthX*5;
+  width: 0px;
+  height: 0px;
+  // margin: -($borderWidthY) 0 0 -($borderWidthX);
+  border: 0px solid $borderColor4;
+  border-width: $borderWidthY*5 $borderWidthX*5;
+  border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
+  content:"";
+  opacity:0;
 }

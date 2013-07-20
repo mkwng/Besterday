@@ -2,3 +2,179 @@
    Profile
    ========================================================================== */
 
+#profile {
+  background:#ffffff;
+}
+
+.profile-header {
+  width:100%;
+  background:$grey1;
+  color:#ffffff;
+  text-align:center;
+  padding:40px 0;
+}
+  .profile-header-img {
+    width:120px;
+    height:120px;
+    border-radius:60px;
+  }
+  .profile-header-title {
+    @include text-h1;
+      margin:1em 0 8px 0;
+  }
+  .profile-header-subtitle {
+    @include text-subtitle;
+    margin:0 0 1em 0;
+    color: $grey3;
+  }
+.profile-stats {
+  width:100%;
+  overflow:hidden;
+}
+  .profile-stats-4 {
+    display:block;
+    float:left;
+    width:24.9%;
+    height:180px;
+    @media screen and (max-width: $break-md) {
+      width:49.8%;height:120px;
+      .profile-stats-img {margin:20px 0;}
+      .profile-stats-num {margin:35px 0 0 0;}
+    }
+  }
+    .profile-stats-img {
+      border-left:$grey4 1px solid;
+      margin:50px 0;
+      padding-left:10%;
+      width:30%;
+      float:left;
+      height:80px;
+    }
+    .profile-stats-num {
+      @include text-h1;
+      margin:60px 0 0 0;
+      color:$grey1;
+    }
+    .profile-stats-cap {
+      @include text-subtitle;
+      margin:1em 0;
+      color:$grey4;
+      font-size:12px;
+    }
+$rowHeight: 180px;
+$columnWidth: 24.9%;
+.profile-grid {
+  width:100%;   
+  /* Prevent vertical gaps */
+  overflow:hidden;
+  background:$grey1;
+}
+  .profile-grid-stories {
+    &:before {
+      right:-1em;
+      display: inline-block;
+      height: 100%;
+      content: '';
+      vertical-align: middle;
+    }
+    position:relative;
+    display:block;
+    float:left;
+    overflow:hidden;
+    width:$columnWidth;
+    height:$rowHeight;
+    background:#ffffff;
+    text-align:center;
+    line-height:normal;
+    cursor:pointer;
+    @media screen and (max-width: $break-md) {
+      width:$columnWidth*2;
+    }
+    @media screen and (max-width: $break-sm) {
+      width:100%;
+      &.wide{width:100%;height:$rowHeight;}
+    }
+    @media screen and (min-width: $break-lg) {
+      height:$rowHeight*1.5;
+      &.wide{height:$rowHeight*3;}
+    }
+
+    &.alt-1{background:$borange;color:#ffffff;}
+    &.alt-2{background:$grey4;}
+    &.alt-3{background:#ffffff;}
+    &.alt-4{background:$grey2;color:#ffffff;}
+    &.alt-5{background:$green;color:$green-high}
+
+    &.large{height:$rowHeight*2;}
+    &.wide{width:$columnWidth*2;height:$rowHeight*2; 
+      .profile-grid-stories-story {font-size:32px;padding:100px 40px;}
+    }
+    &.img{color:#ffffff;}
+
+    &:hover {
+
+      .profile-grid-stories-story {color:#ffffff;}
+      .profile-grid-stories-date {opacity:1;top:50%;}
+      &::after {
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        z-index:0;
+        background-color:$yellow;
+        content:"";
+        opacity:.85;
+      }
+    }
+  }
+    .profile-grid-stories-img {
+      position:absolute;
+      left:-5px;
+      top:-5px;
+      right:-5px;
+      bottom:-5px;
+      z-index:0;
+      -webkit-filter: blur(5px);
+      img {height:100%;width:100%;}
+    }
+    .profile-grid-stories-story {
+      position:relative;
+      z-index:2;
+      display:inline-block;
+      overflow:hidden;
+      width:80%;
+      line-height:1.2em;
+      text-overflow: ellipsis;
+      max-height: 4.9em;
+      vertical-align: middle;
+      text-align:center;
+      font-weight:100;
+      font-size:24px;
+      font-family:"ratio";
+    }
+    .profile-grid-stories-date {
+      position:absolute;
+      z-index:2;
+      display:block;
+      width:100px;
+      height:100px;
+      background:url(/img/calendar.svg);
+      left:50%;
+      top:52%;
+      margin:-50px 0 0 -50px;
+      opacity:0;
+      @include transition(top .3s);
+    }
+      .profile-grid-stories-date-month{
+        @include text-smallcaps;
+        color:$yellow;
+        margin: 20px 0 0 0;
+      }
+      .profile-grid-stories-date-date{
+        @include text-smallcaps;
+        color:$grey3;
+        margin:0;
+        font-size:32px;
+      }
+

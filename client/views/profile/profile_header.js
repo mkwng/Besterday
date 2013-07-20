@@ -12,7 +12,7 @@ Template.profile_header.events({});
 
 Template.profile_header.helpers({
   profileImage : function() {
-    return 'http://placehold.it/120x120';
+    return '/img/profile.png';
   },
   displayName : function() {
     return 'Michael Wang';
