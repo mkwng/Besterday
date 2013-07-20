@@ -55,8 +55,7 @@ Template.profile_grid.helpers({
         break;
     }
     ran = (Math.random()*8);
-    if(ran < 1) classes += " large";
-    else if(ran >7.7) classes += "wide";
+    if(ran < 1) classes += !!this.img ? " wide" : " large";
     return classes;
   },
   'date_month' : function() {
