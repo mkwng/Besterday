@@ -130,14 +130,14 @@ body {
 
 
 @mixin text-h1{
-  font-family:"ratio";
+  font-family:"ratio",Arial;
   font-weight:100;
   font-size:42px;
 
 }
 
 @mixin text-subtitle {
-  font-family:"rooney-web";
+  font-family:"rooney-web",Georgia;
   font-weight:400;
   font-size:14px;
 }
@@ -148,6 +148,13 @@ body {
   text-transform:uppercase;
   font-size:16px;
   letter-spacing:2px;
+}
+
+@mixin text-feature {
+  font-weight:100;
+  font-size:32px;
+  font-family:"ratio",Arial;
+  line-height:1.2em;
 }
 
 /* ==========================================================================

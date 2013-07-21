@@ -1,10 +1,23 @@
-/* ==========================================================================
-   Profile
-   ========================================================================== */
 
 #profile {
   background:#ffffff;
+  overflow:hidden;
 }
+
+.profile-outro {
+  @include text-feature;
+  text-align:center;
+  color:$grey4;
+  width:66%;
+  margin:200px auto 200px;
+  span{color:$grey2;}
+}
+
+
+/* ==========================================================================
+   Profile Header
+   ========================================================================== */
+
 
 .profile-header {
   width:100%;
@@ -27,11 +40,17 @@
     margin:0 0 1em 0;
     color: $grey3;
   }
+
+/* ==========================================================================
+   Profile Stats
+   ========================================================================== */
+
 .profile-stats {
   width:100%;
   overflow:hidden;
 }
   .profile-stats-4 {
+    position:relative;
     display:block;
     float:left;
     width:24.9%;
@@ -41,8 +60,12 @@
       .profile-stats-img {margin:20px 0;}
       .profile-stats-num {margin:35px 0 0 0;}
     }
+    @media screen and (max-width: $break-sm) {
+      width:100%;height:140px;padding-top:10px;
+    }
   }
     .profile-stats-img {
+      position:relative;
       border-left:$grey4 1px solid;
       margin:50px 0;
       padding-left:10%;
@@ -54,22 +77,130 @@
       @include text-h1;
       margin:60px 0 0 0;
       color:$grey1;
+      overflow-x:hidden;
+      overflow-y:visible;
     }
     .profile-stats-cap {
       @include text-subtitle;
-      margin:1em 0;
+      margin:0;
       color:$grey4;
       font-size:12px;
+      overflow-x:hidden;
+      overflow-y:visible;
     }
+.profile-stats-4.completion {
+  .profile-stats-img{
+    .bar {position:relative; overflow:hidden; margin-right:12px; height:80px; width:10px; float:right; background:lighten($green,40%);}
+    .fillbar {
+      position:absolute; 
+      width:10px; 
+      height:80px; 
+      top:79px; 
+      left:0; 
+      background:$green; 
+      @include transition(top .8s);
+      &.start{top:80px !important;}
+    }
+  }
+}
+.profile-stats-4.total {
+  .profile-stats-img {
+    .columns{
+      // @include prefix(column-gap,2px);
+      // @include prefix(column-count,6);
+      // line-height:12px;
+      position:relative;
+      margin-right:12px;
+      height:80px;
+    }
+    .block{
+      position:absolute;
+      display: block;
+      vertical-align: bottom;
+      width:8px;
+      height:8px;
+      background:$blue; 
+      float:right;
+      @include prefix(transform-origin,left bottom);
+      @include transition(all .8s); 
+      &.start {
+        right:0;
+        bottom:0;
+        opacity:.1;
+      }
+    }
+  }
+}
+
+@for $i from 0 through 7 {
+  .block:nth-child(#{$i+1}) {
+    right:0;
+    bottom:$i*10px;
+  }
+}
+@for $i from 8 through 15 {
+  .block:nth-child(#{$i+1}) {
+    right:10px;
+    bottom:($i - 8)*10px;
+  }
+}
+@for $i from 16 through 23 {
+  .block:nth-child(#{$i+1}) {
+    right:20px;
+    bottom:($i - 16)*10px;
+  }
+}
+@for $i from 24 through 31 {
+  .block:nth-child(#{$i+1}) {
+    right:30px;
+    bottom:($i - 24)*10px;
+  }
+}
+@for $i from 32 through 39 {
+  .block:nth-child(#{$i+1}) {
+    right:40px;
+    bottom:($i - 32)*10px;
+  }
+}
+
+.profile-stats-4 {
+  .triangle {
+    position:absolute;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 12.5px 0 12.5px 15px;
+    border-color: transparent transparent transparent $yellow;
+    top:50%;
+    margin-top:-12.5px;
+    @include transition(right .8s);
+    &.one {right:12px;}
+    &.two {right:22px;}
+    &.three {right:32px;}
+    &.start {right:12px;}
+  }
+}
+.profile-stats-4.beststreak .triangle {
+  border-color: transparent transparent transparent $red;
+}
+
+/* ==========================================================================
+   Profile Grid
+   ========================================================================== */
+
+
 $rowHeight: 180px;
-$columnWidth: 24.9%;
+$columnWidth: 25%;
 .profile-grid {
-  width:100%;   
+  width:100%;
+  // max-height:$rowHeight*2;
   /* Prevent vertical gaps */
   overflow:hidden;
-  background:$grey1;
+  background:#ffffff;
+  @include transition(max-height 2s);
 }
   .profile-grid-stories {
+
     &:before {
       right:-1em;
       display: inline-block;
@@ -86,19 +217,9 @@ $columnWidth: 24.9%;
     background:#ffffff;
     text-align:center;
     line-height:normal;
+    color:$grey1;
+    text-decoration:none;
     cursor:pointer;
-    @media screen and (max-width: $break-md) {
-      width:$columnWidth*2 !important;
-      height:$rowHeight !important;
-    }
-    @media screen and (max-width: $break-sm) {
-      width:100% !important;
-      height:$rowHeight !important;
-    }
-    @media screen and (min-width: $break-lg) {
-      height:$rowHeight*1.5;
-      &.wide{height:$rowHeight*3;}
-    }
 
     &.alt-1{background:$borange;color:#ffffff;}
     &.alt-2{background:$grey4;}
@@ -106,7 +227,9 @@ $columnWidth: 24.9%;
     &.alt-4{background:$grey2;color:#ffffff;}
     &.alt-5{background:$green;color:$green-high}
 
-    &.large{height:$rowHeight*2;}
+    &.large{height:$rowHeight*2;
+      .profile-grid-stories-story {max-height:7em}
+    }
     &.wide{width:$columnWidth*2;height:$rowHeight*2; 
       .profile-grid-stories-story {font-size:32px;}
     }
@@ -114,7 +237,7 @@ $columnWidth: 24.9%;
 
     &:hover {
 
-      .profile-grid-stories-story {color:#ffffff;}
+      .profile-grid-stories-story {color:$yellow-high;}
       .profile-grid-stories-date {opacity:1;top:50%;}
       &::after {
         position:absolute;
@@ -128,6 +251,25 @@ $columnWidth: 24.9%;
         opacity:.85;
       }
     }
+
+
+
+    @media screen and (max-width: $break-md) {
+      width:$columnWidth*2;
+      height:$rowHeight;
+      &.wide,&.large{width:100%; height:$rowHeight*1.5} 
+      .profile-grid-stories-story{font-size:24px}
+    }
+    @media screen and (max-width: $break-sm) {
+      width:100%;
+      height:$rowHeight;
+      .profile-grid-stories-story{font-size:24px;}
+    }
+    @media screen and (min-width: $break-lg) {
+      height:$rowHeight*1.5;
+      &.wide,&.large{height:$rowHeight*3;}
+    }
+
   }
     .profile-grid-stories-img {
       position:absolute;
@@ -140,6 +282,7 @@ $columnWidth: 24.9%;
       img {height:100%;width:100%;}
     }
     .profile-grid-stories-story {
+      @include text-feature;
       position:relative;
       z-index:2;
       display:inline-block;
@@ -149,10 +292,7 @@ $columnWidth: 24.9%;
       vertical-align: middle;
       text-align:center;
       text-overflow: ellipsis;
-      font-weight:100;
       font-size:24px;
-      font-family:"ratio";
-      line-height:1.2em;
     }
     .profile-grid-stories-date {
       position:absolute;
@@ -178,4 +318,27 @@ $columnWidth: 24.9%;
         margin:0;
         font-size:32px;
       }
-
+.profile-grid-more {
+  @include text-smallcaps;
+  @include background-image-retina('/img/more-shadow',png,800px,50px);
+  @include transition(all .3s);
+  @include prefix(box-shadow, 0px -10px 10px rgba(0,0,0,.15));
+  position:relative;
+  display:block;
+  z-index:2;
+  margin:0 0 20px 0;
+  width:100%;
+  height:100px; 
+  background-position:50% 75px;
+  background-repeat:no-repeat;
+  color:$grey1;
+  text-align:center;
+  line-height:80px;
+  text-decoration:none;
+  opacity:.5;
+  &:hover{
+    color:$yellow;
+    background-position:50% 80px;
+    opacity:1;
+  }
+}

@@ -1,7 +1,7 @@
 <template name="profile_grid">
   <div class="profile-grid"><div class="profile-grid-inner">
     {{#each stories}}
-    <div class="profile-grid-stories{{#if img}} img{{/if}} {{randomClasses}}" data-date="{{date}}">
+    <a class="profile-grid-stories{{#if img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" href="{{url}}">
       {{#if img}}<div class="profile-grid-stories-img"><img src="{{imgUrl}}" /></div>{{/if}}
       <div class="profile-grid-stories-story">
         {{text}}
@@ -10,7 +10,8 @@
         <p class="profile-grid-stories-date-month">{{date_month}}</p>
         <p class="profile-grid-stories-date-date">{{date_date}}</p>
       </div>
-    </div>
+    </a>
     {{/each}}
   </div></div>
+  <a class="profile-grid-more" href="#">Show more&hellip;</a>
 </template>

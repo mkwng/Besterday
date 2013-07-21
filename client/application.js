@@ -22,7 +22,9 @@ Meteor.startup(function () {
     setTimeout(function(){
       $("#story").cssPersist("width","+="+getScrollBarWidth());
     },0);
-    $profileGridInner.isotope({itemSelector:'.profile-grid-stories'});
+
+
+    $(".profile-grid-inner").widthDivByFour();
 
   })
 

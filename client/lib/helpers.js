@@ -7,6 +7,7 @@ $bgPreload = null;
 $bg = undefined;
 $bgImage = undefined;
 makeBackground = function(picture) {
+  if (Meteor.Router.page()!="journal") return false;
 
   if( !$bg || (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
   if( !$bgImage || (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");

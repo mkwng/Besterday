@@ -12,12 +12,20 @@ Template.profile_header.events({});
 
 Template.profile_header.helpers({
   profileImage : function() {
-    return '/img/profile.png';
+    var img = '/img/profile.png';
+    // img = Meteor.user().profileImage
+    return img;
   },
   displayName : function() {
-    return 'Michael Wang';
+    return getDisplayName(Session.get("session_user"));
   },
   memberSince : function() {
-    return 'June 2013';
+    date = incrementDate(new Date(),-1);
+    if(Session.get("user_loaded")) {
+      var user = Meteor.users.findOne(Session.get("session_user"));
+      if(!!user && user.hasOwnProperty("createdAt"))
+        date = new Date(user.createdAt);
+    }
+    return monthNames[date.getMonth()]+" "+date.getFullYear();
   }
 });

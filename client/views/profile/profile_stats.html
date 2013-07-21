@@ -1,22 +1,22 @@
 <template name="profile_stats">
   <div class="profile-stats">
     <div class="profile-stats-4 completion">
-      <div class="profile-stats-img"></div>
+      {{> profile_stats_completion}}
       <p class="profile-stats-num">{{completion}}</p>
       <p class="profile-stats-cap">completion rate</p>
     </div>
     <div class="profile-stats-4 total">
-      <div class="profile-stats-img"></div>
+      {{> profile_stats_total}}
       <p class="profile-stats-num">{{total}}</p>
       <p class="profile-stats-cap">total besterdays</p>
     </div>
     <div class="profile-stats-4 currstreak">
-      <div class="profile-stats-img"></div>
+      {{> profile_stats_currstreak}}
       <p class="profile-stats-num">{{currstreak}}</p>
       <p class="profile-stats-cap">current streak</p>
     </div>
     <div class="profile-stats-4 beststreak">
-      <div class="profile-stats-img"></div>
+      {{> profile_stats_beststreak}}
       <p class="profile-stats-num">{{beststreak}}</p>
       <p class="profile-stats-cap">best streak</p>
     </div>
@@ -29,6 +29,38 @@
 </template>
 
 
+<template name="profile_stats_completion">
+  <div class="profile-stats-img">
+    <div class="bar">
+      <div class="fillbar start" style="top:{{ratio}}px"></div>
+    </div>
+  </div>
+</template>
+
+<template name="profile_stats_total">
+  <div class="profile-stats-img">
+    <div class="columns">
+      {{#each count}}
+        <div class="block start" style="-webkit-transform:scaleY({{num}});-moz-transform:scaleY({{num}});-o-transform:scaleY({{num}});-ms-transform:scaleY({{num}});transform:scaleY({{num}});"></div>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="profile_stats_currstreak">
+  <div class="profile-stats-img">
+    <div class="triangle one start"></div>
+    <div class="triangle two start"></div>
+  </div>
+</template>
+
+<template name="profile_stats_beststreak">
+  <div class="profile-stats-img">
+    <div class="triangle one start"></div>
+    <div class="triangle two start"></div>
+    <div class="triangle three start"></div>
+  </div>
+</template>
 
 
 
