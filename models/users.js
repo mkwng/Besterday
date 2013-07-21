@@ -18,7 +18,9 @@ Meteor.users.allow({
   // Update: Only allow if you are the owner.
   // Remove: Not allowed. Must use destroyStory method.
   update: function (userId,doc,fieldNames) {
-    // can only remove your own documents
-    return true;
+    if(Meteor.userId() == userId)
+      return true;
+    else 
+      return false;
   },
 });

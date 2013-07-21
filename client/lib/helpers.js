@@ -95,17 +95,24 @@ jQuery.fn.verticalCenter = function(force) {
 findStory = function(user,date) {
   if(typeof Stories == "undefined") {Meteor.Error(500,"Trying to find a story without Stories collection.")}
 
-  if(typeof date == "undefined") date = new Date();
+  if(typeof date == "undefined") date = discreteDate(new Date());
 
-  date = new Date(date);
-  start = floorDate(date);
-  end = floorDate(incrementDate(date,1));
+  if(date.getMonth) {
+    console.warn("Finding a legacy date. Timezone issues may occur.")
+    date = new Date(date);
+    start = floorDate(date);
+    end = floorDate(incrementDate(date,1));
 
-  story = Stories.find({"owner": user,"date":{"$gte": start, "$lt": end}},{sort: {created:-1,date:1}}).fetch();
+    story = Stories.find({"owner": user,"date":{"$gte": start, "$lt": end}},{sort: {created:-1,date:1}}).fetch();
+    date = discreteDate(story);
+  } else {
+    story = Stories.find({"owner": user,"discreteDate":date},{sort: {created:-1,date:1}}).fetch();
+  }
+
   if (story.length > 1) {
     if(confirm("Multiple ("+story.length+") stories detected for "+prettyDate(date)+". This is usually our fault. Resolve? No data will be deleted.")) {
       resolveMultiple(story);
-      story = Stories.find({"owner": user,"date":{"$gte": start, "$lt": end}},{sort: {created:-1,date:1}}).fetch();
+      story = Stories.find({"owner": user,"discreteDate":date},{sort: {created:-1,date:1}}).fetch();
     };
   }
   story = story[0];
@@ -113,13 +120,22 @@ findStory = function(user,date) {
   else {return {date:date,text:""};}
 }
 incrementDate = function(date,increment) {
+  if(!!!date) return false;
+  if(date.hasOwnProperty("year")) {
+    date = objectifyDate(date);
+    var newDate = new Date(new Date().setTime(date.getTime() + increment * 24 * 60 * 60 * 1000));
+    return discreteDate(date);
+  } else {
   return new Date(new Date().setTime(date.getTime() + increment * 24 * 60 * 60 * 1000));
+  }
 }
 floorDate = function(date) {
   return new Date(date.getFullYear(),date.getMonth(),date.getDate());
 }
 dayDiff = function(first, second) {
-    return Math.floor(( second - first ) / 86400000);
+  if(first.hasOwnProperty("year")) first = objectifyDate(first); 
+  if(second.hasOwnProperty("year")) second = objectifyDate(second); 
+  return Math.floor(( second - first ) / 86400000);
 }
 
 jQuery.fn.cssPersist = function(prop,val) {
@@ -278,6 +294,7 @@ scrollNav = function () {
 
 
 resolveMultiple = function(storyArray) {
+
   var options = 
       {
         owner: "",
@@ -306,7 +323,11 @@ resolveMultiple = function(storyArray) {
   }
 
 
-  Meteor.call("createStory",options,function(e,r) {console.log(e,r); sessionId = r;});
+  Meteor.call("createStory",options,function(e,r) {
+    console.log(e,r); 
+    discreteDate(Stories.findOne(r));
+    sessionId = r;
+  });
 }
 
 
@@ -370,11 +391,87 @@ ownStory = function() {
 }
 
 getDateUrl = function(date) {
-  return "/"+date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+  if(date.hasOwnProperty("year"))
+    return "/"+date.year+"/"+(date.month+1)+"/"+date.date;
+  else
+    return "/"+date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
 }
 
+discreteDate = function(story) {
+  var ddate = {year:undefined,month:undefined,date:undefined};
+  if(story.getMonth) {
+    ddate = {year:story.getFullYear(),month:story.getMonth(),date:story.getDate()};
+  } else {
+    if(story.hasOwnProperty("discreteDate"))
+      return story.discreteDate;
 
+    console.warn("Caution: Legacy post with no discrete date set. Timezone issues possible.");
+    var date = new Date(story.date);
+    ddate = {year:date.getFullYear(),month:date.getMonth(),date:date.getDate()};
 
+    if(story.owner == Meteor.userId()) {
+      Meteor.call("updateDiscreteDate",story._id,ddate);
+    }
+  }
+  return ddate;
+}
+objectifyDate = function(date) {
+  if(!!date){
+  if (date.hasOwnProperty("year"))
+    return new Date(date.year,date.month,date.date);
+  else if(new Date(date))
+    return new Date(date);
+  }
+  console.warn("Not a valid date.");
+  return null;
+}
 
+updateStats = function(id) {
+  if(id != Meteor.userId()){
+    console.warn("Foreign update attempt. You can't update other users' stats.");
+    return false;
+  }
+  user = Meteor.users.findOne(id);
+  if(!!user) {
 
+    // Last updated
+    var stories = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch();
+    lastUpdate = discreteDate(stories[0]);
+    if (user.profile.hasOwnProperty("lastUpdate"))
+      var dayOld = new Date(user.profile.lastUpdate.year,user.profile.lastUpdate.month,user.profile.lastUpdate.date);
+      var dayLast = new Date(lastUpdate.year,lastUpdate.month,lastUpdate.date);
+      var diff = dayDiff(dayOld,dayLast);
+
+    // Current streak
+    var currstreak = user.profile.hasOwnProperty("currstreak") ? user.profile.currstreak : 1;
+    if (diff == 1) currstreak++;
+    else if (diff > 1) currstreak = 1;
+
+    // Best streak
+    var beststreak = user.profile.hasOwnProperty("beststreak") ? user.profile.beststreak : 1;
+    if(currstreak>beststreak) beststreak = currstreak;
+
+    // Posts
+    var posts = stories.length > user.profile.posts ? stories.length : user.profile.posts;
+
+    // Completion
+    if(user.hasOwnProperty("createdAt")) {
+      var age = dayDiff(user.createdAt,incrementDate(new Date(),-1));
+    }
+    var completion = stories.length / age;
+
+    Meteor.users.update({_id:id}, {$set:{
+      "profile.currstreak":currstreak,
+      "profile.posts":posts,
+      "profile.completion":completion,
+      "profile.beststreak":beststreak,
+      "profile.lastUpdate":lastUpdate
+    }})
+  }
+  else {
+    console.warn("No user found. Could not update");
+    return false;
+  }
+
+}
 

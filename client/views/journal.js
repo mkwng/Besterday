@@ -10,7 +10,7 @@ Template.journal.created = function() {
     $("#story").cssPersist("width","+="+getScrollBarWidth());
   })
   dateSetOnce = false;
-  console.log("created:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+  console.log("created:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
 }
 
 
@@ -21,7 +21,14 @@ Template.journal.rendered = function() {
     // This addresses bug fix #3
     // debugger;
     if(!dateSetOnce) {
-      console.log("journal.rendered:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+      console.log("journal.rendered:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
+
+      if(!!sessionId) {
+        story = Stories.findOne(sessionId);
+        Session.set("session_date",discreteDate(story));
+        Session.set("session_user",story.owner);
+      }
+
       setDate(Session.get("session_user"),Session.get("session_date"));
     }
     setTimeout(scrollNav,10);
@@ -114,7 +121,8 @@ Template.journal.events({
         } else {
           Meteor.call("createStory",{
             owner: Meteor.userId(),
-            date: Session.get("session_date"),
+            date: objectifyDate(Session.get("session_date")),
+            discreteDate: Session.get("session_date"),
             created: new Date().getTime(),
             text: document.getElementById('story').value,
             img: image,
@@ -144,7 +152,8 @@ Template.journal.events({
       } else {
         Meteor.call("createStory",{
           owner: Meteor.userId(),
-          date: Session.get("session_date"),
+          date: objectifyDate(Session.get("session_date")),
+          discreteDate: Session.get("session_date"),
           created: new Date().getTime(),
           text: document.getElementById('story').value,
           public: false
@@ -157,14 +166,16 @@ Template.journal.events({
       setTimeout(function() {
         $("#story").verticalCenter(true);
         toggleLoad(false,"controls-save");
-        Meteor.Router.to("/"+sessionScreenName+getDateUrl(Session.get("session_date")));
+        Meteor.Router.to("/story/"+sessionId);
 
       },0);
+
+      updateStats(Meteor.userId());
 
     },1000);
   },
   'click .edit' : function() {
-    Meteor.Router.to("/"+sessionScreenName+getDateUrl(Session.get("session_date"))+"/edit")
+    Meteor.Router.to("/story/"+sessionId+"/edit");
   }
 });
 // Helpers
@@ -227,7 +238,8 @@ Template.story.events({
       } else {
         Meteor.call("createStory",{
           owner: Meteor.userId(),
-          date: Session.get("session_date"),
+          date: objectifyDate(Session.get("session_date")),
+          discreteDate: Session.get("session_date"),
           created: new Date().getTime(),
           text: document.getElementById('story').value,
           public: false
@@ -253,7 +265,7 @@ Template.story.events({
 // Helpers
 Template.story.helpers({
   prettyDate : function() {
-    if(Session.get("session_date")) return prettyDate(Session.get("session_date"),true);
+    if(Session.get("session_date")) return prettyDate(objectifyDate(Session.get("session_date")),true);
     else return "Loading...";
   },
   owner : function() {
@@ -268,10 +280,10 @@ Template.story.helpers({
     return !(calculateTop() >= 0);
   },
   month : function() {
-    if(Session.get("session_date")) return monNames[Session.get("session_date").getMonth()];
+    if(Session.get("session_date")) return monNames[Session.get("session_date").month];
   },
   day : function() {
-    if(Session.get("session_date")) return Session.get("session_date").getDate();
+    if(Session.get("session_date")) return Session.get("session_date").date;
   }
 });
 
@@ -305,7 +317,7 @@ Template.postControls.events({
 // Helpers
 Template.postControls.helpers({
   prettyDate : function() {
-    if(Session.get("session_date")) return prettyDate(Session.get("session_date"));
+    if(Session.get("session_date")) return prettyDate(objectifyDate(Session.get("session_date")));
     else return "Loading...";
   },
   edit : function() {

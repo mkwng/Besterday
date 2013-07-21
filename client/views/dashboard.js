@@ -1,4 +1,6 @@
 noMore = false;
+currentMiddle = 0;
+activeDate = null;
 
 Template.dashboard.rendered = function() {
   $dashboard = $(".dashboard");
@@ -48,7 +50,7 @@ Template.dashboard.events({
     return Meteor.logout(function() {
       console.log("logging out");
       Session.set("session_user", "");
-      Session.set("session_date", incrementDate(new Date(),-1));
+      Session.set("session_date", discreteDate(incrementDate(new Date(),-1)) );
       sessionId = "";
       sessionScreenName = "";
       closeSidebar();
@@ -109,7 +111,7 @@ infoFill = function($e,thisDate) {
       noMore = false;
     }
 
-    var story = findStory(getUserId(sessionScreenName),thisDate);
+    var story = findStory(getUserId(sessionScreenName),discreteDate(thisDate));
     if(story.text) {
       blurb = story.text;
     } else {
@@ -141,8 +143,10 @@ jQuery.fn.fillDay = function() {
     diff = $allDays.index(this) - currentMiddle;
     if(diff==0) $(this).addClass("active");
 
-    var thisDate = incrementDate(activeDate,-diff)
-    infoFill($(this),thisDate);
+    if (!!activeDate) {
+      var thisDate = incrementDate(activeDate,-diff);
+      infoFill($(this),thisDate);
+    }
   });
 
   return $(this);

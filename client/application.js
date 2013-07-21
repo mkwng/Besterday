@@ -45,8 +45,15 @@ Meteor.autorun(function() {
 });
 
 initialize = function() {
+  // We're entering with just the story id?
+  if(!!sessionId) {
+    story = Stories.findOne(sessionId);
+    Session.set("session_date",discreteDate(story));
+    Session.set("session_user",story.owner);
+  }
+
   // If no date, default date is yesterday.
-  if(!Session.get("session_date")) Session.set("session_date",incrementDate(new Date(),-1));
+  if(!Session.get("session_date")) Session.set("session_date",discreteDate(incrementDate(new Date(),-1)));
 
   if(!Session.get("session_user")) {
     var id;
@@ -60,7 +67,7 @@ initialize = function() {
     // return false;
   }
 
-  console.log("initialize:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+  console.log("initialize:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
   setDate(Session.get("session_user"),Session.get("session_date"));
 
   $allDays = $(".dashboard-day").fillDay();
@@ -82,7 +89,7 @@ Meteor.Router.add({
     // If logged in, set the session to current user.
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
       Session.set("session_user",Meteor.userId());
-      console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+      console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
       dateSetOnce = false;  // Why is this here?
       return 'journal';
     } else {
@@ -94,9 +101,7 @@ Meteor.Router.add({
 
   '/#': 'journal',
 
-  '/404': function() {
-    return 'landing'; 
-  },
+  '/404': 'landing',
 
   '/404#': 'journal',
 
@@ -105,40 +110,64 @@ Meteor.Router.add({
   },
 
   '/:user': function(user) {
-    console.log("our parameters: ",user);
     sessionScreenName = user;
-    return 'dashboard';
+    return 'profile';
   },
-
-  '/:user/beta': function(user) {
-    console.log("our parameters: ",user);
+  '/:user#': function(user) {
     sessionScreenName = user;
     return 'profile';
   },
 
-  '/:user/:year/:month/:date': function(user,year,month,date) {
-    var toDate = new Date(year,month-1,date);
-    if(user=="null" || user==null || user===false) return 'landing';
-    if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
-      toDate = incrementDate(new Date(),-1);
-    }
-    sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
-    Session.set("session_date",toDate);
-    console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
+  // '/:user/beta': function(user) {
+  //   sessionScreenName = user;
+  //   return 'profile';
+  // },
+
+  // '/:year/:month/:date': function(user,year,month,date) {
+
+  //   // If logged in, set the session to current user.
+  //   if (!(Meteor.userId()==null || Meteor.userId()===false)){
+  //     return 'landing';
+  //   }
+
+  //   var toDate = new Date(year,month-1,date);
+  //   if(user=="null" || user==null || user===false) return 'landing';
+  //   if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
+  //     toDate = incrementDate(new Date(),-1);
+  //   }
+  //   sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
+  //   Session.set("session_date",discreteDate(toDate));
+  //   console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
+  //   return 'journal';
+  // },
+  // '/:year/:month/:date/edit': function(user,year,month,date) {
+  //   var toDate = new Date(year,month-1,date);
+  //   if(user=="null" || user==null || user===false) return 'landing';
+  //   if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
+  //     toDate = incrementDate(new Date(),-1);
+  //   }
+  //   sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
+  //   Session.set("session_date",discreteDate(toDate));
+  //   Session.set("edit",true);
+  //   console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
+  //   return 'journal';
+  // },
+  '/story/:storyId': function(storyId) {
+    sessionId = storyId;
     return 'journal';
   },
-  '/:user/:year/:month/:date/edit': function(user,year,month,date) {
-    var toDate = new Date(year,month-1,date);
-    if(user=="null" || user==null || user===false) return 'landing';
-    if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
-      toDate = incrementDate(new Date(),-1);
-    }
-    sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
-    Session.set("session_date",toDate);
+  '/story/:storyId/edit': function(storyId) {
+    console.log("hello");
+    sessionId = storyId;
     Session.set("edit",true);
-    console.log("Router:",Session.get("session_user"),prettyDate(Session.get("session_date")));
     return 'journal';
   },
+  '/story/:storyId/edit#': function(storyId) {
+    console.log("hello");
+    sessionId = storyId;
+    Session.set("edit",true);
+    return 'journal';
+  }
 });
 
 

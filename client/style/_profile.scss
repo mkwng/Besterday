@@ -124,7 +124,6 @@
       @include prefix(transform-origin,left bottom);
       @include transition(all .8s); 
       &.start {
-        right:0;
         bottom:0;
         opacity:.1;
       }

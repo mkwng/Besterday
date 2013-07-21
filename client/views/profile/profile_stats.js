@@ -14,26 +14,51 @@ Template.profile_stats.helpers({
   completion : function() {
     var posts = 0;
     var age = 1;
-    if(Session.get("pub_loaded"))
-      posts = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch().length;
 
     if(Session.get("user_loaded")) {
-      var user = Meteor.users.findOne(Session.get("session_user"));
-      if(!!user && user.hasOwnProperty("createdAt")) {
-        age = dayDiff(user.createdAt,incrementDate(new Date(),-1));
+      if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
+        posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
+        age = dayDiff(floorDate(new Date(user.createdAt)),incrementDate(new Date(),-1));
       }
     }
-    return Math.round(posts/age*100)+"%";
+    return Math.min(Math.round(posts/age*100),100)+"%";
   },
   total : function() {
-    var posts = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch().length;
+    var posts = 0;
+
+    if(Session.get("user_loaded")) {
+      if(!!user && user.hasOwnProperty("profile")) {
+        posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
+      }
+    }
     return posts;
   },
   currstreak : function() {
-    return "0";
+    var streak = 0;
+
+    if(Session.get("user_loaded")) {
+      if(!!user && user.hasOwnProperty("profile")) {
+
+        var dayOld = new Date(user.profile.lastUpdate.year,user.profile.lastUpdate.month,user.profile.lastUpdate.date);
+        var diff = dayDiff(dayOld,new Date());
+
+        if (diff <= 1) streak = user.profile.hasOwnProperty("currstreak") ? user.profile.currstreak : 0;
+        else streak = 0;
+      }
+    }
+
+    return streak;
   },
   beststreak : function() {
-    return '6';
+    var streak = 0;
+
+    if(Session.get("user_loaded")) {
+      if(!!user && user.hasOwnProperty("profile")) {
+        streak = user.profile.hasOwnProperty("beststreak") ? user.profile.beststreak : 0;
+      }
+    }
+
+    return streak;
   },
 
 });
@@ -49,18 +74,17 @@ Template.profile_stats_completion.rendered = function() {
 }
 Template.profile_stats_completion.helpers({
   ratio : function() {
+
     var posts = 0;
     var age = 1;
-    if(Session.get("pub_loaded"))
-      posts = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch().length;
 
     if(Session.get("user_loaded")) {
-      var user = Meteor.users.findOne(Session.get("session_user"));
-
-      if(!!user && user.hasOwnProperty("createdAt")) {
-        age = dayDiff(user.createdAt,incrementDate(new Date(),-1));
+      if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
+        posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
+        age = dayDiff(floorDate(new Date(user.createdAt)),incrementDate(new Date(),-1));
       }
     }
+
     return 80-Math.round(Math.min(Math.round(posts/age*100),100)*80/100);
   }
 });
@@ -72,7 +96,14 @@ Template.profile_stats_total.rendered = function() {
 }
 Template.profile_stats_total.count = function() {
   var blocks = [];
-  var posts = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch().length;
+  var posts = 0;
+
+  if(Session.get("user_loaded")) {
+    if(!!user && user.hasOwnProperty("profile")) {
+      posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
+    }
+  }
+
   if(posts<40) rate = 1;
   else if(posts<400) rate = 10;
   else if(posts<4000) rate = 100;
