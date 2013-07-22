@@ -32,16 +32,17 @@ Meteor.startup(function () {
 
 Meteor.autorun(function() {
   // Whenever this session variable changes, run this function.
-  var message = Session.get('displayMessage');
-  if (message) {
-    var stringArray = message.split('&amp;');
-    // ui.notify(stringArray[0], stringArray[1])
-    //   .effect('slide')
-    //   .closable();
-    alert(stringArray);
+  // var message = Session.get('displayMessage');
+  // if (message) {
+  //   var stringArray = message.split('&amp;');
+  //   // ui.notify(stringArray[0], stringArray[1])
+  //   //   .effect('slide')
+  //   //   .closable();
+  //   alert(stringArray);
 
-    Session.set('displayMessage', null);
-  }
+  //   Session.set('displayMessage', null);
+  // }
+  console.log("Hello autorun!");
 });
 
 initialize = function() {
@@ -55,22 +56,32 @@ initialize = function() {
   // If no date, default date is yesterday.
   if(!Session.get("session_date")) Session.set("session_date",discreteDate(incrementDate(new Date(),-1)));
 
+  // Still no session user set?
   if(!Session.get("session_user")) {
     var id;
     // We have a screen name, but no user yet? This is from Router.
     if(sessionScreenName) id = getUserId(sessionScreenName);
     else if(Meteor.userId()) id = Meteor.userId();
 
+    // Still no user. Must not be logged in. Re-route to home.
     if(id) Session.set("session_user",id);
-    else Meteor.Router.to('/');
-
-    // return false;
+    else {
+      console.warn("This should not have happened.");
+      Meteor.Router.to('/');
+    }
   }
+
 
   console.log("initialize:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
   setDate(Session.get("session_user"),Session.get("session_date"));
 
-  $allDays = $(".dashboard-day").fillDay();
+
+  // We don't have a story for today yet:
+  if(!!!story) { 
+    story = Stories.findOne({owner:Meteor.userId(),discreteDate:Session.get("session_date")});
+    if (story==undefined)
+      Meteor.Router.to('/story/today');
+  }
 
   return true;
 
@@ -88,35 +99,30 @@ Meteor.Router.add({
   '/': function() {
     // If logged in, set the session to current user.
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
-      Session.set("session_user",Meteor.userId());
-      console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
-      dateSetOnce = false;  // Why is this here?
-      return 'journal';
+      return 'profile';
     } else {
       return 'landing';
     }
   },
 
-  '/welcome': 'landing',
-
-  '/#': 'journal',
-
   '/404': 'landing',
 
-  '/404#': 'journal',
+  '/user/:user': function(user) {
+    sessionScreenName = user;
+    return 'profile';
+  },
+  '/story/today':function() {
+    Session.set("edit",true);
+    return 'journal';
+  },
+  '/story/:storyId': function(storyId) {
+    sessionId = storyId;
+    return 'journal';
+  },
 
   '/youdonthaveausername': function() {
     return 'youdonthaveausername';
-  },
-
-  '/:user': function(user) {
-    sessionScreenName = user;
-    return 'profile';
-  },
-  '/:user#': function(user) {
-    sessionScreenName = user;
-    return 'profile';
-  },
+  }
 
   // '/:user/beta': function(user) {
   //   sessionScreenName = user;
@@ -151,23 +157,19 @@ Meteor.Router.add({
   //   Session.set("edit",true);
   //   console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
   //   return 'journal';
+  // },,
+  // '/story/:storyId/edit': function(storyId) {
+  //   console.log("hello");
+  //   sessionId = storyId;
+  //   Session.set("edit",true);
+  //   return 'journal';
   // },
-  '/story/:storyId': function(storyId) {
-    sessionId = storyId;
-    return 'journal';
-  },
-  '/story/:storyId/edit': function(storyId) {
-    console.log("hello");
-    sessionId = storyId;
-    Session.set("edit",true);
-    return 'journal';
-  },
-  '/story/:storyId/edit#': function(storyId) {
-    console.log("hello");
-    sessionId = storyId;
-    Session.set("edit",true);
-    return 'journal';
-  }
+  // '/story/:storyId/edit#': function(storyId) {
+  //   console.log("hello");
+  //   sessionId = storyId;
+  //   Session.set("edit",true);
+  //   return 'journal';
+  // }
 });
 
 

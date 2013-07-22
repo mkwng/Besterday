@@ -1566,7 +1566,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   width: 100%;
   /* Prevent vertical gaps */
   overflow: hidden;
-  background: #ffffff;
+  background: #cdc6c6;
   -webkit-transition: max-height 2s;
   -moz-transition: max-height 2s;
   -ms-transition: max-height 2s;
@@ -1758,6 +1758,14 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     color: #ffc157;
     background-position: 50% 80px;
     opacity: 1; }
+  .profile-grid-more.hide {
+    -webkit-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    background-image: none;
+    height: 81px; }
 
 /* ==========================================================================
    Filepicker

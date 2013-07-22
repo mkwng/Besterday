@@ -175,7 +175,7 @@ Template.journal.events({
     },1000);
   },
   'click .edit' : function() {
-    Meteor.Router.to("/story/"+sessionId+"/edit");
+    // Meteor.Router.to("/story/"+sessionId+"/edit");
   }
 });
 // Helpers

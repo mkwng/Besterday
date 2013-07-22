@@ -195,7 +195,7 @@ $columnWidth: 25%;
   // max-height:$rowHeight*2;
   /* Prevent vertical gaps */
   overflow:hidden;
-  background:#ffffff;
+  background:darken($grey4,10%);
   @include transition(max-height 2s);
 }
   .profile-grid-stories {
@@ -339,5 +339,10 @@ $columnWidth: 25%;
     color:$yellow;
     background-position:50% 80px;
     opacity:1;
+  }
+  &.hide{
+    @include prefix(box-shadow, 0px 10px 10px rgba(0,0,0,.05));
+    background-image:none;
+    height:81px;
   }
 }

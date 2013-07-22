@@ -10,6 +10,7 @@ formatDummyText = function(text) {
 }
 calculateTop = function() {
   var top=0;
+  if (!$dummy) return 0;
 
     if ($dummy.length) {
       var h = $(window).height()-40;

@@ -18,7 +18,7 @@ Template.profile_stats.helpers({
     if(Session.get("user_loaded")) {
       if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
         posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
-        age = dayDiff(floorDate(new Date(user.createdAt)),incrementDate(new Date(),-1));
+        age = dayDiff(user.createdAt,new Date())+1;
       }
     }
     return Math.min(Math.round(posts/age*100),100)+"%";
@@ -81,7 +81,7 @@ Template.profile_stats_completion.helpers({
     if(Session.get("user_loaded")) {
       if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
         posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
-        age = dayDiff(floorDate(new Date(user.createdAt)),incrementDate(new Date(),-1));
+        age = dayDiff(user.createdAt,new Date())+1;
       }
     }
 

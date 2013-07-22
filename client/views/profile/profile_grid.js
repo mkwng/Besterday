@@ -21,9 +21,21 @@ Template.profile_grid.stories = function() {
 Template.profile_grid.events({
   "click .profile-grid-more" : function(e) {
     e.preventDefault();
-    $(e.currentTarget).fadeOut();
-    if(!!$removedItems)
-      $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems);
+    var $this = $(e.currentTarget);
+    if(!!$removedItems) {
+
+      if($this.hasClass("hide")){
+        $removedItems = $(".profile-grid-stories").slice(5);
+        $(".profile-grid-inner").isotope('remove',$removedItems);
+        $this.html("Show more&hellip;");
+      }
+      else{
+        $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems);
+        $this.html("Show less&hellip;");
+      }
+
+      $this.toggleClass("hide");
+    }
   }
 });
 
