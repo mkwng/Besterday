@@ -14,6 +14,8 @@ $blue: #50b7e3;
 $yellow: #ffc157;
   $yellow-high: #ffea85;
 $borange: #ff905a;
+  $borange-high: #ffbf4d;
+  $borange-shad: #F46640;
 $red: #f56d85;
 
 $grey1: #312b2c;
@@ -36,6 +38,17 @@ $break-lg: 1200px;
       -ms-#{$property}: $value;
        -o-#{$property}: $value;
           #{$property}: $value;
+}
+
+@mixin gradient($color1, $color2) {
+background: $color1; /* Old browsers */
+background: -moz-linear-gradient(-45deg, $color1 0%, $color2 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,$color1), color-stop(100%,$color2)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg, $color1 0%,$color2 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg, $color1 0%,$color2 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg, $color1 0%,$color2 100%); /* IE10+ */
+background: linear-gradient(135deg, $color1 0%,$color2 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 @mixin animation($args...) {

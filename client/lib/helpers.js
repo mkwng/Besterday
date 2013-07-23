@@ -466,15 +466,6 @@ updateStats = function(id) {
       }
       var completion = stories.length / age;
     }
-    console.log(stories.length,age);
-
-    console.log({
-      "profile.currstreak":currstreak,
-      "profile.posts":posts,
-      "profile.completion":completion,
-      "profile.beststreak":beststreak,
-      "profile.lastUpdate":lastUpdate
-    });
 
     Meteor.users.update({_id:id}, {$set:{
       "profile.currstreak":currstreak,

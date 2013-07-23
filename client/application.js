@@ -25,23 +25,13 @@ Meteor.startup(function () {
 
 
     $(".profile-grid-inner").widthDivByFour();
+    $(".profile-grid-stories.img").imgCover();
 
   })
 
 });
 
 Meteor.autorun(function() {
-  // Whenever this session variable changes, run this function.
-  // var message = Session.get('displayMessage');
-  // if (message) {
-  //   var stringArray = message.split('&amp;');
-  //   // ui.notify(stringArray[0], stringArray[1])
-  //   //   .effect('slide')
-  //   //   .closable();
-  //   alert(stringArray);
-
-  //   Session.set('displayMessage', null);
-  // }
   console.log("Hello autorun!");
 });
 
@@ -124,52 +114,7 @@ Meteor.Router.add({
     return 'youdonthaveausername';
   }
 
-  // '/:user/beta': function(user) {
-  //   sessionScreenName = user;
-  //   return 'profile';
-  // },
 
-  // '/:year/:month/:date': function(user,year,month,date) {
-
-  //   // If logged in, set the session to current user.
-  //   if (!(Meteor.userId()==null || Meteor.userId()===false)){
-  //     return 'landing';
-  //   }
-
-  //   var toDate = new Date(year,month-1,date);
-  //   if(user=="null" || user==null || user===false) return 'landing';
-  //   if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
-  //     toDate = incrementDate(new Date(),-1);
-  //   }
-  //   sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
-  //   Session.set("session_date",discreteDate(toDate));
-  //   console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
-  //   return 'journal';
-  // },
-  // '/:year/:month/:date/edit': function(user,year,month,date) {
-  //   var toDate = new Date(year,month-1,date);
-  //   if(user=="null" || user==null || user===false) return 'landing';
-  //   if(toDate > incrementDate(floorDate(new Date()),-1/(24 * 60 * 60 * 1000) ) ) { // compare to 1 second before midnight
-  //     toDate = incrementDate(new Date(),-1);
-  //   }
-  //   sessionScreenName = user; // We're not looking up userId yet, because data may not be published yet.
-  //   Session.set("session_date",discreteDate(toDate));
-  //   Session.set("edit",true);
-  //   console.log("Router:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
-  //   return 'journal';
-  // },,
-  // '/story/:storyId/edit': function(storyId) {
-  //   console.log("hello");
-  //   sessionId = storyId;
-  //   Session.set("edit",true);
-  //   return 'journal';
-  // },
-  // '/story/:storyId/edit#': function(storyId) {
-  //   console.log("hello");
-  //   sessionId = storyId;
-  //   Session.set("edit",true);
-  //   return 'journal';
-  // }
 });
 
 

@@ -189,7 +189,7 @@
 
 
 $rowHeight: 180px;
-$columnWidth: 25%;
+$columnWidth: 20%;
 .profile-grid {
   width:100%;
   // max-height:$rowHeight*2;
@@ -220,10 +220,10 @@ $columnWidth: 25%;
     text-decoration:none;
     cursor:pointer;
 
-    &.alt-1{background:$borange;color:#ffffff;}
-    &.alt-2{background:$grey4;}
-    &.alt-3{background:#ffffff;}
-    &.alt-4{background:$grey2;color:#ffffff;}
+    &.alt-1{@include gradient($borange,mix($borange,$borange-shad,75%));color:#ffffff;}
+    &.alt-2{@include gradient($grey4,mix($grey4,$grey3,95%))}
+    &.alt-3{@include gradient(#ffffff,mix(#ffffff,$grey4))}
+    &.alt-4{@include gradient($grey2,mix($grey2,$grey1,75%));color:#ffffff;}
     &.alt-5{background:$green;color:$green-high}
 
     &.large{height:$rowHeight*2;
@@ -235,7 +235,6 @@ $columnWidth: 25%;
     &.img{color:#ffffff;}
 
     &:hover {
-
       .profile-grid-stories-story {color:$yellow-high;}
       .profile-grid-stories-date {opacity:1;top:50%;}
       &::after {
@@ -254,7 +253,7 @@ $columnWidth: 25%;
 
 
     @media screen and (max-width: $break-md) {
-      width:$columnWidth*2;
+      width:50%;
       height:$rowHeight;
       &.wide,&.large{width:100%; height:$rowHeight*1.5} 
       .profile-grid-stories-story{font-size:24px}
@@ -265,6 +264,7 @@ $columnWidth: 25%;
       .profile-grid-stories-story{font-size:24px;}
     }
     @media screen and (min-width: $break-lg) {
+      font-size:22px;
       height:$rowHeight*1.5;
       &.wide,&.large{height:$rowHeight*3;}
     }
@@ -286,7 +286,7 @@ $columnWidth: 25%;
       z-index:2;
       display:inline-block;
       overflow:hidden;
-      max-height: 4.9em;
+      max-height: 4.7em;
       width:80%;
       vertical-align: middle;
       text-align:center;
@@ -335,14 +335,22 @@ $columnWidth: 25%;
   line-height:80px;
   text-decoration:none;
   opacity:.5;
+  &.less{
+    @include prefix(box-shadow, 0px 0px 20px rgba(0,0,0,.10));
+    background-image:none;
+    height:81px;    
+    &.fixed{
+      position: fixed;
+      bottom: 0px;
+      margin-bottom:0;
+      background: #ffffff;
+      opacity: 1;
+      @include transition(all 0s);
+    }
+  }
   &:hover{
     color:$yellow;
     background-position:50% 80px;
     opacity:1;
-  }
-  &.hide{
-    @include prefix(box-shadow, 0px 10px 10px rgba(0,0,0,.05));
-    background-image:none;
-    height:81px;
   }
 }

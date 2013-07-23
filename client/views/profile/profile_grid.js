@@ -28,10 +28,11 @@ Template.profile_grid.events({
     var $this = $(e.currentTarget);
     if(!!$removedItems) {
 
-      if($this.hasClass("hide")){
-        $removedItems = $(".profile-grid-stories").slice(5);
+      if($this.hasClass("less")){
+        $removedItems = $(".profile-grid-stories").slice(7);
         $(".profile-grid-inner").isotope('remove',$removedItems);
-        $this.html("Show more&hellip;");
+        $this.html("Show more&hellip;").removeClass("fixed");
+        $(window).unbind('scroll',stickyLess);
       }
       else{
         $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
@@ -41,10 +42,11 @@ Template.profile_grid.events({
             $(this).closest(".img").imgCover();
           });
         });
-        $this.html("Show less&hellip;");
+        $this.html("Show less&hellip;").addClass("fixed");
+        $(window).bind('scroll',stickyLess);
       }
 
-      $this.toggleClass("hide");
+      $this.toggleClass("less");
     }
   }
 });
@@ -133,20 +135,21 @@ $removedItems = {};
 jQuery.fn.widthDivByFour = function(callback) {
   clearTimeout(isoTimeout);
   var width = $(window).width();
+  var lcd = width<768 ? 10 : 5;
 
-  if(width%4!=0){
-    width = Math.floor(width / 4) * 4;
+  if(width%lcd!=0){
+    width = Math.floor(width / lcd) * lcd;
   }
   $(this).css("width",width);
 
   isoTimeout = setTimeout(function() {
     if (callback=="first") {
-      $removedItems = $(".profile-grid-stories").slice(5).remove();
+      $removedItems = $(".profile-grid-stories").slice(7).addClass("small").remove();
       $(".profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");
-      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/4}});
+      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/10}});
     }
     else
-      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/4}});
+      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/10}});
   },100);
 
   return $(this);
@@ -194,7 +197,14 @@ jQuery.fn.imgCover = function() {
   });
 }
 
-
+stickyLess = function() {
+  $button = $(".profile-grid-more");
+  console.log($(window).scrollTop(),$(window).height(),$button.height(),$(".profile-grid").offset().top,$(".profile-grid").height());
+  if($(window).scrollTop()+$(window).height()-$button.height()>$(".profile-grid").offset().top+$(".profile-grid").height())
+    $button.removeClass("fixed");
+  else
+    $button.addClass("fixed");
+}
 
 
 
