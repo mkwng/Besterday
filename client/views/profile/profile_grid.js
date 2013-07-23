@@ -7,6 +7,10 @@ Template.profile_grid.rendered = function() {
   // $profileGrid = $(".profile-grid").css({"width":"+="+getScrollBarWidth(),"padding-right":getScrollBarWidth()});
   $profileGridInner = $(".profile-grid-inner");
   $profileGridInner.widthDivByFour("first");
+  $(".profile-grid-stories.img").imgCover();
+  $(".profile-grid-stories.img img").load(function() {
+    $(this).closest(".img").imgCover();
+  });
 }
 
 
@@ -30,7 +34,13 @@ Template.profile_grid.events({
         $this.html("Show more&hellip;");
       }
       else{
-        $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems);
+        $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
+          // Resize images to fit the grid.
+          $(".profile-grid-stories.img").imgCover();
+          $(".profile-grid-stories.img img").load(function() {
+            $(this).closest(".img").imgCover();
+          });
+        });
         $this.html("Show less&hellip;");
       }
 
@@ -141,3 +151,57 @@ jQuery.fn.widthDivByFour = function(callback) {
 
   return $(this);
 };
+
+jQuery.fn.imgCover = function() {
+  this.each(function() {
+
+    // Image container
+    $imageContainer = $(this).find(".profile-grid-stories-img");
+
+    // Image width
+    var screenImage = $imageContainer.find("img");
+
+    var theImage = new Image();
+    if(!theImage.hasOwnProperty("src")) return false;
+
+    theImage.src = screenImage.attr("src");
+    var imageWidth = theImage.width;
+    var imageHeight = theImage.height;
+
+    // Container width
+    var containerWidth = $(this).width();
+    var containerHeight = $(this).height();
+
+    var y;
+    var x;
+
+    // Determine if it needs to be stretched horizontally or vertically
+    if(imageWidth/imageHeight > containerWidth/containerHeight) {
+      y = containerHeight * 1.1;
+      x = imageWidth * containerHeight/imageHeight * 1.1;
+    } else {
+      x = containerWidth * 1.1;
+      y = imageHeight * containerWidth/imageWidth * 1.1;
+    }
+
+    var marginX = -1 * (x - containerWidth)/2;
+    var marginY = -1 * (y - containerHeight)/2;
+
+
+    $imageContainer.css("margin",marginY+"px "+marginX+"px "+marginY+"px "+marginX+"px");
+    return true;
+
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+

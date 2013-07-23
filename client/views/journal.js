@@ -166,11 +166,11 @@ Template.journal.events({
       setTimeout(function() {
         $("#story").verticalCenter(true);
         toggleLoad(false,"controls-save");
+        updateStats(Meteor.userId());
         Meteor.Router.to("/story/"+sessionId);
 
       },0);
 
-      updateStats(Meteor.userId());
 
     },1000);
   },
