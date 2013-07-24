@@ -89,6 +89,7 @@ Meteor.Router.add({
   '/': function() {
     // If logged in, set the session to current user.
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
+      Session.set("session_user",Meteor.userId());
       return 'profile';
     } else {
       return 'landing';

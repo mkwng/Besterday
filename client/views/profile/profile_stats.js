@@ -103,10 +103,10 @@ Template.profile_stats_total.count = function() {
       posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
     }
   }
-
   if(posts<40) rate = 1;
   else if(posts<400) rate = 10;
   else if(posts<4000) rate = 100;
+  else rate = 1000;
   for (var i = posts;i>=0;i-=rate) {
     if(i<rate) blocks.push({num:(i%rate)/rate});
     else blocks.push({num:1});
