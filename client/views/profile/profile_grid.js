@@ -23,6 +23,10 @@ Template.profile_grid.stories = function() {
 }
 
 Template.profile_grid.events({
+  "click a.profile-grid-stories" : function(e) {
+    e.preventDefault();
+    $(e.currentTarget).showStory();
+  },
   "click .profile-grid-more" : function(e) {
     e.preventDefault();
     var $this = $(e.currentTarget);
@@ -180,18 +184,25 @@ jQuery.fn.imgCover = function() {
 
     // Determine if it needs to be stretched horizontally or vertically
     if(imageWidth/imageHeight > containerWidth/containerHeight) {
-      y = containerHeight * 1.1;
-      x = imageWidth * containerHeight/imageHeight * 1.1;
+      y = containerHeight;
+      x = imageWidth * containerHeight/imageHeight;
     } else {
-      x = containerWidth * 1.1;
-      y = imageHeight * containerWidth/imageWidth * 1.1;
+      x = containerWidth;
+      y = imageHeight * containerWidth/imageWidth;
     }
 
-    var marginX = -1 * (x - containerWidth)/2;
-    var marginY = -1 * (y - containerHeight)/2;
+    var marginX = -1 * (x/4 - containerWidth)/2;
+    var marginY = -1 * (y/4 - containerHeight)/2;
+
+    console.log(marginX/containerWidth,marginY/containerHeight);
 
 
-    $imageContainer.css("margin",marginY+"px "+marginX+"px "+marginY+"px "+marginX+"px");
+    $imageContainer.css({
+      "left":(marginX/containerWidth)*100+"%",
+      "right":(marginX/containerWidth)*100+"%",
+      "bottom":(marginY/containerHeight)*100+"%",
+      "top":(marginY/containerHeight)*100+"%"
+    });
     return true;
 
   });
