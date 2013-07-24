@@ -13,7 +13,7 @@ jQuery.fn.showStory = function() {
         left:"40px",
         width:$(window).width()-80+"px",
         height:$(window).height()-80+"px"
-      }).addClass("giant-clone").attr("data-original",$.param({
+      }).addClass("giant-clone no-hover").attr("data-original",$.param({
         top:$t.offset().top - $(window).scrollTop(),
         left:$t.offset().left,
         width:$t.width(),
@@ -22,12 +22,12 @@ jQuery.fn.showStory = function() {
       $t.css("opacity",0.25);
     } else if($t.hasClass("giant-clone")) {
       $tc = $(".giant-clone");
-      $tc.animate($.deparam($tc.attr("data-original")),function() {
+      $tc.removeClass("giant-clone").animate($.deparam($tc.attr("data-original")),function() {
         $(".profile-grid-stories").css("opacity",1);
         this.remove();
       });
     } else {
-      $tc = $(".giant-clone").animate($.deparam($tc.attr("data-original")),function() {
+      $tc = $(".giant-clone").removeClass("giant-clone").animate($.deparam($tc.attr("data-original")),function() {
         $t.css("opacity",1);
         this.remove();
       });
