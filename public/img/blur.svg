@@ -2,7 +2,7 @@
 
   <filter id="blur">
 
-    <feGaussianBlur stdDeviation="3" />
+    <feGaussianBlur stdDeviation="1" />
 
   </filter>
 

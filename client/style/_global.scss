@@ -58,6 +58,21 @@ body {
   @include transform(scale(5));
   filter:(url(/img/blur.svg#blur));
 }
+.cover{
+  @include accelerate;
+  @include prefix(perspective,600px);
+  @include transition(all .5s);
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:10;
+  width:100%;
+  height:100%;
+  background:rgba(49,43,44,0);
+  &.visible{
+    background:rgba(49,43,44,.5);
+  }
+}
 
   .nav {
     /* Positioning */

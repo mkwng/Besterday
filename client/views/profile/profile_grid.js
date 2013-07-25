@@ -8,8 +8,9 @@ Template.profile_grid.rendered = function() {
   $profileGridInner = $(".profile-grid-inner");
   $profileGridInner.widthDivByFour("first");
   $(".profile-grid-stories.img").imgCover();
-  $(".profile-grid-stories.img img").load(function() {
-    $(this).closest(".img").imgCover();
+  $(".profile-grid-stories.img img").css("opacity",0).load(function() {
+    $(this).closest(".img").imgCover("");
+    $(this).css("opacity",1);
   });
 }
 
@@ -159,58 +160,9 @@ jQuery.fn.widthDivByFour = function(callback) {
   return $(this);
 };
 
-jQuery.fn.imgCover = function() {
-  this.each(function() {
-
-    // Image container
-    $imageContainer = $(this).find(".profile-grid-stories-img");
-
-    // Image width
-    var screenImage = $imageContainer.find("img");
-
-    var theImage = new Image();
-    if(!theImage.hasOwnProperty("src")) return false;
-
-    theImage.src = screenImage.attr("src");
-    var imageWidth = theImage.width;
-    var imageHeight = theImage.height;
-
-    // Container width
-    var containerWidth = $(this).width();
-    var containerHeight = $(this).height();
-
-    var y;
-    var x;
-
-    // Determine if it needs to be stretched horizontally or vertically
-    if(imageWidth/imageHeight > containerWidth/containerHeight) {
-      y = containerHeight;
-      x = imageWidth * containerHeight/imageHeight;
-    } else {
-      x = containerWidth;
-      y = imageHeight * containerWidth/imageWidth;
-    }
-
-    var marginX = -1 * (x/4 - containerWidth)/2;
-    var marginY = -1 * (y/4 - containerHeight)/2;
-
-    console.log(marginX/containerWidth,marginY/containerHeight);
-
-
-    $imageContainer.css({
-      "left":(marginX/containerWidth)*100+"%",
-      "right":(marginX/containerWidth)*100+"%",
-      "bottom":(marginY/containerHeight)*100+"%",
-      "top":(marginY/containerHeight)*100+"%"
-    });
-    return true;
-
-  });
-}
 
 stickyLess = function() {
   $button = $(".profile-grid-more");
-  console.log($(window).scrollTop(),$(window).height(),$button.height(),$(".profile-grid").offset().top,$(".profile-grid").height());
   if($(window).scrollTop()+$(window).height()-$button.height()>$(".profile-grid").offset().top+$(".profile-grid").height())
     $button.removeClass("fixed");
   else

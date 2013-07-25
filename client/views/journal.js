@@ -167,7 +167,7 @@ Template.journal.events({
         $("#story").verticalCenter(true);
         toggleLoad(false,"controls-save");
         updateStats(Meteor.userId());
-        Meteor.Router.to("/story/"+sessionId);
+        Meteor.Router.to("/user/"+sessionScreenName);
 
       },0);
 
