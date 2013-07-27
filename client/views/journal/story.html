@@ -2,7 +2,7 @@
 <div id="storytime">
 
 <div class="cover visible no-transition" style="display: block;">
-  <a class="cover-area" href="#">Close</a>
+  <a class="cover-area" href="#"></a>
 
   <div class="story{{#if story.img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" style="{{currentStyle}}">
       {{#if story.img}}
@@ -15,6 +15,9 @@
         <p class="story-date-month">{{date_month}}</p>
         <p class="story-date-date">{{date_date}}</p>
       </div>
+
+      <a class="edit" href="#">Close</a>
+      <a class="close" href="#">Close</a>
   </div>
 </div>
 

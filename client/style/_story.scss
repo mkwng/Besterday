@@ -117,6 +117,34 @@
           margin:0;
           font-size:32px;
         }
+      .close{
+        display:block;
+        position:absolute;
+        top:8px;
+        right:8px;
+        width:30px;
+        height:30px;
+        text-decoration:none;
+        text-indent:-9999em;
+        background:$borange;
+        &:hover {
+          background:$borange-shad;
+        }
+      }
+      .edit{
+        display:block;
+        position:absolute;
+        top:8px;
+        right:46px;
+        width:30px;
+        height:30px;
+        text-decoration:none;
+        text-indent:-9999em;
+        background:$green;
+        &:hover {
+          background:$green-high;
+        }
+      }
 
       @media screen and (max-width: $break-md) {
         .story-text,.profile-grid-stories-story{font-size:28px}

@@ -30,12 +30,16 @@ Template.storytime.events({
     e.preventDefault();
     $(e.currentTarget).siblings(".story").showStory();
   },
+  'click a.close' : function(e) {
+    e.preventDefault();
+    $(e.currentTarget).closest(".story").showStory();
+  },
   "keyup textarea.story-text" : function(e) {
     $("textarea").verticalCenterTextarea();
   },
-  'click textarea' : function(e) {
-    alert("hello");
-    $(".story").edit();
+  'click a.edit' : function(e) {
+    e.preventDefault();
+    $(e.currentTarget).closest(".story").edit();
   }
 });
 
@@ -230,7 +234,7 @@ jQuery.fn.showStory = function(callback) {
 
 jQuery.fn.edit = function() {
   $(this).find(".story-text").removeAttr("disabled");
-  setTimeout(function() {$($("textarea")[0]).focus();},100);
+  setTimeout(function() {$($("textarea")[0]).select();},100);
 };
 jQuery.fn.editDone = function() {
   $(this).find(".story-text").addAttr("disabled");
