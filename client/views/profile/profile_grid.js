@@ -6,6 +6,10 @@ Template.profile_grid.created = function() {}
 Template.profile_grid.rendered = function() {
   // $profileGrid = $(".profile-grid").css({"width":"+="+getScrollBarWidth(),"padding-right":getScrollBarWidth()});
   $profileGridInner = $(".profile-grid-inner");
+  $(".profile-grid-stories-story").each(function() {
+    $(this).attr("data-story",$(this).html());
+    $clamp(this, {clamp: 4, useNativeClamp: false});
+  });
   $profileGridInner.widthDivByFour("first");
   $(".profile-grid-stories.img").imgCover();
   $(".profile-grid-stories.img img").css("opacity",0).load(function() {
@@ -42,6 +46,9 @@ Template.profile_grid.events({
       else{
         $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
           // Resize images to fit the grid.
+          // $(".profile-grid-stories-story").each(function() {
+          //   $clamp(this, {clamp: 4, useNativeClamp: false});
+          // });
           $(".profile-grid-stories.img").imgCover();
           $(".profile-grid-stories.img img").load(function() {
             $(this).closest(".img").imgCover();

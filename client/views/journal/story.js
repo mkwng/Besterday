@@ -6,6 +6,7 @@ jQuery.fn.showStory = function() {
 
   this.each(function() {
     $t = $(this);
+    var storyMargin = $(window).width() > 320 ? 40 : 0;
     if(!$t.hasClass("expanded") && !$t.hasClass("giant-clone")) {
       $cover.show();
       $tc = $t.clone().removeClass("isotope-item").attr("href","").css({
@@ -15,16 +16,21 @@ jQuery.fn.showStory = function() {
         "z-index":99,
         transform:"translate3d(0,0,0)"
       }).appendTo($cover).css({
-        top:"40px",
-        left:"40px",
-        width:$(window).width()-80+"px",
-        height:$(window).height()-80+"px"
+        top:storyMargin,
+        left:storyMargin,
+        width:$(window).width()-storyMargin*2+"px",
+        height:$(window).height()-storyMargin*2+"px"
       }).addClass("giant-clone no-hover").attr("data-original",$.param({
         top:$t.offset().top - $(window).scrollTop(),
         left:$t.offset().left,
         width:$t.width(),
         height:$t.height()
       })).click(function(){$(this).showStory()});
+      $ts = $tc.find(".profile-grid-stories-story");
+      $ts.html($ts.attr("data-story"));
+      setTimeout(function() {
+        if($ts[0].clientHeight>$(window).height()-storyMargin*2) $ts.addClass("scroll");
+      },500);
       $t.css("opacity",0);
       $cover.addClass("visible");
 
@@ -50,3 +56,10 @@ jQuery.fn.showStory = function() {
     $t.toggleClass("expanded");
   });
 }
+
+
+
+
+
+
+

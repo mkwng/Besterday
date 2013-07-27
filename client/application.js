@@ -67,7 +67,7 @@ initialize = function() {
 
 
   // We don't have a story for today yet:
-  if(Meteor.userId() && Meteor.Router.page() != "landing" && !!!story) { 
+  if((Meteor.userId() && !!!story && Meteor.Router.page() != "landing") | (Meteor.userId() == Session.get("session_user") && Meteor.Router.page() != "landing"))  { 
     story = Stories.findOne({owner:Meteor.userId(),discreteDate:Session.get("session_date")});
     if (story==undefined)
       Meteor.Router.to('/story/today');
