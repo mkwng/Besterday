@@ -329,6 +329,29 @@ $columnWidth: 20%;
         .profile-grid-stories-story{font-size:24px;}
       } 
       .profile-grid-stories-story{font-size:24px;}
+        &:not(.giant-clone) {
+          .profile-grid-stories-date {
+            top:8px !important;
+            left:0;
+            width:100%;
+            text-align:center;
+            height:auto;
+            margin:0;
+            opacity:1;
+            background:none;
+            .profile-grid-stories-date-month{
+              margin:0;
+              font-size:13px;
+              display:inline;
+            }
+            .profile-grid-stories-date-date{
+              margin:0;
+              font-size:13px;
+              display:inline;
+              color:inherit;
+            }
+          }
+        }
     }
     @media screen and (min-width: $break-lg) {
       font-size:22px;
@@ -380,6 +403,7 @@ $columnWidth: 20%;
       margin:-50px 0 0 -50px;
       opacity:0;
       @include transition(top .5s, transform .5s);
+
     }
       .profile-grid-stories-date-month{
         @include text-smallcaps;

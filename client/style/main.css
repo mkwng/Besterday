@@ -1829,7 +1829,25 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
         .profile-grid-stories.wide .profile-grid-stories-story, .profile-grid-stories.large .profile-grid-stories-story {
           font-size: 24px; }
       .profile-grid-stories .profile-grid-stories-story {
-        font-size: 24px; } }
+        font-size: 24px; }
+      .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date {
+        top: 8px !important;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        height: auto;
+        margin: 0;
+        opacity: 1;
+        background: none; }
+        .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date .profile-grid-stories-date-month {
+          margin: 0;
+          font-size: 13px;
+          display: inline; }
+        .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date .profile-grid-stories-date-date {
+          margin: 0;
+          font-size: 13px;
+          display: inline;
+          color: inherit; } }
   @media screen and (min-width: 1200px) {
     .profile-grid-stories {
       font-size: 22px;

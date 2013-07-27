@@ -45,10 +45,6 @@ Template.profile_grid.events({
       }
       else{
         $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
-          // Resize images to fit the grid.
-          // $(".profile-grid-stories-story").each(function() {
-          //   $clamp(this, {clamp: 4, useNativeClamp: false});
-          // });
           $(".profile-grid-stories.img").imgCover();
           $(".profile-grid-stories.img img").load(function() {
             $(this).closest(".img").imgCover();
