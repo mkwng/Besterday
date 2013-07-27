@@ -1,4 +1,30 @@
 
+/*
+ * Change element type
+ * Author: Andrew Whitaker
+ * Source: http://stackoverflow.com/questions/8584098/how-to-change-an-element-type-using-jquery
+ */
+(function($) {
+    $.fn.changeElementType = function(newType,live) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+            attrs[attr.nodeName] = attr.nodeValue;
+        });
+        if(typeof live != undefined && live){
+          this.replaceWith(function() {
+            var newElement = $("<" + newType + "/>", attrs).append($(this).html());
+            console.log(newElement);
+            return newElement;
+          });
+        } else {
+          var newElement = $("<" + newType + "/>", attrs).append($(this).html());
+          return newElement;
+        }
+    };
+})(jQuery);
+
+
 /*!
 * Clamp.js 0.4
 *
@@ -248,20 +274,69 @@
  * Author: Behnam Esmali
  * Source: http://stackoverflow.com/questions/13552655/how-to-vertically-center-text-in-textarea
  */
+jQuery.fn.verticalCenterTextarea = function(first) {
+  $t = $(this);
+  if(typeof first != undefined && first) {
+    if(!!$dummy && !!$dummy.closest("body").length) {}
+    else {
+      $dummy = $('<div class="dummy"></div>').appendTo($("body"));
+    }
+    $dummy.css({
+      width:$(this).innerWidth(),
+      'font-size':getStyle($t[0], 'font-size'),
+      'line-height':getStyle($t[0], 'line-height'),
+      'font-weight':getStyle($t[0], 'font-weight'),
+      'letter-spacing':getStyle($t[0], 'letter-spacing'),
+      'font-family':getStyle($t[0], 'font-family'),
+      padding:getStyle($t[0], 'padding'),
+    });
+  }
+  $dummy.html(formatDummyText($t.val()));
+  setTimeout(function() { 
+    var top=calculateTop($t);
+    if (top<100){ 
+      $t.addClass("scroll");
+      top = 100;
+    } else {
+      $t.removeClass("scroll");
+    }
+    // debugger;
+    $t.css("padding-top",top);
+
+  },0);
+  return $t;
+}
 formatDummyText = function(text) {
   if ( !text ) return $("#story").attr("placeholder");
   else return text.replace( /\n$/, '<br>&nbsp;' ).replace( /\n/g, '<br>' );
 }
-calculateTop = function() {
+calculateTop = function($ele) {
+  if(typeof $ele == "undefined") $ele = $(window);
   var top=0;
   if (!$dummy) return 0;
 
     if ($dummy.length) {
-      var h = $(window).height()-40;
+      var h = $ele.height();
       top = (h - $dummy.height()) * .5;
     }
 
   return top;
+}
+getStyle = function(el,styleProp) {
+  var camelize = function (str) {
+    return str.replace(/\-(\w)/g, function(str, letter){
+      return letter.toUpperCase();
+    });
+  };
+
+  if (el.currentStyle) {
+    return el.currentStyle[camelize(styleProp)];
+  } else if (document.defaultView && document.defaultView.getComputedStyle) {
+    return document.defaultView.getComputedStyle(el,null)
+                               .getPropertyValue(styleProp);
+  } else {
+    return el.style[camelize(styleProp)]; 
+  }
 }
 
 
@@ -392,8 +467,5 @@ prettyDate = function(date,week){
   else
     return monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 }
-
-
-
 
 

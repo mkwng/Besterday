@@ -1,0 +1,22 @@
+<template name="storytime">
+<div id="storytime">
+
+<div class="cover visible no-transition" style="display: block;">
+  <a class="cover-area" href="#">Close</a>
+
+  <div class="story{{#if story.img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" style="{{currentStyle}}">
+      {{#if story.img}}
+      <div class="story-img" style="{{copyImgStyle}}">
+        <img src="{{imgUrl}}" />
+      </div>
+      {{/if}}
+      <textarea disabled class="story-text" style="padding-top:{{paddingTopStory}}px">{{story.text}}</textarea>
+      <div class="story-date">
+        <p class="story-date-month">{{date_month}}</p>
+        <p class="story-date-date">{{date_date}}</p>
+      </div>
+  </div>
+</div>
+
+</div>
+</template>

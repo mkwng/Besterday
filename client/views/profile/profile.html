@@ -2,7 +2,7 @@
   <div id="profile" class="page">
     {{> profile_header}}
     {{> profile_stats}}
-    {{> profile_grid}}
+      {{> profile_grid}}
 
     <h2 class="profile-outro">
       Go ahead. Have the best day of your life.<br />
@@ -10,5 +10,11 @@
     </h2>
 
   </div>
+
+    {{#isolate}}
+      {{#if expandedStory}}
+        {{> storytime}}
+      {{/if}}
+    {{/isolate}}
 
 </template>

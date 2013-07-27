@@ -4,20 +4,32 @@ Template.profile_grid.created = function() {}
 
 
 Template.profile_grid.rendered = function() {
-  // $profileGrid = $(".profile-grid").css({"width":"+="+getScrollBarWidth(),"padding-right":getScrollBarWidth()});
   $profileGridInner = $(".profile-grid-inner");
-  $(".profile-grid-stories-story").each(function() {
-    $(this).attr("data-story",$(this).html());
-    $clamp(this, {clamp: 4, useNativeClamp: false});
-  });
-  $profileGridInner.widthDivByFour("first");
-  $(".profile-grid-stories.img").imgCover();
-  $(".profile-grid-stories.img img").css("opacity",0).load(function() {
-    $(this).closest(".img").imgCover("");
-    $(this).css("opacity",1);
-  });
-}
 
+  // This makes sure the container is evenly divisible and sets the grid
+  $profileGridInner.widthDivByFour("first");
+  $(".profile-grid-stories.img img").css("opacity",0)
+
+  setTimeout(function() {
+    gridHousekeeping();
+  },100)
+
+
+}
+gridHousekeeping = function() {
+    // On load, let's clip all the text so it fits in four lines.
+    $(".profile-grid-stories-story").each(function() {
+      $(this).attr("data-story",$(this).html());
+      $clamp(this, {clamp: 4, useNativeClamp: false});
+    });  
+
+    // Make sure the images are positioned correctly and load nicely
+    $(".profile-grid-stories.img").imgCover();
+    $(".profile-grid-stories.img img").load(function() {
+      $(this).closest(".img").imgCover("");
+      $(this).css("opacity",1);
+    });
+}
 
 Template.profile_grid.destroyed = function() {}
 
@@ -28,8 +40,16 @@ Template.profile_grid.stories = function() {
 }
 
 Template.profile_grid.events({
+
   "click a.profile-grid-stories" : function(e) {
+    console.log("hello");
     e.preventDefault();
+    if (isStory(this)) setDate(Session.get("session_user"),discreteDate(this));
+    else {
+      // console.warn("NO NO NO");
+      var toDate = discreteDate(new Date($(e.currentTarget).attr("data-date")));
+      setDate(Session.get("session_user"),toDate);
+    }
     $(e.currentTarget).showStory();
   },
   "click .profile-grid-more" : function(e) {
@@ -45,10 +65,7 @@ Template.profile_grid.events({
       }
       else{
         $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
-          $(".profile-grid-stories.img").imgCover();
-          $(".profile-grid-stories.img img").load(function() {
-            $(this).closest(".img").imgCover();
-          });
+          gridHousekeeping();
         });
         $this.html("Show less&hellip;").addClass("fixed");
         $(window).bind('scroll',stickyLess);
@@ -58,7 +75,6 @@ Template.profile_grid.events({
     }
   }
 });
-
 
 Template.profile_grid.helpers({
   imgUrl : function() {

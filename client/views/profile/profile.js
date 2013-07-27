@@ -9,8 +9,12 @@ Template.profile.rendered = function() {}
 
 Template.profile.destroyed = function() {}
 
+Template.profile.expandedStory = function() {
+  return Session.get("expanded_story");
+};
 
 Template.profile.events({});
 
 
-Template.profile.helpers({});
+Template.profile.helpers({
+});

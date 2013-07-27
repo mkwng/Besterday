@@ -107,6 +107,10 @@ findStory = function(user,date) {
     date = discreteDate(story);
   } else {
     story = Stories.find({"owner": user,"discreteDate":date},{sort: {created:-1,date:1}}).fetch();
+    if (!story.length) {
+      console.warn("Nothing here...");
+      return findStory(user,objectifyDate(date));
+    }
   }
 
   if (story.length > 1) {
@@ -118,6 +122,14 @@ findStory = function(user,date) {
   story = story[0];
   if(story) {return story;}
   else {return {date:date,text:""};}
+}
+isStory = function(story) {
+  if(!!story && typeof story == "object" && !!story._id) {
+    discreteDate(story);
+    return story._id;
+  } else {
+    return false;
+  }
 }
 incrementDate = function(date,increment) {
   if(!!!date) return false;
@@ -139,7 +151,8 @@ dayDiff = function(first, second) {
 }
 
 jQuery.fn.cssPersist = function(prop,val) {
-  journalCss = $(this).attr("style",journalCss).css(prop,val).attr("style");
+  if($(this).length)
+    journalCss = $(this).attr("style",journalCss).css(prop,val).attr("style");
 
   return $(this);
 }
@@ -399,6 +412,7 @@ getDateUrl = function(date) {
 
 discreteDate = function(story) {
   var ddate = {year:undefined,month:undefined,date:undefined};
+
   if(story.getMonth) {
     ddate = {year:story.getFullYear(),month:story.getMonth(),date:story.getDate()};
   } else {
@@ -491,6 +505,7 @@ jQuery.fn.imgCover = function(container) {
 
     // Image width
     var screenImage = $imageContainer.find("img");
+    if (!screenImage.length) return false;
 
     var theImage = new Image();
 

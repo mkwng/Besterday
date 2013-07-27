@@ -32,7 +32,6 @@ Meteor.startup(function () {
 });
 
 Meteor.autorun(function() {
-  console.log("Hello autorun!");
 });
 
 initialize = function() {
@@ -67,9 +66,9 @@ initialize = function() {
 
 
   // We don't have a story for today yet:
-  if((Meteor.userId() && !!!story && Meteor.Router.page() != "landing") | (Meteor.userId() == Session.get("session_user") && Meteor.Router.page() != "landing"))  { 
+  if((Meteor.userId() && (!!!story | story.text=="") && Meteor.Router.page() != "landing") | (Meteor.userId() == Session.get("session_user") && Meteor.Router.page() != "landing"))  { 
     story = Stories.findOne({owner:Meteor.userId(),discreteDate:Session.get("session_date")});
-    if (story==undefined)
+    if (story==undefined | story.text=="" && !Session.get("override"))
       Meteor.Router.to('/story/today');
   }
 
@@ -108,7 +107,8 @@ Meteor.Router.add({
   },
   '/story/:storyId': function(storyId) {
     sessionId = storyId;
-    return 'journal';
+    Session.set("expanded_story",true);
+    return 'profile';
   },
 
   '/youdonthaveausername': function() {

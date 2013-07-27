@@ -1,0 +1,144 @@
+.story,.profile-grid-stories.story {
+      &:before {
+        right:-1em;
+        display: inline-block;
+        height: 100%;
+        content: '';
+        vertical-align: middle;
+      }
+      &.transition{
+        @include prefix(transform-style,preserve-3d);
+        @include prefix(transform-origin,50% 100%);
+      }
+      &.animate{
+        @include prefix(animation,OpenTop .6s forwards ease);
+      }
+      @include prefix(transition,all .5s);
+      @include gradient(#ffffff,mix(#ffffff,$grey4));
+      position:fixed;
+      top:40px;
+      right:40px;
+      bottom:40px;
+      left:40px;
+      z-index:99;
+      display:block;
+      float:left;
+      overflow:hidden;
+      width:$columnWidth;
+      height:$rowHeight;
+      color:$grey1;
+      text-align:center;
+      text-decoration:none;
+      line-height:normal;
+      
+      &.alt-1{color:#ffffff;@include gradient($borange,mix($borange,$borange-shad,75%));textarea {color:#ffffff;}}
+      &.alt-2{@include gradient($grey4,mix($grey4,$grey3,95%));textarea {color:$grey1;}}
+      &.alt-3{@include gradient(#ffffff,mix(#ffffff,$grey4));textarea {color:$grey1;}}
+      &.alt-4{color:#ffffff;@include gradient($grey2,mix($grey2,$grey1,75%));textarea {color:#ffffff;}}
+      &.alt-5{background:$green;textarea {color:$green-high;}}
+
+      &.img{color:#ffffff;@include gradient($grey2,mix($grey2,$grey1,75%));textarea {color:#ffffff;}}
+
+      .story-img,.profile-grid-stories-img {
+        position:absolute;
+        top:-5px;
+        right:-5px;
+        bottom:-5px;
+        left:-5px;
+        z-index:0;
+        img {
+          @include filter(blur(12px));        
+          @include accelerate;
+          @include transition(all .5s);
+          @include transform(scale(4.2));
+          filter:(url(/img/blur.svg#blur));
+          height:100%;
+          width:100%;
+        }
+      }
+      // Removing text-area styles
+      textarea.story-text,textarea.profile-grid-stories-story {
+        @include prefix(transition,padding .3s);
+        background: transparent;
+        border: none;
+        resize: none;
+        outline: none;
+        height:99%;
+        width:80%;
+
+      }
+      .story-text,.profile-grid-stories-story {
+        @include transition(font-size .5s);
+        @include text-feature;
+        position:relative;
+        z-index:2;
+        display:inline-block;
+        overflow-y:scroll;
+        width:80%;
+        vertical-align: middle;
+        text-align:center;
+        text-overflow: ellipsis;
+        font-size:42px;
+        overflow:visible;
+        &.scroll {
+          width: 95%;
+          margin: 0 auto;
+          padding:120px 10% 120px 10%;
+          font-size: 24px;
+          line-height: 1.4em;
+          box-sizing: border-box;
+          text-align: left;
+          max-height: 100%;
+        }
+      }
+      .story-date,.profile-grid-stories-date {
+        @include transition(top .5s, transform .5s);
+        @include transform(scale(0.5));
+        position:absolute;
+        top:10%;
+        left:50%;
+        z-index:2;
+        display:block;
+        margin:-50px 0 0 -50px;
+        width:100px;
+        height:100px;
+        background:url(/img/calendar.svg);
+        opacity:1;
+      }
+
+        .story-date-month,.profile-grid-stories-date-month{
+          @include text-smallcaps;
+          color:$yellow;
+          margin: 20px 0 0 0;
+        }
+        .story-date-date,.profile-grid-stories-date-date{
+          @include text-smallcaps;
+          color:$grey3;
+          margin:0;
+          font-size:32px;
+        }
+
+      @media screen and (max-width: $break-md) {
+        .story-text,.profile-grid-stories-story{font-size:28px}
+      }
+      @media screen and (max-width: $break-sm) {
+        .story-text,.profile-grid-stories-story{
+          font-size:24px;
+          &.scroll {
+            font-size:20px;
+            width:95%;
+            padding-left:0;
+            padding-right:0;
+          }
+        }
+      }
+      @media screen and (min-width: $break-lg) {
+      }
+
+      &:hover {
+        .story-text,.profile-grid-stories-story {}
+        &::after {
+          opacity:0;
+        }
+      }
+}

@@ -221,18 +221,21 @@ $columnWidth: 20%;
       opacity:0;
       pointer-events:none;
     }
+
+    @include prefix(transform-style,preserve-3d);
+    @include prefix(transition,all .5s);
+    @include prefix(transform-origin,50% 100%);
+    @include gradient(#ffffff,mix(#ffffff,$grey4));
     position:relative;
     display:block;
     float:left;
     overflow:hidden;
     width:$columnWidth;
     height:$rowHeight;
-    background:#ffffff;
     text-align:center;
     line-height:normal;
     color:$grey1;
     text-decoration:none;
-    cursor:pointer;
 
     &.alt-1{@include gradient($borange,mix($borange,$borange-shad,75%));color:#ffffff;}
     &.alt-2{@include gradient($grey4,mix($grey4,$grey3,95%))}
@@ -256,61 +259,6 @@ $columnWidth: 20%;
       }
     }
     &.giant-clone{
-      @include prefix(transform-style,preserve-3d);
-      @include prefix(animation,OpenTop .6s forwards ease);
-      @include prefix(transition,all .5s);
-      @include prefix(transform-origin,50% 100%);
-
-
-      .profile-grid-stories-img {
-        img {
-          @include filter(blur(12px));
-        }
-      }
-      .profile-grid-stories-story {
-        overflow-y:scroll;
-        font-size:42px;
-        // max-height: 66%;
-        &.scroll {
-          width: 95%;
-          margin: 0 auto;
-          padding:120px 10% 120px 10%;
-          font-size: 24px;
-          line-height: 1.4em;
-          box-sizing: border-box;
-          text-align: left;
-        max-height: 100%;
-        }
-      }
-      .profile-grid-stories-date {
-        opacity:1;
-        top:10%;
-        @include transform(scale(0.5));
-      }
-
-      @media screen and (max-width: $break-md) {
-        .profile-grid-stories-story{font-size:28px}
-      }
-      @media screen and (max-width: $break-sm) {
-        .profile-grid-stories-story{
-          font-size:24px;
-          &.scroll {
-            font-size:20px;
-            width:95%;
-            padding-left:0;
-            padding-right:0;
-          }
-        }
-      }
-      @media screen and (min-width: $break-lg) {
-      }
-
-      &:hover {
-        .profile-grid-stories-story {}
-        &::after {
-          opacity:0;
-        }
-      }
     }
 
 
@@ -329,7 +277,7 @@ $columnWidth: 20%;
         .profile-grid-stories-story{font-size:24px;}
       } 
       .profile-grid-stories-story{font-size:24px;}
-        &:not(.giant-clone) {
+        &:not(.story) {
           .profile-grid-stories-date {
             top:8px !important;
             left:0;

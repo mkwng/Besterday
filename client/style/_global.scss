@@ -58,10 +58,11 @@ body {
   @include transform(scale(5));
   filter:(url(/img/blur.svg#blur));
 }
-.cover{
+.cover,.cover-transition{
   @include accelerate;
   @include prefix(perspective,600px);
   @include transition(all .5s);
+  pointer-events:none;
   position:fixed;
   top:0;
   left:0;
@@ -69,8 +70,24 @@ body {
   width:100%;
   height:100%;
   background:rgba(49,43,44,0);
+  &.no-transition{
+    @include transition(all 0);
+  }
   &.visible{
     background:rgba(49,43,44,.5);
+    pointer-events:auto;
+  }
+  .cover-area{
+    z-index:0;
+    position:fixed;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    text-indent:-99999em;
+  }  
+  &.transition-hide{
+    display:none;
   }
 }
 

@@ -99,7 +99,7 @@ body {
   transform: scale(5);
   filter: url(/img/blur.svg#blur); }
 
-.cover {
+.cover, .cover-transition {
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
@@ -125,6 +125,7 @@ body {
   -ms-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
+  pointer-events: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -132,8 +133,25 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(49, 43, 44, 0); }
-  .cover.visible {
-    background: rgba(49, 43, 44, 0.5); }
+  .cover.no-transition, .cover-transition.no-transition {
+    -webkit-transition: all 0;
+    -moz-transition: all 0;
+    -ms-transition: all 0;
+    -o-transition: all 0;
+    transition: all 0; }
+  .cover.visible, .cover-transition.visible {
+    background: rgba(49, 43, 44, 0.5);
+    pointer-events: auto; }
+  .cover .cover-area, .cover-transition .cover-area {
+    z-index: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-indent: -99999em; }
+  .cover.transition-hide, .cover-transition.transition-hide {
+    display: none; }
 
 .nav {
   /* Positioning */
@@ -1610,18 +1628,47 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   transition: max-height 2s; }
 
 .profile-grid-stories {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  background: white;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, white), color-stop(100%, #f2f0f0));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* IE10+ */
+  background: linear-gradient(135deg, white 0%, #f2f0f0 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
   position: relative;
   display: block;
   float: left;
   overflow: hidden;
   width: 20%;
   height: 180px;
-  background: #ffffff;
   text-align: center;
   line-height: normal;
   color: #312b2c;
-  text-decoration: none;
-  cursor: pointer; }
+  text-decoration: none; }
   .profile-grid-stories:before {
     right: -1em;
     display: inline-block;
@@ -1751,66 +1798,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     top: 50%; }
   .profile-grid-stories:hover:not(.no-hover)::after {
     opacity: .85; }
-  .profile-grid-stories.giant-clone {
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    -o-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    -webkit-animation: OpenTop 0.6s forwards ease;
-    -moz-animation: OpenTop 0.6s forwards ease;
-    -ms-animation: OpenTop 0.6s forwards ease;
-    -o-animation: OpenTop 0.6s forwards ease;
-    animation: OpenTop 0.6s forwards ease;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
-    -webkit-transform-origin: 50% 100%;
-    -moz-transform-origin: 50% 100%;
-    -ms-transform-origin: 50% 100%;
-    -o-transform-origin: 50% 100%;
-    transform-origin: 50% 100%; }
-    .profile-grid-stories.giant-clone .profile-grid-stories-img img {
-      -webkit-filter: blur(12px);
-      -moz-filter: blur(12px);
-      -o-filter: blur(12px);
-      -ms-filter: blur(12px);
-      filter: blur(12px); }
-    .profile-grid-stories.giant-clone .profile-grid-stories-story {
-      overflow-y: scroll;
-      font-size: 42px; }
-      .profile-grid-stories.giant-clone .profile-grid-stories-story.scroll {
-        width: 95%;
-        margin: 0 auto;
-        padding: 120px 10% 120px 10%;
-        font-size: 24px;
-        line-height: 1.4em;
-        box-sizing: border-box;
-        text-align: left;
-        max-height: 100%; }
-    .profile-grid-stories.giant-clone .profile-grid-stories-date {
-      opacity: 1;
-      top: 10%;
-      -webkit-transform: scale(0.5);
-      -moz-transform: scale(0.5);
-      -ms-transform: scale(0.5);
-      -o-transform: scale(0.5);
-      transform: scale(0.5); }
-    @media screen and (max-width: 768px) {
-      .profile-grid-stories.giant-clone .profile-grid-stories-story {
-        font-size: 28px; } }
-    @media screen and (max-width: 320px) {
-      .profile-grid-stories.giant-clone .profile-grid-stories-story {
-        font-size: 24px; }
-        .profile-grid-stories.giant-clone .profile-grid-stories-story.scroll {
-          font-size: 20px;
-          width: 95%;
-          padding-left: 0;
-          padding-right: 0; } }
-    .profile-grid-stories.giant-clone:hover::after {
-      opacity: 0; }
   @media screen and (max-width: 768px) {
     .profile-grid-stories {
       width: 50%;
@@ -1830,7 +1817,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
           font-size: 24px; }
       .profile-grid-stories .profile-grid-stories-story {
         font-size: 24px; }
-      .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date {
+      .profile-grid-stories:not(.story) .profile-grid-stories-date {
         top: 8px !important;
         left: 0;
         width: 100%;
@@ -1839,11 +1826,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
         margin: 0;
         opacity: 1;
         background: none; }
-        .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date .profile-grid-stories-date-month {
+        .profile-grid-stories:not(.story) .profile-grid-stories-date .profile-grid-stories-date-month {
           margin: 0;
           font-size: 13px;
           display: inline; }
-        .profile-grid-stories:not(.giant-clone) .profile-grid-stories-date .profile-grid-stories-date-date {
+        .profile-grid-stories:not(.story) .profile-grid-stories-date .profile-grid-stories-date-date {
           margin: 0;
           font-size: 13px;
           display: inline;
@@ -2032,6 +2019,302 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     margin-top: 30px;
     transform: rotateX(-20deg);
     animation-timing-function: ease; } }
+
+.story, .profile-grid-stories.story {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  background: white;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, white), color-stop(100%, #f2f0f0));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+  /* IE10+ */
+  background: linear-gradient(135deg, white 0%, #f2f0f0 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  bottom: 40px;
+  left: 40px;
+  z-index: 99;
+  display: block;
+  float: left;
+  overflow: hidden;
+  width: 20%;
+  height: 180px;
+  color: #312b2c;
+  text-align: center;
+  text-decoration: none;
+  line-height: normal; }
+  .story:before, .profile-grid-stories.story:before {
+    right: -1em;
+    display: inline-block;
+    height: 100%;
+    content: '';
+    vertical-align: middle; }
+  .story.transition, .profile-grid-stories.story.transition {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    transform-origin: 50% 100%; }
+  .story.animate, .profile-grid-stories.story.animate {
+    -webkit-animation: OpenTop 0.6s forwards ease;
+    -moz-animation: OpenTop 0.6s forwards ease;
+    -ms-animation: OpenTop 0.6s forwards ease;
+    -o-animation: OpenTop 0.6s forwards ease;
+    animation: OpenTop 0.6s forwards ease; }
+  .story.alt-1, .profile-grid-stories.story.alt-1 {
+    color: #ffffff;
+    background: #ff905a;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #ff905a 0%, #fc8553 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #ff905a), color-stop(100%, #fc8553));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, #ff905a 0%, #fc8553 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, #ff905a 0%, #fc8553 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, #ff905a 0%, #fc8553 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, #ff905a 0%, #fc8553 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+    .story.alt-1 textarea, .profile-grid-stories.story.alt-1 textarea {
+      color: #ffffff; }
+  .story.alt-2, .profile-grid-stories.story.alt-2 {
+    background: #e5e1e1;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #e5e1e1 0%, #dfdbdb 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #e5e1e1), color-stop(100%, #dfdbdb));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, #e5e1e1 0%, #dfdbdb 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, #e5e1e1 0%, #dfdbdb 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, #e5e1e1 0%, #dfdbdb 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, #e5e1e1 0%, #dfdbdb 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+    .story.alt-2 textarea, .profile-grid-stories.story.alt-2 textarea {
+      color: #312b2c; }
+  .story.alt-3, .profile-grid-stories.story.alt-3 {
+    background: white;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, white), color-stop(100%, #f2f0f0));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, white 0%, #f2f0f0 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, white 0%, #f2f0f0 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+    .story.alt-3 textarea, .profile-grid-stories.story.alt-3 textarea {
+      color: #312b2c; }
+  .story.alt-4, .profile-grid-stories.story.alt-4 {
+    color: #ffffff;
+    background: #443f41;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #443f41), color-stop(100%, #3f3a3b));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, #443f41 0%, #3f3a3b 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+    .story.alt-4 textarea, .profile-grid-stories.story.alt-4 textarea {
+      color: #ffffff; }
+  .story.alt-5, .profile-grid-stories.story.alt-5 {
+    background: #25b399; }
+    .story.alt-5 textarea, .profile-grid-stories.story.alt-5 textarea {
+      color: #53ecce; }
+  .story.img, .profile-grid-stories.story.img {
+    color: #ffffff;
+    background: #443f41;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #443f41), color-stop(100%, #3f3a3b));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, #443f41 0%, #3f3a3b 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, #443f41 0%, #3f3a3b 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+    .story.img textarea, .profile-grid-stories.story.img textarea {
+      color: #ffffff; }
+  .story .story-img, .story .profile-grid-stories-img, .profile-grid-stories.story .story-img, .profile-grid-stories.story .profile-grid-stories-img {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    z-index: 0; }
+    .story .story-img img, .story .profile-grid-stories-img img, .profile-grid-stories.story .story-img img, .profile-grid-stories.story .profile-grid-stories-img img {
+      -webkit-filter: blur(12px);
+      -moz-filter: blur(12px);
+      -o-filter: blur(12px);
+      -ms-filter: blur(12px);
+      filter: blur(12px);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      -moz-transform: translateZ(0);
+      -o-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      -moz-backface-visibility: hidden;
+      -o-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+      perspective: 1000;
+      -webkit-perspective: 1000;
+      -moz-perspective: 1000;
+      -o-perspective: 1000;
+      -ms-perspective: 1000;
+      -webkit-transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      -ms-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      -webkit-transform: scale(4.2);
+      -moz-transform: scale(4.2);
+      -ms-transform: scale(4.2);
+      -o-transform: scale(4.2);
+      transform: scale(4.2);
+      filter: url(/img/blur.svg#blur);
+      height: 100%;
+      width: 100%; }
+  .story textarea.story-text, .story textarea.profile-grid-stories-story, .profile-grid-stories.story textarea.story-text, .profile-grid-stories.story textarea.profile-grid-stories-story {
+    -webkit-transition: padding 0.3s;
+    -moz-transition: padding 0.3s;
+    -ms-transition: padding 0.3s;
+    -o-transition: padding 0.3s;
+    transition: padding 0.3s;
+    background: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+    height: 99%;
+    width: 80%; }
+  .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {
+    -webkit-transition: font-size 0.5s;
+    -moz-transition: font-size 0.5s;
+    -ms-transition: font-size 0.5s;
+    -o-transition: font-size 0.5s;
+    transition: font-size 0.5s;
+    font-weight: 100;
+    font-size: 32px;
+    font-family: "ratio",Arial;
+    line-height: 1.2em;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    overflow-y: scroll;
+    width: 80%;
+    vertical-align: middle;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 42px;
+    overflow: visible; }
+    .story .story-text.scroll, .story .profile-grid-stories-story.scroll, .profile-grid-stories.story .story-text.scroll, .profile-grid-stories.story .profile-grid-stories-story.scroll {
+      width: 95%;
+      margin: 0 auto;
+      padding: 120px 10% 120px 10%;
+      font-size: 24px;
+      line-height: 1.4em;
+      box-sizing: border-box;
+      text-align: left;
+      max-height: 100%; }
+  .story .story-date, .story .profile-grid-stories-date, .profile-grid-stories.story .story-date, .profile-grid-stories.story .profile-grid-stories-date {
+    -webkit-transition: top 0.5s;
+    -moz-transition: top 0.5s;
+    -ms-transition: top 0.5s;
+    -o-transition: top 0.5s;
+    transition: top 0.5s;
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    z-index: 2;
+    display: block;
+    margin: -50px 0 0 -50px;
+    width: 100px;
+    height: 100px;
+    background: url(/img/calendar.svg);
+    opacity: 1; }
+  .story .story-date-month, .story .profile-grid-stories-date-month, .profile-grid-stories.story .story-date-month, .profile-grid-stories.story .profile-grid-stories-date-month {
+    font-family: "futura-pt",Arial;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #ffc157;
+    margin: 20px 0 0 0; }
+  .story .story-date-date, .story .profile-grid-stories-date-date, .profile-grid-stories.story .story-date-date, .profile-grid-stories.story .profile-grid-stories-date-date {
+    font-family: "futura-pt",Arial;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #726d6e;
+    margin: 0;
+    font-size: 32px; }
+  @media screen and (max-width: 768px) {
+    .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {
+      font-size: 28px; } }
+  @media screen and (max-width: 320px) {
+    .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {
+      font-size: 24px; }
+      .story .story-text.scroll, .story .profile-grid-stories-story.scroll, .profile-grid-stories.story .story-text.scroll, .profile-grid-stories.story .profile-grid-stories-story.scroll {
+        font-size: 20px;
+        width: 95%;
+        padding-left: 0;
+        padding-right: 0; } }
+  .story:hover::after, .profile-grid-stories.story:hover::after {
+    opacity: 0; }
 
 /* ==========================================================================
    Filepicker
