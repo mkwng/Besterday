@@ -85,11 +85,11 @@ body {
     top:0;
     left:0;
     text-indent:-99999em;
+    cursor:default;
   }  
   &.transition-hide{
     pointer-events:none;
     .profile-grid-stories {
-      opacity:0;
     }
   }
 }

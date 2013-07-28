@@ -4,19 +4,21 @@ Template.profile_grid.created = function() {}
 
 
 Template.profile_grid.rendered = function() {
+  pageViews++;
   $profileGridInner = $(".profile-grid-inner");
 
   // This makes sure the container is evenly divisible and sets the grid
-  $profileGridInner.widthDivByFour("first");
+  $profileGridInner.widthDivisible("first");
   $(".profile-grid-stories.img img").css("opacity",0)
 
   setTimeout(function() {
     gridHousekeeping();
-  },100)
+  },1000)
 
 
 }
 gridHousekeeping = function() {
+    $profileGridInner.widthDivisible();
     // On load, let's clip all the text so it fits in four lines.
     $(".profile-grid-stories-story").each(function() {
       $(this).attr("data-story",$(this).html());
@@ -52,7 +54,7 @@ Template.profile_grid.events({
     if(!!$removedItems) {
 
       if($this.hasClass("less")){
-        $removedItems = $(".profile-grid-stories").slice(7);
+        $removedItems = $("a.profile-grid-stories").slice(7);
         $(".profile-grid-inner").isotope('remove',$removedItems);
         $this.html("Show more&hellip;").removeClass("fixed");
         $(window).unbind('scroll',stickyLess);
@@ -150,25 +152,36 @@ Template.profile_grid.helpers({
 
 isoTimeout = setTimeout(function() {},0);
 $removedItems = {};
-jQuery.fn.widthDivByFour = function(callback) {
+numCols = 0;
+jQuery.fn.widthDivisible = function(callback) {
   clearTimeout(isoTimeout);
-  var width = $(window).width();
-  var lcd = width<768 ? 10 : 5;
 
-  if(width%lcd!=0){
-    width = Math.floor(width / lcd) * lcd;
+  numCols = Math.round(1/($(".profile-grid-stories:not(.wide)").slice(0,1).width()/$(window).width()));
+  console.log(numCols);
+
+  var width = $(window).width();
+  // numCols = width<768 ? 2 : 5;
+  // var lcd = width<768 ? 10 : 5;
+
+  // Force the width of the container to a number evenly divisible by numCols
+  if(width%numCols!=0){
+    width = Math.floor(width / numCols) * numCols;
   }
   $(this).css("width",width);
 
+  // This is fairly expensive, so setting a timeout so it doesn't run consecutively too many times.
   isoTimeout = setTimeout(function() {
     if (callback=="first") {
-      $removedItems = $(".profile-grid-stories").slice(7).addClass("small").remove();
-      $(".profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");
-      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/10}});
+      console.log("first");
+      // (columns - 2) * (2 rows) + 1 large 
+      var firstShow = Math.max((numCols - 2) * 2 + 1,5);
+      $removedItems = $("a.profile-grid-stories").slice(firstShow).addClass("small").remove();
+      var temp = $("a.profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");
+      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/numCols}});
     }
     else
-      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/10}});
-  },100);
+      $(".profile-grid-inner").isotope({masonry:{columnWidth:width/numCols}});
+  },20);
 
   return $(this);
 };

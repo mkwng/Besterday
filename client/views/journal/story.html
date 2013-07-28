@@ -16,8 +16,14 @@
         <p class="story-date-date">{{date_date}}</p>
       </div>
 
-      <a class="story-buttons edit" href="#">Close</a>
-      <a class="story-buttons close" href="#">Close</a>
+      {{#isolate}}
+        {{#if edit}}
+        <a class="story-buttons done" href="#">Done</a>
+        {{else}}
+        <a class="story-buttons edit" href="#">Edit</a>
+        <a class="story-buttons close" href="#">Close</a>
+        {{/if}}
+      {{/isolate}}
   </div>
 </div>
 

@@ -129,14 +129,25 @@
         &.close{
           top:8px;
           right:8px;
-          background:$borange;
+          background:$yellow;
           &:hover {
-            background:$borange-shad;
+            background:$yellow-high;
           }
         }
         &.edit{
           top:8px;
           right:46px;
+          background:$green;
+          &:hover {
+            background:$green-high;
+          }
+        }
+        &.done {
+          bottom:20px;
+          width:160px;
+          height:40px;
+          left:50%;
+          margin-left:-80px;
           background:$green;
           &:hover {
             background:$green-high;

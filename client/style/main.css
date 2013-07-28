@@ -149,11 +149,10 @@ body {
     width: 100%;
     top: 0;
     left: 0;
-    text-indent: -99999em; }
+    text-indent: -99999em;
+    cursor: default; }
   .cover.transition-hide, .cover-transition.transition-hide {
     pointer-events: none; }
-    .cover.transition-hide .profile-grid-stories, .cover-transition.transition-hide .profile-grid-stories {
-      opacity: 0; }
 
 .cover {
   z-index: 11;
@@ -1671,7 +1670,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   display: block;
   float: left;
   overflow: hidden;
-  width: 20%;
+  width: 25%;
   height: 180px;
   text-align: center;
   line-height: normal;
@@ -1777,7 +1776,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     .profile-grid-stories.large .profile-grid-stories-story {
       max-height: 7em; }
   .profile-grid-stories.wide {
-    width: 40%;
+    width: 50%;
     height: 360px; }
     .profile-grid-stories.wide .profile-grid-stories-story {
       font-size: 32px; }
@@ -1846,6 +1845,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   @media screen and (min-width: 1200px) {
     .profile-grid-stories {
       font-size: 22px;
+      width: 20%;
       height: 270px; }
       .profile-grid-stories.wide, .profile-grid-stories.large {
         height: 540px; } }
@@ -2059,7 +2059,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   display: block;
   float: left;
   overflow: hidden;
-  width: 20%;
+  width: 25%;
   height: 180px;
   color: #312b2c;
   text-align: center;
@@ -2321,14 +2321,23 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     .story .story-buttons.close, .profile-grid-stories.story .story-buttons.close {
       top: 8px;
       right: 8px;
-      background: #ff905a; }
+      background: #ffc157; }
       .story .story-buttons.close:hover, .profile-grid-stories.story .story-buttons.close:hover {
-        background: #f46640; }
+        background: #ffea85; }
     .story .story-buttons.edit, .profile-grid-stories.story .story-buttons.edit {
       top: 8px;
       right: 46px;
       background: #25b399; }
       .story .story-buttons.edit:hover, .profile-grid-stories.story .story-buttons.edit:hover {
+        background: #53ecce; }
+    .story .story-buttons.done, .profile-grid-stories.story .story-buttons.done {
+      bottom: 20px;
+      width: 160px;
+      height: 40px;
+      left: 50%;
+      margin-left: -80px;
+      background: #25b399; }
+      .story .story-buttons.done:hover, .profile-grid-stories.story .story-buttons.done:hover {
         background: #53ecce; }
   @media screen and (max-width: 768px) {
     .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {

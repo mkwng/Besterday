@@ -3,6 +3,7 @@
    ========================================================================== */
 
 Meteor.startup(function () {
+  pageViews = 0;
   Session.set('pub_loaded', false); 
   Session.set('user_loaded', false); 
   Session.set("grid_count", 10);
@@ -23,9 +24,7 @@ Meteor.startup(function () {
       $("#story").cssPersist("width","+="+getScrollBarWidth());
     },0);
 
-
-    $(".profile-grid-inner").widthDivByFour();
-    $(".profile-grid-stories.img").imgCover();
+    gridHousekeeping();
 
   })
 
@@ -61,7 +60,7 @@ initialize = function() {
   }
 
 
-  console.log("initialize:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
+  // console.log("initialize:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
   setDate(Session.get("session_user"),Session.get("session_date"));
 
 
@@ -77,7 +76,7 @@ initialize = function() {
 
 Meteor.Router.beforeRouting = function() {
   Session.set("edit",false);
-  Session.set("grid_count", 10);
+  initialize();
 }
 
 
@@ -97,17 +96,32 @@ Meteor.Router.add({
   '/404': 'landing',
 
   '/user/:user': function(user) {
+    Session.set("expanded_story",false);
+    $(".story").showStory();
     sessionScreenName = user;
     return 'profile';
   },
   '/story/yesterday':function() {
+    Session.set("expanded_story",true);
     Session.set("edit",true);
-    return 'profile';
+    return 'storytime';
+  },
+  '/story/:storyId/edit': function(storyId) {
+    sessionId = storyId;
+    Session.set("expanded_story",true);
+    Session.set("edit",true);
+    if(Meteor.Router.page()=='profile')
+      return 'profile';
+    else 
+      return 'storytime';
   },
   '/story/:storyId': function(storyId) {
     sessionId = storyId;
     Session.set("expanded_story",true);
-    return 'profile';
+    if(Meteor.Router.page()=='profile')
+      return 'profile';
+    else 
+      return 'storytime';
   },
 
   '/youdonthaveausername': function() {

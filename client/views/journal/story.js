@@ -7,9 +7,13 @@ Template.storytime.created = function() {}
 
 Template.storytime.rendered = function() {
     $("textarea").verticalCenterTextarea(true);
-    // $st = $(".story-text");
-    // console.log($st[0].clientHeight);
-    // if($st[0].clientHeight>$(window).height()-40*2) $st.addClass("scroll");
+
+    setTimeout(function() {
+      $(".story.img img").load(function() {
+        $(this).closest(".img").imgCover("");
+        $(this).animate({"opacity":1});
+      });
+    },100);
 }
 
 
@@ -28,7 +32,7 @@ Template.storytime.edit = function() {
 Template.storytime.events({
   "click a.cover-area" : function(e) {
     e.preventDefault();
-    $(e.currentTarget).siblings(".story").showStory();
+    // $(e.currentTarget).siblings(".story").showStory();
   },
   'click a.close' : function(e) {
     e.preventDefault();
@@ -40,6 +44,10 @@ Template.storytime.events({
   'click a.edit' : function(e) {
     e.preventDefault();
     $(e.currentTarget).closest(".story").edit();
+  },
+  'click a.done' : function(e) {
+    e.preventDefault();
+    $(e.currentTarget).closest(".story").editDone();
   }
 });
 
@@ -245,15 +253,44 @@ editStory = function(ddate) {
     story = {_id: "yesterday"};
   }
   if (!Session.get("override"))
-    Meteor.Router.to('/story/'+story._id);
+    Meteor.Router.to('/story/'+story._id+'/edit');
 }
 
 jQuery.fn.edit = function() {
   $(this).find(".story-text").removeAttr("disabled");
-  setTimeout(function() {$($("textarea")[0]).select();},100);
+  setTimeout(function() {
+    $($("textarea")[0]).focus();
+    Session.set("edit",true);
+  },100);
 };
 jQuery.fn.editDone = function() {
-  $(this).find(".story-text").addAttr("disabled");
+  $storyText = $(this).find(".story-text").attr("disabled","");
+
+
+
+  if(sessionId) {
+    Meteor.call("updateText",sessionId,$storyText[0].value);
+  } else {
+    Meteor.call("createStory",{
+      owner: Meteor.userId(),
+      date: objectifyDate(Session.get("session_date")),
+      discreteDate: Session.get("session_date"),
+      created: new Date().getTime(),
+      text: $storyText[0].value,
+      public: false
+    }, function(e,r) {
+      console.log(e,r);
+      sessionId = r;
+    });
+  }
+
+  setTimeout(function() {
+    Session.set("edit",false);
+    // toggleLoad(false,"controls-save");
+    updateStats(Meteor.userId());
+    // Meteor.Router.to("/user/"+sessionScreenName);
+
+  },0);
 }
 
 

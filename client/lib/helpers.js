@@ -501,11 +501,11 @@ jQuery.fn.imgCover = function(container) {
   this.each(function() {
 
     // Image container
-    $imageContainer = $(this).find(".profile-grid-stories-img");
-
     // Image width
-    var screenImage = $imageContainer.find("img");
+    var screenImage = $(this).find("img");
     if (!screenImage.length) return false;
+
+    $imageContainer = screenImage.parent();
 
     var theImage = new Image();
 
