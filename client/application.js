@@ -64,10 +64,12 @@ initialize = function() {
   setDate(Session.get("session_user"),Session.get("session_date"));
 
 
-  if(Meteor.userId() && Meteor.userId() == Session.get("session_user")){
-    // if(typeof story=="undefined")           editStory(Session.get("session_date"));
-    // else if(!story.hasOwnProperty("text"))  editStory(Session.get("session_date"));
-    // else if(story.text = "")                editStory(Session.get("session_date"));
+  if(Meteor.userId() && Meteor.userId() == Session.get("session_user") && !Session.get("override")){
+    // editStory(Session.get("session_date"));
+    // alert("You should be editing yesterday.");
+    if(typeof story=="undefined") Meteor.Router.to('/story/yesterday');
+    else if(!story.hasOwnProperty("text")) Meteor.Router.to('/story/yesterday');
+    else if(story.text = "") Meteor.Router.to('/story/yesterday');
   }
 
   return true;
@@ -76,7 +78,7 @@ initialize = function() {
 
 Meteor.Router.beforeRouting = function() {
   Session.set("edit",false);
-  initialize();
+  // initialize();
 }
 
 

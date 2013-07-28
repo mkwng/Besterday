@@ -2,6 +2,44 @@
    Helpers
    ========================================================================== */
 
+createModal = function(message1,message2,actions) {
+  var html = '<div class="modal"><div class="modal-content"><p><span>';
+
+  html += message1+"</span><br />";
+
+  if(typeof message2 != "undefined") html += message2;
+
+  html += '</p>';
+
+  if(typeof actions == "object") {
+    for(var prop in actions) {
+      html += '<a class="modal-button '+prop+'" href="#">'+actions[prop]+'</a>';
+    }
+  }
+
+  html += '</div></div><div class="modal-overlay"></div>';
+  var $modal = $(html);
+  $modal.appendTo("body");
+  setTimeout(function() {
+    $modal.addClass("show");
+  },0);
+  $modal.find(".close").click(function() {
+    $modal.removeClass("show");
+    setTimeout(function() {
+      $modal.remove();
+    },500);
+  });
+  $modal.find(".profile").click(function() {
+    $(".story").showStory();
+    Session.set("expanded_story",false);
+    Meteor.Router.to('/');
+    setTimeout(function() {
+      $modal.remove();
+    },500);
+  });
+}
+
+
 // makeBackground: Sets the background image.
 $bgPreload = null;
 $bg = undefined;
@@ -98,7 +136,7 @@ findStory = function(user,date) {
   if(typeof date == "undefined") date = discreteDate(new Date());
 
   if(date.getMonth) {
-    console.warn("Finding a legacy date. Timezone issues may occur.")
+    // console.warn("Finding a legacy date. Timezone issues may occur.")
     date = new Date(date);
     start = floorDate(date);
     end = floorDate(incrementDate(date,1));
@@ -108,7 +146,7 @@ findStory = function(user,date) {
   } else {
     story = Stories.find({"owner": user,"discreteDate":date},{sort: {created:-1,date:1}}).fetch();
     if (!story.length) {
-      console.warn("Nothing here...");
+      // console.warn("Nothing here...");
       return findStory(user,objectifyDate(date));
     }
   }
@@ -419,7 +457,7 @@ discreteDate = function(story) {
     if(story.hasOwnProperty("discreteDate"))
       return story.discreteDate;
 
-    console.warn("Caution: Legacy post with no discrete date set. Timezone issues possible.");
+    // console.warn("Caution: Legacy post with no discrete date set. Timezone issues possible.");
     var date = new Date(story.date);
     ddate = {year:date.getFullYear(),month:date.getMonth(),date:date.getDate()};
 

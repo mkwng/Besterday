@@ -305,7 +305,7 @@ $columnWidth: 25%;
       font-size:22px;
       width:20%;
       height:$rowHeight*1.5;
-      &.wide,&.large{height:$rowHeight*3;}
+      &.wide,&.large{width:40%;height:$rowHeight*3;}
     }
 
   }

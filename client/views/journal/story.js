@@ -1,18 +1,20 @@
 
-storyMargin = $(window).width() > 320 ? 40 : 0;
+storytimeRenderedTimeout = setTimeout(function() {},0);
+storyMargin = $(window).width() > 768 ? 40 : $(window).width() > 320 ? 20 : 0;
 paddingTopTemp = 100;
 
 Template.storytime.created = function() {}
 
 
 Template.storytime.rendered = function() {
-    $("textarea").verticalCenterTextarea(true);
-
-    setTimeout(function() {
+    clearTimeout(storytimeRenderedTimeout);
+    storytimeRenderedTimeout = setTimeout(function() {
+      $("textarea").verticalCenterTextarea(true);
       $(".story.img img").load(function() {
         $(this).closest(".img").imgCover("");
         $(this).animate({"opacity":1});
       });
+      if(Session.get("edit")) $(".story").edit();
     },100);
 }
 
@@ -39,6 +41,9 @@ Template.storytime.events({
     $(e.currentTarget).closest(".story").showStory();
   },
   "keyup textarea.story-text" : function(e) {
+    if (e.which === 27) {
+      $(".story").editCancel();
+    }
     $("textarea").verticalCenterTextarea();
   },
   'click a.edit' : function(e) {
@@ -96,15 +101,27 @@ Template.storytime.helpers({
   },
   'date_month' : function() {
     if (story && story.date.getMonth)
-    return monNames[story.date.getMonth()];
+      return monNames[story.date.getMonth()];
+    else if(Session.get("session_date"))
+      return monNames[Session.get("session_date").month];
+    else 
+      return "Loading..."
   },
   'date_date' : function() {
     if (story && story.date.getDate)
-    return story.date.getDate();
+      return story.date.getDate();
+    else if(Session.get("session_date"))
+      return Session.get("session_date").date;
+    else 
+      return "Loading..."
   },
   'date_year' : function() {
     if (story && story.date.getFullYear)
-    return story.date.getFullYear();
+      return story.date.getFullYear();
+    else if(Session.get("session_date"))
+      return Session.get("session_date").year;
+    else 
+      return "Loading..."
   },
   'imgDark' : function() {
     if (!story) return;
@@ -149,7 +166,8 @@ jQuery.fn.showStory = function(callback) {
 
   this.each(function() {
     $t = $(this);
-    storyMargin = $(window).width() > 320 ? 40 : 0;
+    var w = $(window).width();
+    storyMargin = w > 768 ? 40 : w > 320 ? 20 : 0;
 
     // Opening this. Make sure it's not one that's already open.
     if(!$t.hasClass("expanded") && !$t.hasClass("story")) {
@@ -248,16 +266,19 @@ jQuery.fn.showStory = function(callback) {
 }
 
 editStory = function(ddate) {
-  story = Stories.findOne({owner:Meteor.userId(),discreteDate:ddate});
-  if(typeof story == "undefined") {
-    story = {_id: "yesterday"};
-  }
-  if (!Session.get("override"))
-    Meteor.Router.to('/story/'+story._id+'/edit');
+  // story = Stories.findOne({owner:Meteor.userId(),discreteDate:ddate});
+  // if (!Session.get("override")) {
+  //   if(typeof story == "undefined") {
+  //     Meteor.Router.to('/story/yesterday');
+  //   } else {
+  //     Meteor.Router.to('/story/'+story._id+'/edit');
+  //   }
+  // }
 }
 
 jQuery.fn.edit = function() {
-  $(this).find(".story-text").removeAttr("disabled");
+  $storyText = $(this).find(".story-text");
+  $storyText.attr("data-original",$storyText[0].value).removeAttr("disabled");
   setTimeout(function() {
     $($("textarea")[0]).focus();
     Session.set("edit",true);
@@ -265,8 +286,6 @@ jQuery.fn.edit = function() {
 };
 jQuery.fn.editDone = function() {
   $storyText = $(this).find(".story-text").attr("disabled","");
-
-
 
   if(sessionId) {
     Meteor.call("updateText",sessionId,$storyText[0].value);
@@ -290,12 +309,16 @@ jQuery.fn.editDone = function() {
     updateStats(Meteor.userId());
     // Meteor.Router.to("/user/"+sessionScreenName);
 
+    if(JSON.stringify(Session.get("session_date"))==JSON.stringify(discreteDate(incrementDate(new Date(),-1))) && Meteor.Router.page() == "storytime"){
+      createModal("Awesome.","See you tomorrow.",{close:"Ok",profile:"Go to profile"});
+    }
+
   },0);
 }
-
-
-
-
-
-
-
+jQuery.fn.editCancel = function() {
+  if (Session.get("edit")) {
+    $storyText = $(this).find(".story-text");
+    Session.set("edit",false);
+    $storyText.attr("disabled","").val($storyText.attr("data-original"));
+  }
+}

@@ -8,7 +8,8 @@ Template.profile_grid.rendered = function() {
   $profileGridInner = $(".profile-grid-inner");
 
   // This makes sure the container is evenly divisible and sets the grid
-  $profileGridInner.widthDivisible("first");
+  if (pageViews<=2)
+    $profileGridInner.widthDivisible("first");
   $(".profile-grid-stories.img img").css("opacity",0)
 
   setTimeout(function() {
@@ -44,7 +45,6 @@ Template.profile_grid.stories = function() {
 Template.profile_grid.events({
 
   "click a.profile-grid-stories" : function(e) {
-    console.log("hello");
     e.preventDefault();
     $(e.currentTarget).showStory();
   },
@@ -157,11 +157,8 @@ jQuery.fn.widthDivisible = function(callback) {
   clearTimeout(isoTimeout);
 
   numCols = Math.round(1/($(".profile-grid-stories:not(.wide)").slice(0,1).width()/$(window).width()));
-  console.log(numCols);
 
   var width = $(window).width();
-  // numCols = width<768 ? 2 : 5;
-  // var lcd = width<768 ? 10 : 5;
 
   // Force the width of the container to a number evenly divisible by numCols
   if(width%numCols!=0){
@@ -172,8 +169,6 @@ jQuery.fn.widthDivisible = function(callback) {
   // This is fairly expensive, so setting a timeout so it doesn't run consecutively too many times.
   isoTimeout = setTimeout(function() {
     if (callback=="first") {
-      console.log("first");
-      // (columns - 2) * (2 rows) + 1 large 
       var firstShow = Math.max((numCols - 2) * 2 + 1,5);
       $removedItems = $("a.profile-grid-stories").slice(firstShow).addClass("small").remove();
       var temp = $("a.profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");

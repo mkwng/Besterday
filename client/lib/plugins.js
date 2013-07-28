@@ -296,30 +296,33 @@ jQuery.fn.verticalCenterTextarea = function(first) {
     var top=calculateTop($t);
     if (top<100){ 
       $t.addClass("scroll");
+      if (top<-100) {
+        $t.addClass("scroll-more");
+      } else {
+        $t.removeClass("scroll-more");
+      }
       top = 100;
     } else {
-      $t.removeClass("scroll");
+      $t.removeClass("scroll scroll-more");
     }
-    // debugger;
     $t.css("padding-top",top);
 
   },0);
   return $t;
 }
 formatDummyText = function(text) {
-  if ( !text ) return $("#story").attr("placeholder");
+  if ( !text ) return $("textarea").slice(0,1).attr("placeholder");
   else return text.replace( /\n$/, '<br>&nbsp;' ).replace( /\n/g, '<br>' );
 }
 calculateTop = function($ele) {
   if(typeof $ele == "undefined") $ele = $(window);
-  var top=0;
+  var top=100;
   if (!$dummy) return 0;
 
-    if ($dummy.length) {
+    if ($dummy.length && $dummy.height()>0) {
       var h = $ele.height();
       top = (h - $dummy.height()) * .5;
     }
-
   return top;
 }
 getStyle = function(el,styleProp) {
