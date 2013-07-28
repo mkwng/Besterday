@@ -117,32 +117,30 @@
           margin:0;
           font-size:32px;
         }
-      .close{
-        display:block;
-        position:absolute;
-        top:8px;
-        right:8px;
-        width:30px;
-        height:30px;
-        text-decoration:none;
-        text-indent:-9999em;
-        background:$borange;
-        &:hover {
-          background:$borange-shad;
+
+      .story-buttons {
+          display:block;
+          position:absolute;
+          width:30px;
+          height:30px;
+          text-decoration:none;
+          text-indent:-9999em;
+          z-index:12;
+        &.close{
+          top:8px;
+          right:8px;
+          background:$borange;
+          &:hover {
+            background:$borange-shad;
+          }
         }
-      }
-      .edit{
-        display:block;
-        position:absolute;
-        top:8px;
-        right:46px;
-        width:30px;
-        height:30px;
-        text-decoration:none;
-        text-indent:-9999em;
-        background:$green;
-        &:hover {
-          background:$green-high;
+        &.edit{
+          top:8px;
+          right:46px;
+          background:$green;
+          &:hover {
+            background:$green-high;
+          }
         }
       }
 

@@ -87,7 +87,17 @@ body {
     text-indent:-99999em;
   }  
   &.transition-hide{
-    display:none;
+    pointer-events:none;
+    .profile-grid-stories {
+      opacity:0;
+    }
+  }
+}
+.cover{
+  z-index:11;
+  background:transparent;
+  &.visible{
+    background:transparent;
   }
 }
 

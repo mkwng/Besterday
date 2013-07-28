@@ -146,6 +146,9 @@ jQuery.fn.showStory = function(callback) {
     // Opening this. Make sure it's not one that's already open.
     if(!$t.hasClass("expanded") && !$t.hasClass("story")) {
 
+      // Find the date we're going to
+      var toDate = discreteDate(new Date($(this).attr("data-date")));
+
       // Create a new clone that we can animate without messing with the original
       $tc = $t.clone().removeClass("isotope-item").addClass("animate transition").removeAttr("href").css({
         position:"fixed",
@@ -179,13 +182,16 @@ jQuery.fn.showStory = function(callback) {
       $tc.imgCover("window");
 
       setTimeout(function() {
-        // debugger;
         paddingTopTemp = $ts.position().top;
+
         Session.set("expanded_story",true);
+
+
         // Animation is done. Let's make sure all the text fits, and then hide everything. Then open the real one.
         // if($ts[0].clientHeight>$(window).height()-storyMargin*2) $ts.addClass("scroll");
         $cover.addClass("transition-hide");
 
+        setDate(Session.get("session_user"),toDate,true);
 
         if(typeof callback == "function"){
           callback();
@@ -220,6 +226,7 @@ jQuery.fn.showStory = function(callback) {
         // Animation is done, let's bring back the original, and clean up.
         $(".expanded").css("opacity",1).removeClass("expanded");
         $cover.remove();
+        Meteor.Router.to("/user/"+sessionScreenName);
         if(typeof callback == "function"){
           callback();
         }
@@ -230,6 +237,15 @@ jQuery.fn.showStory = function(callback) {
 
     $t.toggleClass("expanded");
   });
+}
+
+editStory = function(ddate) {
+  story = Stories.findOne({owner:Meteor.userId(),discreteDate:ddate});
+  if(typeof story == "undefined") {
+    story = {_id: "yesterday"};
+  }
+  if (!Session.get("override"))
+    Meteor.Router.to('/story/'+story._id);
 }
 
 jQuery.fn.edit = function() {

@@ -44,12 +44,6 @@ Template.profile_grid.events({
   "click a.profile-grid-stories" : function(e) {
     console.log("hello");
     e.preventDefault();
-    if (isStory(this)) setDate(Session.get("session_user"),discreteDate(this));
-    else {
-      // console.warn("NO NO NO");
-      var toDate = discreteDate(new Date($(e.currentTarget).attr("data-date")));
-      setDate(Session.get("session_user"),toDate);
-    }
     $(e.currentTarget).showStory();
   },
   "click .profile-grid-more" : function(e) {

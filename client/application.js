@@ -65,11 +65,10 @@ initialize = function() {
   setDate(Session.get("session_user"),Session.get("session_date"));
 
 
-  // We don't have a story for today yet:
-  if((Meteor.userId() && (!!!story | story.text=="") && Meteor.Router.page() != "landing") | (Meteor.userId() == Session.get("session_user") && Meteor.Router.page() != "landing"))  { 
-    story = Stories.findOne({owner:Meteor.userId(),discreteDate:Session.get("session_date")});
-    if (story==undefined | story.text=="" && !Session.get("override"))
-      Meteor.Router.to('/story/today');
+  if(Meteor.userId() && Meteor.userId() == Session.get("session_user")){
+    // if(typeof story=="undefined")           editStory(Session.get("session_date"));
+    // else if(!story.hasOwnProperty("text"))  editStory(Session.get("session_date"));
+    // else if(story.text = "")                editStory(Session.get("session_date"));
   }
 
   return true;
@@ -101,9 +100,9 @@ Meteor.Router.add({
     sessionScreenName = user;
     return 'profile';
   },
-  '/story/today':function() {
+  '/story/yesterday':function() {
     Session.set("edit",true);
-    return 'journal';
+    return 'profile';
   },
   '/story/:storyId': function(storyId) {
     sessionId = storyId;

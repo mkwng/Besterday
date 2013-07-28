@@ -151,7 +151,15 @@ body {
     left: 0;
     text-indent: -99999em; }
   .cover.transition-hide, .cover-transition.transition-hide {
-    display: none; }
+    pointer-events: none; }
+    .cover.transition-hide .profile-grid-stories, .cover-transition.transition-hide .profile-grid-stories {
+      opacity: 0; }
+
+.cover {
+  z-index: 11;
+  background: transparent; }
+  .cover.visible {
+    background: transparent; }
 
 .nav {
   /* Positioning */
@@ -2302,30 +2310,26 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     color: #726d6e;
     margin: 0;
     font-size: 32px; }
-  .story .close, .profile-grid-stories.story .close {
+  .story .story-buttons, .profile-grid-stories.story .story-buttons {
     display: block;
     position: absolute;
-    top: 8px;
-    right: 8px;
     width: 30px;
     height: 30px;
     text-decoration: none;
     text-indent: -9999em;
-    background: #ff905a; }
-    .story .close:hover, .profile-grid-stories.story .close:hover {
-      background: #f46640; }
-  .story .edit, .profile-grid-stories.story .edit {
-    display: block;
-    position: absolute;
-    top: 8px;
-    right: 46px;
-    width: 30px;
-    height: 30px;
-    text-decoration: none;
-    text-indent: -9999em;
-    background: #25b399; }
-    .story .edit:hover, .profile-grid-stories.story .edit:hover {
-      background: #53ecce; }
+    z-index: 12; }
+    .story .story-buttons.close, .profile-grid-stories.story .story-buttons.close {
+      top: 8px;
+      right: 8px;
+      background: #ff905a; }
+      .story .story-buttons.close:hover, .profile-grid-stories.story .story-buttons.close:hover {
+        background: #f46640; }
+    .story .story-buttons.edit, .profile-grid-stories.story .story-buttons.edit {
+      top: 8px;
+      right: 46px;
+      background: #25b399; }
+      .story .story-buttons.edit:hover, .profile-grid-stories.story .story-buttons.edit:hover {
+        background: #53ecce; }
   @media screen and (max-width: 768px) {
     .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {
       font-size: 28px; } }
