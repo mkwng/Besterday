@@ -18,17 +18,18 @@ Meteor.startup(function () {
     if(Session.get('pub_loaded')) initialize();
   });
 
-  $(window).resize(function() {
+  $(window).resize($.throttle( 250, resizeHousekeeping ) )
+
+});
+
+resizeHousekeeping = function() {
     $("#story").cssPersist("width","100%").verticalCenter(true);
     setTimeout(function(){
       $("#story").cssPersist("width","+="+getScrollBarWidth());
     },0);
 
     gridHousekeeping();
-
-  })
-
-});
+}
 
 Meteor.autorun(function() {
 });
