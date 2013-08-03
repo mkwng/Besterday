@@ -2,6 +2,7 @@
 #profile {
   background:#ffffff;
   overflow:hidden;
+  z-index:12;
 }
 
 .profile-outro {
@@ -12,6 +13,58 @@
   margin:200px auto 200px;
   span{color:$grey2;}
 }
+
+
+
+
+/* ==========================================================================
+   Profile Top
+   ========================================================================== */
+.profile-top-placeholder {
+  width:100%;
+  height:40px;
+}
+.profile-top {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+  height:40px;
+  background:$grey2;
+  color:#ffffff;
+  z-index:9;
+  text-align:center;
+  @include text-paragraph;
+  line-height:40px;
+  strong {
+    font-weight:200;
+    color:$yellow;
+  }
+  .profile-top-back,.profile-top-what {
+    @include text-smallcaps;
+    font-size:12px;
+    line-height:40px;
+    height:40px;
+    position:absolute;
+    text-decoration:none;
+    padding: 0 20px;
+    top:0;
+    background:#000000;
+    color:$grey3;
+    &:hover {
+      color:#ffffff;
+      background:$orange;
+    }
+  }
+  .profile-top-back {
+    left:0;
+  }
+  .profile-top-what {
+    right:0;
+  }
+}
+
 
 
 /* ==========================================================================

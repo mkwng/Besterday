@@ -21,51 +21,11 @@
   
   {{renderPage}}
 
-  <div id="sidebar">
-    {{#if showSidebar}}
-      {{> sidebar}}
-    {{/if}}
-  </div>
-
   {{#unless loggedIn}}
     {{> loginForm}}
   {{/unless}}
 </template>
 
-<template name="sidebar">
-  <ul class="sidebar-menu">
-    <li class="sidebar-menu-sub list">
-      <input type="radio" id="list" name="sidebar-menu-sub" checked>
-      <label for="list">List</label>
-      <ul class="content">
-        <li class="sidebar-menu-sub-list-week this"> <a href="#">{{month}} {{year}}</a>
-          <ul>
-            {{#each weekThis}}
-            <li><a href="{{#if disabled}}#{{else}}{{dateUrl}}{{/if}}" data-date="{{date}}" class="{{#if disabled}}disabled{{/if}} {{#if text}}story{{/if}} {{#if active}}active{{/if}}">{{day}}{{#if img}}<div class="hasImg {{#if active}}active{{/if}}"></div>{{/if}}</a></li>
-            {{/each}}
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li class="sidebar-menu-sub profile">
-      <input type="radio" id="profile" name="sidebar-menu-sub">
-      <label for="profile">Profile</label>
-      <ul class="content">
-
-          <li><a href="#">Edit Profile</a></li>
-          <li><a href="#">Edit Password</a></li>
-          <li><a href="#">Sharing Settings</a></li>
-
-      </ul>
-    </li>
-    <li class="sidebar-menu-sub signout">
-      <input type="radio" id="signout" name="sidebar-menu-sub">
-      <label for="signout">Sign Out</label>
-      <ul class="content">
-        <li>Goodbye!</li>
-      </ul>
-    </li>
-</template>
 
 <template name="loginForm">
 <div id="login">

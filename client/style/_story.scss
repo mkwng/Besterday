@@ -1,3 +1,8 @@
+#storytime {
+  z-index:12;
+  position:relative;
+}
+
 .story,.profile-grid-stories.story {
       &:before {
         right:-1em;
@@ -125,15 +130,16 @@
       .story-buttons {
           display:block;
           position:absolute;
-          width:30px;
-          height:30px;
           text-decoration:none;
-          text-indent:-9999em;
           z-index:12;
+          color:white;
         &.close{
           top:8px;
           right:8px;
           background:$yellow;
+          width:30px;
+          height:30px;
+          text-indent:-9999em;
           &:hover {
             background:$yellow-high;
           }
@@ -142,15 +148,21 @@
           top:8px;
           right:46px;
           background:$green;
+          width:30px;
+          height:30px;
+          text-indent:-9999em;
           &:hover {
             background:$green-high;
           }
         }
         &.done {
-          bottom:20px;
-          width:160px;
-          height:40px;
+          bottom:32px;
+          margin:0 auto;
+          @include box-sizing;
+          // height:40px;
+          padding:18px 32px;
           left:50%;
+          width:160px;
           margin-left:-80px;
           background:$green;
           &:hover {

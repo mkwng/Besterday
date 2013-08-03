@@ -151,6 +151,19 @@ Template.storytime.helpers({
   'copyImgStyle' : function() {
     var imgimg = $(".cover-transition .profile-grid-stories-img").attr("style");
     return imgimg;
+  },
+  'prettyDate' : function() {
+    if (!!story.date) {
+      if (!!story.date.year) 
+        return " " + prettyDate(objectifyDate(story.discreteDate));
+      else
+        return " yesterday";
+    }
+    else 
+      return "";
+  },
+  'isOwner' : function() {
+    return Meteor.userId() == Session.get("session_user");
   }
 });
 
@@ -285,7 +298,15 @@ jQuery.fn.edit = function() {
   },100);
 };
 jQuery.fn.editDone = function() {
-  $storyText = $(this).find(".story-text").attr("disabled","");
+
+  $storyText = $(this).find(".story-text");
+
+  if($storyText[0].value == "") {
+    createModal("Oh come on.","There's got to be something.",{close:"Ok, fine"});
+    return false;
+  } else {
+    $storyText.attr("disabled","");
+  }
 
   if(sessionId) {
     Meteor.call("updateText",sessionId,$storyText[0].value);
@@ -310,7 +331,7 @@ jQuery.fn.editDone = function() {
     // Meteor.Router.to("/user/"+sessionScreenName);
 
     if(JSON.stringify(Session.get("session_date"))==JSON.stringify(discreteDate(incrementDate(new Date(),-1))) && Meteor.Router.page() == "storytime"){
-      createModal("Awesome.","See you tomorrow.",{close:"Ok",profile:"Go to profile"});
+      createModal("Awesome.","See you tomorrow.",{profile:"Ok"});
     }
 
   },0);

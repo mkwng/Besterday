@@ -9,15 +9,15 @@ createModal = function(message1,message2,actions) {
 
   if(typeof message2 != "undefined") html += message2;
 
-  html += '</p>';
+  html += '<br />';
 
   if(typeof actions == "object") {
     for(var prop in actions) {
-      html += '<a class="modal-button '+prop+'" href="#">'+actions[prop]+'</a>';
+      html += '<a class="modal-button button '+prop+'" href="#">'+actions[prop]+'</a>';
     }
   }
 
-  html += '</div></div><div class="modal-overlay"></div>';
+  html += '</p></div></div><div class="modal-overlay"></div>';
   var $modal = $(html);
   $modal.appendTo("body");
   setTimeout(function() {

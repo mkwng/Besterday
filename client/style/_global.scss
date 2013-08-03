@@ -69,12 +69,12 @@ body {
   z-index:10;
   width:100%;
   height:100%;
-  background:rgba($grey1,0);
+  background:rgba(darken($grey1,5%),0);
   &.no-transition{
     @include transition(all 0);
   }
   &.visible{
-    background:rgba($grey1,.9);
+    background:rgba(darken($grey1,5%),.9);
     pointer-events:auto;
   }
   .cover-area{
@@ -192,6 +192,13 @@ body {
   letter-spacing:2px;
 }
 
+@mixin text-paragraph {
+  font-weight:200;
+  font-size:18px;
+  font-family:"ratio",Arial;
+  line-height:1.2em;
+}
+
 @mixin text-feature {
   font-weight:100;
   font-size:32px;
@@ -243,6 +250,8 @@ body {
   @include prefix(transform, scale(0.8));
   opacity: 0;
   text-align:center;
+  width:100%;
+  height:100%;
   p {
     @include text-h1;
     color:#ffffff;
@@ -252,13 +261,14 @@ body {
   .modal-button {
     text-align:center;
     display:inline-block;
-    width:180px;
-    margin:10px;
-    padding:20px 0;
+    width:auto;
+    margin:20px 10px 10px;
+    padding:20px 30px;
     @include text-smallcaps;
     color:#ffffff;
     background:rgba($yellow-high,.75);
     text-decoration:none;
+
     &:hover {background:$yellow-high;}
   }
 }
@@ -267,6 +277,12 @@ body {
   opacity: 1;
 }
 
+
+.button {
+  @include text-smallcaps;
+  color:#ffffff;
+  border-radius:3px;
+}
 
 /* ==========================================================================
    Loader styles

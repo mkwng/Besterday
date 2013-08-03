@@ -17,4 +17,7 @@ Template.profile.events({});
 
 
 Template.profile.helpers({
+  'isOwner' : function() {
+    return Meteor.userId() == Session.get("session_user");
+  }
 });
