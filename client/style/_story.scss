@@ -136,23 +136,29 @@
         &.close{
           top:8px;
           right:8px;
-          background:$yellow;
+          color:$yellow;
           width:30px;
           height:30px;
-          text-indent:-9999em;
+          text-align:center;
+          line-height:30px;
+          // text-indent:-9999em;
+          @include prefix(transition,all .2s);
           &:hover {
-            background:$yellow-high;
+            color:$yellow-high;
           }
         }
         &.edit{
           top:8px;
           right:46px;
-          background:$green;
+          color:$green;
           width:30px;
           height:30px;
-          text-indent:-9999em;
+          text-align:center;
+          line-height:30px;
+          // text-indent:-9999em;
+          @include prefix(transition,all .2s);
           &:hover {
-            background:$green-high;
+            color:$green-high;
           }
         }
         &.done {

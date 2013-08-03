@@ -1,7 +1,9 @@
 <template name="profile">
-  {{#unless isOwner}}
+  {{#if isOwner}}
+    {{> profile_menu}}
+  {{else}}
     {{> profile_top}}
-  {{/unless}}
+  {{/if}}
   <div id="profile" class="page">
     {{> profile_header}}
     {{> profile_stats}}

@@ -281,6 +281,7 @@ body {
 .button {
   @include text-smallcaps;
   color:#ffffff;
+  @include prefix(transition,all .2s);
   border-radius:3px;
 }
 

@@ -65,6 +65,98 @@
   }
 }
 
+.profile-menu {
+  z-index:9;
+  position:absolute;
+  left:20px;
+  top:20px;
+  width:44px;
+  height:44px;
+  color:white;
+  a.icon-menu {
+    @include prefix(transition,all .2s);
+    display:block;
+    border-radius:3px;
+    width:44px;
+    height:44px;
+    background:#000000;
+    text-align:center;
+    line-height:44px;
+    color:$grey3;
+    cursor:pointer;
+    &:hover{
+      background:$orange;
+      color:#ffffff;
+    }
+  }
+  &.active{
+    .profile-menu-sub {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+.profile-menu-edit-picture,.profile-menu-edit-name,.profile-menu-edit-email,.profile-menu-edit-password,.profile-menu-edit-done,.profile-menu-edit-delete {
+  padding: 10px 10px 12px 10px;
+  border-top:1px solid $grey1;  
+}
+.profile-menu-sub {
+  opacity:0;
+  position:absolute;
+  left:0;
+  top:54px;
+  border-radius:3px;
+  visibility:hidden;
+  background:$grey2;
+  font-size:12px;
+  width:240px;
+  overflow:hidden;
+  text-align:left;
+  label {
+    @include text-smallcaps;
+    margin:0 0 8px 0;
+    display:block;
+    color:$grey3;
+    line-height:20px;
+    font-size:11px;
+  }
+  input {
+    @include text-paragraph;
+    padding:0 10px;
+    width:200px;
+    outline:none;
+    border:none;
+    border-bottom:1px solid $grey3;
+    // border-radius:3px;
+    background:$grey1;
+    color:$grey4;
+    line-height:32px;
+  }
+  a {
+    @include text-smallcaps;
+    @include prefix(transition,all .2s);
+    display:block;
+    padding: 10px 12px;
+    height:24px;
+    color:#ffffff;
+    color:$grey3;
+    text-decoration:none;
+    font-size:12px;
+    line-height:24px;
+    &:hover{
+      background:$orange;
+      color:#ffffff;
+    }
+    span.icon { 
+      float:right;
+      line-height:24px;
+      font-size:11px;
+      width: 14px;
+      text-align: center;
+    }
+  }
+}
+
 
 
 /* ==========================================================================
