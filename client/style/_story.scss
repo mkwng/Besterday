@@ -16,7 +16,7 @@
         @include prefix(transform-origin,50% 100%);
       }
       &.animate{
-        @include prefix(animation,OpenTop .6s forwards ease);
+        // @include prefix(animation,OpenTop .6s forwards ease);
       }
       @include prefix(transition,all .5s);
       @include gradient(#ffffff,mix(#ffffff,$grey4));
@@ -159,6 +159,47 @@
           @include prefix(transition,all .2s);
           &:hover {
             color:$green-high;
+          }
+        }
+        &.share{
+          top:8px;
+          left:8px;
+          color:$yellow;
+          width:30px;
+          height:30px;
+          text-align:center;
+          line-height:30px;
+          // text-indent:-9999em;
+          @include prefix(transition,all .2s);
+          &:hover {
+            color:$yellow-high;
+          }
+        }
+        &.upload {
+          @include prefix(transition, color .2s, opacity .2s);
+          top: 100px;
+          left: 50%;
+          width: 44px;
+          height: 44px;
+          margin-left: -22px;
+          text-align:center;
+          line-height: 44px;
+          color:#000000;
+          opacity:0;
+          font-size:32px;
+          &.scroll {
+            top:20px !important;
+            left:20px;
+            margin-left:0;
+          }
+          &.attached {
+            color:$yellow;
+            // opacity:.85 !important;
+          }
+          &:hover {
+            @include prefix(transition,opacity .2s);
+            color:$yellow;
+            opacity:1 !important;
           }
         }
         &.done {

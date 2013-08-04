@@ -2,6 +2,52 @@
    Helpers
    ========================================================================== */
 
+uploadPicture = function(button) {
+
+  // Need to provide better way of deleting picture...
+  if ($(button).hasClass("attached") && confirm("Remove picture?")) {
+    $(button).removeClass("attached");
+    // Remove the current picture.
+    makeBackground();
+
+    Meteor.call("updateImg",sessionId,"")
+
+  } 
+
+  filepicker.pick({
+    mimetypes: ['image/*', 'text/plain'],
+    container: 'modal',
+    services:['COMPUTER', 'URL', 'FACEBOOK', 'INSTAGRAM', 'FLICKR', 
+    'PICASA', 'DROPBOX', 'GMAIL'],
+    },
+    function(FPFile){
+      image = JSON.stringify(FPFile);
+      makeBackground(image);
+
+      if(sessionId) {
+        Meteor.call("updateImg",sessionId,image);
+      } else {
+        Meteor.call("createStory",{
+          owner: Meteor.userId(),
+          date: objectifyDate(Session.get("session_date")),
+          discreteDate: Session.get("session_date"),
+          created: new Date().getTime(),
+          text: document.getElementById('story').value,
+          img: image,
+          public: false
+        }, function(e,r) {
+          sessionId = r;
+        });
+      }
+    },
+    function(FPError){
+      console.log(FPError.toString());
+      $(button).addClass("error");
+    }
+  );
+
+}
+
 createModal = function(message1,message2,actions) {
   var html = '<div class="modal"><div class="modal-content"><p><span>';
 
@@ -45,13 +91,85 @@ createModal = function(message1,message2,actions) {
     },500);
   });
 }
+$imgPreload = null;
+makeBackground = function(picture) {
+  // debugger;
+  // If there's a previous thing happening, let's cancel that.
+  if($imgPreload) $imgPreload.unbind("load");
+
+  if (picture && typeof picture != "undefined"){
+    // Wait, we gotta check if this is a URL or an object, because you can pass either one in.
+    if (typeof picture == "object" && picture.hasOwnProperty("url")) 
+      var url = picture.url;
+    else if (picture.indexOf("{") !== -1) {
+      picture = jQuery.parseJSON(picture)
+      var url = picture.url;
+    }
+    else 
+      var url = picture; // Phew.
 
 
+    // toggleLoad(true,"bg");
+    var storyColor,avgColor,updateFlag = false;
+
+    if(typeof picture == "object") {
+      if (picture.hasOwnProperty("avgColor") && picture.hasOwnProperty("storyColor") ) {
+          storyColor = picture.storyColor;
+          avgColor = picture.avgColor;
+      } else {
+        updateFlag = true;
+      }
+    } 
+    if(!!!storyColor && !!!avgColor) {
+
+      getImageLightness(url,function(brightness,avg){
+        if(brightness<150) {
+          storyColor = "#ffffff";
+        }
+        else {
+          storyColor = "#666666";
+        }
+        avgColor = avg;
+
+      });
+    }
+
+    $story = $(".story, .profile-grid-stories.expanded");
+    $storyDiv = $story.find(".story-img, .profile-grid-stories-img");
+    $storyImg = $storyDiv.find("img");
+    $storyImg.css({opacity:"0",visibility:'hidden'});
+
+    // $storyDiv.stop().animate({opacity:0},function() {
+
+
+      $imgPreload = $('<img/>').attr("src",url);
+      $imgPreload.one("load", function() {
+        setTimeout(function() {
+          $storyImg.attr("src",url);
+          $("textarea.story-text").css({color:storyColor});
+          $story.css("background",avgColor).addClass("img").imgCover();
+          // $storyDiv.animate({opacity:1}, function() {
+          setTimeout(function(){
+            $storyImg.css({opacity:"1",visibility:'visible'});
+            toggleLoad(false,"bg");
+            if(updateFlag && !!sessionId){
+              picture["avgColor"] = avgColor;
+              picture["storyColor"] = storyColor;
+              Meteor.call("updateImg",sessionId,picture);
+            }
+          },800);
+        },100);
+      });
+
+  } else {
+    $(".story-img").fadeOut(function() {$(this).remove()});
+  }
+}
 // makeBackground: Sets the background image.
 $bgPreload = null;
 $bg = undefined;
 $bgImage = undefined;
-makeBackground = function(picture) {
+makeBackgroundOld = function(picture) {
   if (Meteor.Router.page()!="journal") return false;
 
   if( !$bg || (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
@@ -561,9 +679,9 @@ jQuery.fn.imgCover = function(container) {
 
     // Container width
 
-    if(typeof container != "undefined" && container=="window") {
-      var containerWidth = $(window).width() - 80;
-      var containerHeight = $(window).height() - 80;
+    if(typeof container != "undefined") {
+      var containerWidth = $(container).width() - 80;
+      var containerHeight = $(container).height() - 80;
     } else {
       var containerWidth = $(this).width();
       var containerHeight = $(this).height(); 
@@ -583,14 +701,14 @@ jQuery.fn.imgCover = function(container) {
     var marginX = -1 * (x/4 - containerWidth)/2;
     var marginY = -1 * (y/4 - containerHeight)/2;
 
-    if(typeof container != "undefined" && container=="window") {
+    if(typeof container != "undefined") {
       $imageContainer.animate({
         "left":(marginX/containerWidth)*100+"%",
         "right":(marginX/containerWidth)*100+"%",
         "bottom":(marginY/containerHeight)*100+"%",
         "top":(marginY/containerHeight)*100+"%"
       });
-      screenImage.css("opacity","1");
+      // screenImage.css("opacity","1");
     } else {
       $imageContainer.css({
         "left":(marginX/containerWidth)*100+"%",
@@ -598,7 +716,7 @@ jQuery.fn.imgCover = function(container) {
         "bottom":(marginY/containerHeight)*100+"%",
         "top":(marginY/containerHeight)*100+"%"
       });
-      screenImage.css("opacity","1");
+      // screenImage.css("opacity","1");
     }
     return true;
 

@@ -577,11 +577,11 @@ body {
   font-size: 36px;
   font-family: "ratio";
   line-height: 520px;
-  -webkit-transition: -webkit-transform 1s;
-  -moz-transition: -webkit-transform 1s;
-  -ms-transition: -webkit-transform 1s;
-  -o-transition: -webkit-transform 1s;
-  transition: -webkit-transform 1s; }
+  -webkit-transition: -webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s;
+  -moz-transition: -webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s;
+  -ms-transition: -webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s;
+  -o-transition: -webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s;
+  transition: -webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s; }
   .landing-hero-example.active {
     -webkit-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
     -moz-transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px);
@@ -730,11 +730,11 @@ body {
   -moz-perspective: 1000;
   -o-perspective: 1000;
   -ms-perspective: 1000;
-  -webkit-transition: padding-top 0.8s;
-  -moz-transition: padding-top 0.8s;
-  -ms-transition: padding-top 0.8s;
-  -o-transition: padding-top 0.8s;
-  transition: padding-top 0.8s; }
+  -webkit-transition: padding-top 0.8s, color 0.8s;
+  -moz-transition: padding-top 0.8s, color 0.8s;
+  -ms-transition: padding-top 0.8s, color 0.8s;
+  -o-transition: padding-top 0.8s, color 0.8s;
+  transition: padding-top 0.8s, color 0.8s; }
   #story::-webkit-input-placeholder {
     opacity: .5 !important; }
   #story:-moz-placeholder {
@@ -1764,7 +1764,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     background-color: #ffc157;
     color: #ffea85;
     content: "";
-    text-align: right;
+    text-align: left;
     opacity: 0;
     pointer-events: none; }
   .profile-grid-stories[data-public="true"]::after {
@@ -1997,11 +1997,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   top: 52%;
   margin: -50px 0 0 -50px;
   opacity: 0;
-  -webkit-transition: top 0.5s;
-  -moz-transition: top 0.5s;
-  -ms-transition: top 0.5s;
-  -o-transition: top 0.5s;
-  transition: top 0.5s; }
+  -webkit-transition: top 0.5s, transform 0.5s;
+  -moz-transition: top 0.5s, transform 0.5s;
+  -ms-transition: top 0.5s, transform 0.5s;
+  -o-transition: top 0.5s, transform 0.5s;
+  transition: top 0.5s, transform 0.5s; }
 
 .profile-grid-stories-date-month {
   font-family: "futura-pt",Arial;
@@ -2160,12 +2160,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     -ms-transform-origin: 50% 100%;
     -o-transform-origin: 50% 100%;
     transform-origin: 50% 100%; }
-  .story.animate, .profile-grid-stories.story.animate {
-    -webkit-animation: OpenTop 0.6s forwards ease;
-    -moz-animation: OpenTop 0.6s forwards ease;
-    -ms-animation: OpenTop 0.6s forwards ease;
-    -o-animation: OpenTop 0.6s forwards ease;
-    animation: OpenTop 0.6s forwards ease; }
   .story.alt-1, .profile-grid-stories.story.alt-1 {
     color: #ffffff;
     background: #ff905a;
@@ -2354,11 +2348,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       font-size: 24px;
       line-height: 1.4em; }
   .story .story-date, .story .profile-grid-stories-date, .profile-grid-stories.story .story-date, .profile-grid-stories.story .profile-grid-stories-date {
-    -webkit-transition: top 0.5s;
-    -moz-transition: top 0.5s;
-    -ms-transition: top 0.5s;
-    -o-transition: top 0.5s;
-    transition: top 0.5s;
+    -webkit-transition: top 0.5s, transform 0.5s;
+    -moz-transition: top 0.5s, transform 0.5s;
+    -ms-transition: top 0.5s, transform 0.5s;
+    -o-transition: top 0.5s, transform 0.5s;
+    transition: top 0.5s, transform 0.5s;
     -webkit-transform: scale(0.5);
     -moz-transform: scale(0.5);
     -ms-transform: scale(0.5);
@@ -2427,6 +2421,51 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       transition: all 0.2s; }
       .story .story-buttons.edit:hover, .profile-grid-stories.story .story-buttons.edit:hover {
         color: #53ecce; }
+    .story .story-buttons.share, .profile-grid-stories.story .story-buttons.share {
+      top: 8px;
+      left: 8px;
+      color: #ffc157;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s; }
+      .story .story-buttons.share:hover, .profile-grid-stories.story .story-buttons.share:hover {
+        color: #ffea85; }
+    .story .story-buttons.upload, .profile-grid-stories.story .story-buttons.upload {
+      -webkit-transition: color 0.2s, opacity 0.2s;
+      -moz-transition: color 0.2s, opacity 0.2s;
+      -ms-transition: color 0.2s, opacity 0.2s;
+      -o-transition: color 0.2s, opacity 0.2s;
+      transition: color 0.2s, opacity 0.2s;
+      top: 100px;
+      left: 50%;
+      width: 44px;
+      height: 44px;
+      margin-left: -22px;
+      text-align: center;
+      line-height: 44px;
+      color: #000000;
+      opacity: 0;
+      font-size: 32px; }
+      .story .story-buttons.upload.scroll, .profile-grid-stories.story .story-buttons.upload.scroll {
+        top: 20px !important;
+        left: 20px;
+        margin-left: 0; }
+      .story .story-buttons.upload.attached, .profile-grid-stories.story .story-buttons.upload.attached {
+        color: #ffc157; }
+      .story .story-buttons.upload:hover, .profile-grid-stories.story .story-buttons.upload:hover {
+        -webkit-transition: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        -ms-transition: opacity 0.2s;
+        -o-transition: opacity 0.2s;
+        transition: opacity 0.2s;
+        color: #ffc157;
+        opacity: 1 !important; }
     .story .story-buttons.done, .profile-grid-stories.story .story-buttons.done {
       bottom: 32px;
       margin: 0 auto;

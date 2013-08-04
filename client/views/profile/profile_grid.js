@@ -1,6 +1,9 @@
 $profileGridInner = undefined;
+profileGridLoaded = false;
 
-Template.profile_grid.created = function() {}
+Template.profile_grid.created = function() {
+  profileGridLoaded = false;
+}
 
 
 Template.profile_grid.rendered = function() {
@@ -10,7 +13,13 @@ Template.profile_grid.rendered = function() {
   // This makes sure the container is evenly divisible and sets the grid
   if (pageViews<=2)
     $profileGridInner.widthDivisible("first");
-  $(".profile-grid-stories.img img").css("opacity",0)
+
+  setTimeout(function() {
+    if(!profileGridLoaded && $(".profile-grid-stories.img img").length) {
+      profileGridLoaded = true;
+      $(".profile-grid-stories.img img").css({opacity:0,visibility:'hidden'});
+    }
+  },0);
 
   setTimeout(function() {
     gridHousekeeping();
@@ -29,8 +38,8 @@ gridHousekeeping = function() {
     // Make sure the images are positioned correctly and load nicely
     $(".profile-grid-stories.img").imgCover();
     $(".profile-grid-stories.img img").load(function() {
-      $(this).closest(".img").imgCover("");
-      $(this).css("opacity",1);
+      $(this).closest(".img").imgCover();
+      $(this).css({opacity:1,visibility:"visible"});
     });
 }
 
@@ -38,7 +47,7 @@ Template.profile_grid.destroyed = function() {}
 
 
 Template.profile_grid.stories = function() {
-  stories = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1}}).fetch();
+  stories = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1},limit:10}).fetch();
   return stories;
 }
 
@@ -50,25 +59,25 @@ Template.profile_grid.events({
   },
   "click .profile-grid-more" : function(e) {
     e.preventDefault();
-    var $this = $(e.currentTarget);
-    if(!!$removedItems) {
+    // var $this = $(e.currentTarget);
+    // if(!!$removedItems) {
 
-      if($this.hasClass("less")){
-        $removedItems = $("a.profile-grid-stories").slice(7);
-        $(".profile-grid-inner").isotope('remove',$removedItems);
-        $this.html("Show more&hellip;").removeClass("fixed");
-        $(window).unbind('scroll',stickyLess);
-      }
-      else{
-        $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
-          gridHousekeeping();
-        });
-        $this.html("Show less&hellip;").addClass("fixed");
-        $(window).bind('scroll',stickyLess);
-      }
+    //   if($this.hasClass("less")){
+    //     $removedItems = $("a.profile-grid-stories").slice(7);
+    //     $(".profile-grid-inner").isotope('remove',$removedItems);
+    //     $this.html("Show more&hellip;").removeClass("fixed");
+    //     $(window).unbind('scroll',stickyLess);
+    //   }
+    //   else{
+    //     $(".profile-grid-inner").append($removedItems).isotope('appended',$removedItems,function() {
+    //       gridHousekeeping();
+    //     });
+    //     $this.html("Show less&hellip;").addClass("fixed");
+    //     $(window).bind('scroll',stickyLess);
+    //   }
 
-      $this.toggleClass("less");
-    }
+    //   $this.toggleClass("less");
+    // }
   }
 });
 
@@ -146,6 +155,28 @@ Template.profile_grid.helpers({
       url = "/"+sessionScreenName+getDateUrl(this.date);
     }
     return url;
+  },
+  'avgColor' : function() {
+    var picture = this.img;
+    var color = "";
+    if (typeof picture == "object" && picture.hasOwnProperty("avgColor")) 
+      color = picture.avgColor;
+    else if (picture.indexOf("{") !== -1) {
+      picture = jQuery.parseJSON(picture);
+      if(picture.hasOwnProperty("avgColor")) color = picture.avgColor;
+    }
+    return color;
+  },
+  'storyColor' : function() {
+    var picture = this.img;
+    var color = "";
+    if (typeof picture == "object" && picture.hasOwnProperty("storyColor")) 
+      color = picture.storyColor;
+    else if (picture.indexOf("{") !== -1) {
+      picture = jQuery.parseJSON(picture);
+      if(picture.hasOwnProperty("storyColor")) color = picture.storyColor;
+    }
+    return color;
   }
 });
 
@@ -169,14 +200,14 @@ jQuery.fn.widthDivisible = function(callback) {
   // This is fairly expensive, so setting a timeout so it doesn't run consecutively too many times.
   isoTimeout = setTimeout(function() {
     if (callback=="first") {
-      var firstShow = Math.max((numCols - 2) * 2 + 1,5);
-      $removedItems = $("a.profile-grid-stories").slice(firstShow).addClass("small").remove();
-      var temp = $("a.profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");
+      // var firstShow = Math.max((numCols - 2) * 2 + 1,5);
+      // $removedItems = $("a.profile-grid-stories").slice(firstShow).addClass("small").remove();
+      // var temp = $("a.profile-grid-stories").removeClass("wide large").slice(0,1).addClass("wide");
       $(".profile-grid-inner").isotope({masonry:{columnWidth:width/numCols}});
     }
     else
       $(".profile-grid-inner").isotope({masonry:{columnWidth:width/numCols}});
-  },20);
+  },100);
 
   return $(this);
 };

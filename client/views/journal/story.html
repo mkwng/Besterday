@@ -4,13 +4,14 @@
 <div class="cover visible no-transition" style="display: block;">
   <a class="cover-area" href="#"></a>
 
-  <div class="story{{#if story.img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" style="{{currentStyle}}">
-      {{#if story.img}}
+  <div class="story{{#if story.img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" style="{{currentStyle}};{{#if story.img}} background:{{avgColor}};{{/if}}">
+      
       <div class="story-img" style="{{copyImgStyle}}">
-        <img src="{{imgUrl}}" />
+        <img {{#if story.img}}src="{{imgUrl}}"{{/if}} />
+        <!-- <img /> -->
       </div>
-      {{/if}}
-      <textarea placeholder="What was the best thing that happened to you{{prettyDate}}?" disabled class="story-text" style="padding-top:{{paddingTopStory}}px">{{story.text}}</textarea>
+      
+      <textarea placeholder="What was the best thing that happened to you{{prettyDate}}?" disabled class="story-text" style="padding-top:{{paddingTopStory}}px;{{#if story.img}} color:{{storyColor}};{{/if}}" >{{story.text}}</textarea>
       <div class="story-date">
         <p class="story-date-month">{{date_month}}</p>
         <p class="story-date-date">{{date_date}}</p>
@@ -19,8 +20,10 @@
       {{#isolate}}
         {{#if edit}}
         <a class="story-buttons done button" href="#">Done</a>
+        <a class="story-buttons upload icon-image{{#if story.img}} attached{{/if}}" href="#"></a>
         {{else}}
         {{#if isOwner}}
+          <a class="story-buttons share {{#if story.public}}icon-unlocked{{else}}icon-lock{{/if}}" href="#"></a>
           <a class="story-buttons edit icon-pencil" href="#">&nbsp;</a>
         {{/if}}
         <a class="story-buttons close icon-cancel" href="#">&nbsp;</a>

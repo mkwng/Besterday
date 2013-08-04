@@ -32,7 +32,7 @@ $break-lg: 1200px;
    Helpers & Mixins
    ========================================================================== */
 
-@mixin prefix ( $property, $value ) {
+@mixin prefix ( $property, $value... ) {
   -webkit-#{$property}: $value;
      -moz-#{$property}: $value;
       -ms-#{$property}: $value;

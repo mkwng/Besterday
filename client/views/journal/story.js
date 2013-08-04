@@ -2,17 +2,29 @@
 storytimeRenderedTimeout = setTimeout(function() {},0);
 storyMargin = $(window).width() > 768 ? 40 : $(window).width() > 320 ? 20 : 0;
 paddingTopTemp = 100;
+uploadButtonTimeout = setTimeout(function() {},0);
+storytimeLoaded = false;
 
-Template.storytime.created = function() {}
+Template.storytime.created = function() {
+  storytimeLoaded = false;
+}
 
 
 Template.storytime.rendered = function() {
+
+    setTimeout(function() {
+      if(!storytimeLoaded && $(".story.img img").length) {
+        storytimeLoaded = true;
+        if(Meteor.Router.page()=="storytime") $(".story.img img").css({opacity:0,visibility:'hidden'});
+      }
+    },0);
+
     clearTimeout(storytimeRenderedTimeout);
     storytimeRenderedTimeout = setTimeout(function() {
       $("textarea").verticalCenterTextarea(true);
       $(".story.img img").load(function() {
-        $(this).closest(".img").imgCover("");
-        $(this).animate({"opacity":1});
+        $(this).closest(".img").imgCover();
+        $(this).css({opacity:1,visibility:'visible'});
       });
       if(Session.get("edit")) $(".story").edit();
     },100);
@@ -38,9 +50,17 @@ Template.storytime.events({
   },
   'click a.close' : function(e) {
     e.preventDefault();
+    if(Meteor.Router.page() == "profile") {
+      $(this).css({opacity:1,visibility:"visible"});
+    }
     $(e.currentTarget).closest(".story").showStory();
   },
+  "keydown textarea.story-text" : function() {
+     $(".story-buttons.upload").css("opacity","0");
+  },
   "keyup textarea.story-text" : function(e) {
+    clearTimeout(uploadButtonTimeout);
+    uploadButtonTimeout = setTimeout(showUploadButton,1500);
     if (e.which === 27) {
       $(".story").editCancel();
     }
@@ -53,9 +73,43 @@ Template.storytime.events({
   'click a.done' : function(e) {
     e.preventDefault();
     $(e.currentTarget).closest(".story").editDone();
-  }
-});
+  },
+  'click a.upload' : function(e) {
+    e.preventDefault();
+    uploadPicture(e.target);
+  },
+  'click a.share' :function(e) {
+  //   toggleLoad(true,"controls-save");
+  //   clearTimeout(publicDelay);
+    if(sessionId) {
 
+      $icon = $("a.share");
+
+      if($icon.hasClass("icon-unlocked")) {
+        $icon.css("background-position","0 0").removeClass("icon-unlocked").addClass("icon-lock");
+        newPublic=false;
+      } else {
+        $icon.css("background-position","-378px 0").removeClass("icon-lock").addClass("icon-unlocked");
+        newPublic=true;
+      }
+
+  //     // Let's give the animation some time to complete before updating the server.
+  //     publicDelay = setTimeout(function() {
+  //       // The animate class has the CSS animation. 
+  //       // We need to remove it because otherwise when Meteor rerenders, it will animate again.
+  //       $icon.removeClass("animate");  
+  //       toggleLoad(false,"controls-save");
+        Meteor.call("updatePublic",sessionId,newPublic);
+
+  //     },800);
+
+    } else {
+      // Need a better error here.
+      alert("No story to share...");
+    }
+
+  },
+});
 Template.storytime.helpers({
   'paddingTopStory' : function() {
     if (!!paddingTopTemp) return paddingTopTemp-4;
@@ -164,10 +218,34 @@ Template.storytime.helpers({
   },
   'isOwner' : function() {
     return Meteor.userId() == Session.get("session_user");
+  },
+  'avgColor' : function() {
+    var picture = story.img;
+    var color = "";
+    if (typeof picture == "object" && picture.hasOwnProperty("avgColor")) 
+      color = picture.avgColor;
+    else if (picture.indexOf("{") !== -1) {
+      picture = jQuery.parseJSON(picture);
+      if(picture.hasOwnProperty("avgColor")) color = picture.avgColor;
+    }
+    return color;
+  },
+  'storyColor' : function() {
+    var picture = story.img;
+    var color = "";
+    if (typeof picture == "object" && picture.hasOwnProperty("storyColor")) 
+      color = picture.storyColor;
+    else if (picture.indexOf("{") !== -1) {
+      picture = jQuery.parseJSON(picture);
+      if(picture.hasOwnProperty("storyColor")) color = picture.storyColor;
+    }
+    return color;
   }
 });
 
 jQuery.fn.showStory = function(callback) {
+
+  //Create the cover if it doesn't exist already
   if(typeof $cover == "undefined" || !$cover.closest("body").length) {
     $cover = $(".cover-transition");
     if($cover.length) {}
@@ -179,6 +257,8 @@ jQuery.fn.showStory = function(callback) {
 
   this.each(function() {
     $t = $(this);
+
+    // Depending on how wide the window is, we want to give it different margins
     var w = $(window).width();
     storyMargin = w > 768 ? 40 : w > 320 ? 20 : 0;
 
@@ -196,6 +276,7 @@ jQuery.fn.showStory = function(callback) {
         "z-index":99,
         transform:"translate3d(0,0,0)"
       }).changeElementType("div");
+
 
       // Append that to $cover and animate it. Let's save the previous attributes for animating back.
       $tc.appendTo($cover).css({
@@ -218,7 +299,7 @@ jQuery.fn.showStory = function(callback) {
       // DOM element visiblity + sizing housekeeping.
       $t.css("opacity",0);
       $cover.addClass("visible");
-      $tc.imgCover("window");
+      $tc.imgCover(window);
 
       setTimeout(function() {
         paddingTopTemp = $ts.position().top;
@@ -259,6 +340,7 @@ jQuery.fn.showStory = function(callback) {
       $tc = $cover.find(".story").removeClass("no-transition animate");
       setTimeout(function() {
         $cover.removeClass("visible");
+        $tc.imgCover(".expanded");
         $tc.removeClass("story").css(params);
       },0);
       setTimeout(function() {
@@ -275,6 +357,18 @@ jQuery.fn.showStory = function(callback) {
     }
 
     $t.toggleClass("expanded");
+  });
+}
+showUploadButton = function(){
+  $uploadButton =$(".story-buttons.upload");
+  if($uploadButton.position().top <90) {
+    $uploadButton.addClass("scroll");
+  }else{
+    $uploadButton.removeClass("scroll");
+  }
+  $uploadButton.css({
+    opacity: $uploadButton.hasClass("attached") ? ".9" : ".08",
+    top: parseInt($('textarea.story-text').css("padding-top"),10)-60+"px"
   });
 }
 
@@ -295,6 +389,7 @@ jQuery.fn.edit = function() {
   setTimeout(function() {
     $($("textarea")[0]).focus();
     Session.set("edit",true);
+    $.debounce(1000,showUploadButton)();
   },100);
 };
 jQuery.fn.editDone = function() {

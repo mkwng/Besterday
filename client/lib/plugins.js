@@ -403,6 +403,7 @@ getImageLightness = function(imageSrc,callback) {
         var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
         var data = imageData.data;
         var r,g,b,avg;
+        var ravg = 0,gavg = 0,bavg = 0,avgColor;
 
         for(var x = 0, len = data.length; x < len; x+=4) {
             r = data[x];
@@ -410,12 +411,19 @@ getImageLightness = function(imageSrc,callback) {
             b = data[x+2];
 
             avg = Math.floor((r+g+b)/3);
+            ravg += r;
+            gavg += g;
+            bavg += b;
             colorSum += avg;
         }
+        var area = (this.width*this.height);
+        var avgColor = "rgb(";
+            avgColor+=Math.floor(ravg / area)+",";
+            avgColor+=Math.floor(gavg / area)+",";
+            avgColor+=Math.floor(bavg / area)+")";
+        var brightness = Math.floor(colorSum / area);
 
-        var brightness = Math.floor(colorSum / (this.width*this.height));
-
-        callback(brightness);
+        callback(brightness,avgColor);
     }
 }
 
