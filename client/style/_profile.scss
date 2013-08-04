@@ -91,20 +91,18 @@
   }
   &.active{
     .profile-menu-sub {
+      top:54px;
       opacity: 1;
       visibility: visible;
     }
   }
 }
-.profile-menu-edit-picture,.profile-menu-edit-name,.profile-menu-edit-email,.profile-menu-edit-password,.profile-menu-edit-done,.profile-menu-edit-delete {
-  padding: 10px 10px 12px 10px;
-  border-top:1px solid $grey1;  
-}
 .profile-menu-sub {
+  @include prefix(transition,all .3s);
   opacity:0;
   position:absolute;
   left:0;
-  top:54px;
+  top:44px;
   border-radius:3px;
   visibility:hidden;
   background:$grey2;
@@ -112,9 +110,15 @@
   width:240px;
   overflow:hidden;
   text-align:left;
+}
+.profile-menu-edit {
+  .profile-menu-edit-picture,.profile-menu-edit-name,.profile-menu-edit-email,.profile-menu-edit-password,.profile-menu-edit-done,.profile-menu-edit-delete {
+    padding: 10px 2px 12px 2px;
+    // border-top:1px solid $grey1;  
+  }
   label {
     @include text-smallcaps;
-    margin:0 0 8px 0;
+    margin:0 8px;
     display:block;
     color:$grey3;
     line-height:20px;
@@ -123,15 +127,42 @@
   input {
     @include text-paragraph;
     padding:0 10px;
-    width:200px;
+    width:216px;
     outline:none;
     border:none;
-    border-bottom:1px solid $grey3;
     // border-radius:3px;
     background:$grey1;
     color:$grey4;
-    line-height:32px;
+    height:44px;
+    line-height:44px;
+    &:-moz-placeholder, &::-moz-placeholder, &::-webkit-input-placeholder,&:-ms-input-placeholder {
+      color:$grey2;
+    }
   }
+  a.button {
+    background:$borange;
+    text-decoration:none;
+    text-align:center;
+    display:block;
+    padding: 10px 12px;
+    margin:0 10px;
+    line-height:24px;
+    height:24px;
+    &:hover{
+      background:$borange-high;
+    }
+  }
+  .profile-menu-edit-delete {
+    text-align:center;
+     a {
+      @include text-paragraph;
+      font-size:11px;
+      color: $grey3;
+      text-decoration:none;
+    }
+  }
+}
+.profile-menu-option {
   a {
     @include text-smallcaps;
     @include prefix(transition,all .2s);
@@ -345,7 +376,8 @@ $columnWidth: 25%;
 }
   .profile-grid-stories {
 
-    &:before {
+
+    &::before {
       right:-1em;
       display: inline-block;
       height: 100%;
@@ -355,16 +387,32 @@ $columnWidth: 25%;
 
     &::after {
       @include transition(opacity .3s);
+      @include text-iconfont;
       position:absolute;
       top:0;
       right:0;
       bottom:0;
       left:0;
       z-index:0;
+      padding:10px;
       background-color:$yellow;
-      content:"";
+      color:$yellow-high;
+      content: "";
+      text-align:right;
       opacity:0;
       pointer-events:none;
+    }
+
+
+    &[data-public="true"] {
+      &::after {
+        content: "\75";
+      }
+    }
+    &[data-public="false"] {
+      &::after {
+        content: "\6c";
+      }
     }
 
     @include prefix(transform-style,preserve-3d);
@@ -400,7 +448,7 @@ $columnWidth: 25%;
       .profile-grid-stories-story {color:$yellow-high;}
       .profile-grid-stories-date {opacity:1;top:50%;}
       &::after {
-        opacity:.85;
+        opacity:.95;
       }
     }
     &.giant-clone{

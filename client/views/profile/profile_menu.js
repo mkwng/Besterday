@@ -24,13 +24,18 @@ Template.profile_menu.events({
   },
   'click .profile-menu-edit-done' : function(e) {
     e.preventDefault();
-    var pass = $('#account-password').value;
+    // var pass = $('#account-password').value;
     // if()
+    createModal("Sorry.","This feature is in development.",{close:"Ok"});
     Session.set("edit_account",false);
   },
   'click .icon-menu' : function(e) {
     e.preventDefault();
     $(".profile-menu").toggleClass("active");
+  },
+  'click .profile-menu-edit-delete a' : function(e) {
+    e.preventDefault();
+    createModal("Are you sure?","We'll miss you.", {home:"Yes, delete me",close:"Wait, no keep me"})
   }
 });
 
@@ -47,4 +52,10 @@ Template.profile_menu.helpers({
   displayName : function() {
     return getDisplayName(Meteor.userId());
   },
+  screenName : function() {
+    return getScreenName(Meteor.userId());
+  },
+  email : function() {
+    return Meteor.user().emails[0].address;
+  }
 });

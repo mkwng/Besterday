@@ -29,6 +29,13 @@ createModal = function(message1,message2,actions) {
       $modal.remove();
     },500);
   });
+  $modal.find(".home").click(function() {
+    $modal.removeClass("show");
+    Meteor.Router.to('/landing');
+    setTimeout(function() {
+      $modal.remove();
+    },500);
+  });
   $modal.find(".profile").click(function() {
     $(".story").showStory();
     Session.set("expanded_story",false);
