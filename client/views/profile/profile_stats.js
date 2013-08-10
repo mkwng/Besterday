@@ -15,7 +15,7 @@ Template.profile_stats.helpers({
     var posts = 0;
     var age = 1;
 
-    if(Session.get("user_loaded")) {
+    if(Session.get("status_userdata")) {
       if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
         posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
         age = dayDiff(user.createdAt,new Date())+1;
@@ -26,7 +26,7 @@ Template.profile_stats.helpers({
   total : function() {
     var posts = 0;
 
-    if(Session.get("user_loaded")) {
+    if(Session.get("status_userdata")) {
       if(!!user && user.hasOwnProperty("profile")) {
         posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
       }
@@ -36,7 +36,7 @@ Template.profile_stats.helpers({
   currstreak : function() {
     var streak = 0;
 
-    if(Session.get("user_loaded")) {
+    if(Session.get("status_userdata")) {
       if(!!user && user.hasOwnProperty("profile")) {
 
         var dayOld = new Date(user.profile.lastUpdate.year,user.profile.lastUpdate.month,user.profile.lastUpdate.date);
@@ -52,7 +52,7 @@ Template.profile_stats.helpers({
   beststreak : function() {
     var streak = 0;
 
-    if(Session.get("user_loaded")) {
+    if(Session.get("status_userdata")) {
       if(!!user && user.hasOwnProperty("profile")) {
         streak = user.profile.hasOwnProperty("beststreak") ? user.profile.beststreak : 0;
       }
@@ -78,7 +78,7 @@ Template.profile_stats_completion.helpers({
     var posts = 0;
     var age = 1;
 
-    if(Session.get("user_loaded")) {
+    if(Session.get("status_userdata")) {
       if(!!user && user.hasOwnProperty("createdAt") && user.hasOwnProperty("profile")) {
         posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
         age = dayDiff(user.createdAt,new Date())+1;
@@ -98,7 +98,7 @@ Template.profile_stats_total.count = function() {
   var blocks = [];
   var posts = 0;
 
-  if(Session.get("user_loaded")) {
+  if(Session.get("status_userdata")) {
     if(!!user && user.hasOwnProperty("profile")) {
       posts = user.profile.hasOwnProperty("posts") ? user.profile.posts : 0;
     }

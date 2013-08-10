@@ -16,6 +16,9 @@
 
 // Events
 // Helpers
+Template.page.loading = function() {
+  return Session.get("loading");
+}
 
 
 

@@ -11,13 +11,10 @@ Meteor.startup(function ()  {
 });
 
 publish = function() {
-  Meteor.publish('pub_data', function(){
-    console.log("publishing pub_data...");
-    // console.log( );
+  Meteor.publish('stories', function(){
     return Stories.find({$or: [{owner: this.userId},{public:true}]});
   });
-  Meteor.publish("user_data", function () {
-    console.log("publishing user_data...");
+  Meteor.publish("users", function () {
     userData = Meteor.users.find({},
                              {fields: {'_id': 1, 'username': 1, 'services': 1, 'createdAt': 1, 'profile': 1}});
     return userData;

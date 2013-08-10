@@ -2137,8 +2137,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   display: block;
   float: left;
   overflow: hidden;
-  width: 25%;
-  height: 180px;
   color: #312b2c;
   text-align: center;
   text-decoration: none;
@@ -2304,17 +2302,18 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       height: 100%;
       width: 100%; }
   .story textarea.story-text, .story textarea.profile-grid-stories-story, .profile-grid-stories.story textarea.story-text, .profile-grid-stories.story textarea.profile-grid-stories-story {
-    -webkit-transition: padding 0.3s;
-    -moz-transition: padding 0.3s;
-    -ms-transition: padding 0.3s;
-    -o-transition: padding 0.3s;
-    transition: padding 0.3s;
     background: transparent;
     border: none;
     resize: none;
     outline: none;
     height: 99%;
     width: 80%; }
+    .story textarea.story-text.animate, .story textarea.profile-grid-stories-story.animate, .profile-grid-stories.story textarea.story-text.animate, .profile-grid-stories.story textarea.profile-grid-stories-story.animate {
+      -webkit-transition: padding 0.3s;
+      -moz-transition: padding 0.3s;
+      -ms-transition: padding 0.3s;
+      -o-transition: padding 0.3s;
+      transition: padding 0.3s; }
   .story .story-text, .story .profile-grid-stories-story, .profile-grid-stories.story .story-text, .profile-grid-stories.story .profile-grid-stories-story {
     -webkit-transition: font-size 0.5s;
     -moz-transition: font-size 0.5s;

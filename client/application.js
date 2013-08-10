@@ -3,47 +3,44 @@
    ========================================================================== */
 
 Meteor.startup(function () {
+  // Session.set("loading", true);
   pageViews = 0;
-  Session.set('pub_loaded', false); 
-  Session.set('user_loaded', false); 
-  Session.set("grid_count", 10);
+  Session.set('status_userdata', false); 
+  Session.set('status_storydata', false); 
+
+  Session.set("pref_gridcount", 10);
 
   // This isn't immediately intuitive, but essentially, run initialize() only when both data sources return.
-  Meteor.subscribe('pub_data', function(){
-    Session.set('pub_loaded', true); 
-    if(Session.get('user_loaded')) initialize();
+  Meteor.subscribe('stories', function(){
+    Session.set('status_storydata', true); 
+    if(Session.get('status_userdata')) initialize();
   });
-  Meteor.subscribe('user_data', function(){
-    Session.set('user_loaded', true); 
-    if(Session.get('pub_loaded')) initialize();
+  Meteor.subscribe('users', function(){
+    Session.set('status_userdata', true); 
+    if(Session.get('status_storydata')) initialize();
   });
 
-  $(window).resize($.throttle( 250, resizeHousekeeping ) )
+  // application_ui();
 
 });
 
-resizeHousekeeping = function() {
-    $("#story").cssPersist("width","100%").verticalCenter(true);
-    setTimeout(function(){
-      $("#story").cssPersist("width","+="+getScrollBarWidth());
-    },0);
 
-    gridHousekeeping();
-}
 
 Meteor.autorun(function() {
 });
 
 initialize = function() {
+  var tempDate,tempUser;
   // We're entering with just the story id?
   if(!!sessionId) {
     story = Stories.findOne(sessionId);
-    Session.set("session_date",discreteDate(story));
-    Session.set("session_user",story.owner);
+    tempDate = discreteDate(story);
+    tempUser = story.owner;
   }
 
   // If no date, default date is yesterday.
-  if(!Session.get("session_date")) Session.set("session_date",discreteDate(incrementDate(new Date(),-1)));
+  if(!Session.get("session_date")) tempDate = discreteDate(incrementDate(new Date(),-1));
+  else tempDate = Session.get("session_date")
 
   // Still no session user set?
   if(!Session.get("session_user")) {
@@ -53,24 +50,23 @@ initialize = function() {
     else if(Meteor.userId()) id = Meteor.userId();
 
     // Still no user. Must not be logged in. Re-route to home.
-    if(id) Session.set("session_user",id);
+    if(id) tempUser = id;
     else {
       console.warn("This should not have happened.");
       Meteor.Router.to('/');
     }
-  }
+  } else tempUser = Session.get("session_user");
 
-
-  // console.log("initialize:",Session.get("session_user"),prettyDate(objectifyDate(Session.get("session_date"))));
-  setDate(Session.get("session_user"),Session.get("session_date"));
+  setDate(tempUser,tempDate);
 
 
   if(Meteor.userId() && Meteor.userId() == Session.get("session_user") && !Session.get("override")){
-    // editStory(Session.get("session_date"));
-    // alert("You should be editing yesterday.");
-    if(typeof story=="undefined") Meteor.Router.to('/story/yesterday');
-    else if(!story.hasOwnProperty("text")) Meteor.Router.to('/story/yesterday');
-    else if(story.text = "") Meteor.Router.to('/story/yesterday');
+    if(typeof story=="undefined") 
+      Meteor.Router.to('/story/yesterday');
+    else if(!story.hasOwnProperty("text")) 
+      Meteor.Router.to('/story/yesterday');
+    else if(story.text == "") 
+      Meteor.Router.to('/story/yesterday');
   }
 
   return true;
@@ -133,5 +129,11 @@ Meteor.Router.add({
 
 
 });
+
+
+
+application_ui = function() {
+  $(window).resize($.throttle( 250, resizeHousekeeping ) )
+}
 
 

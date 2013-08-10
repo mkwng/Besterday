@@ -23,11 +23,36 @@ Template.profile_menu.events({
     Session.set("edit_account",true);
   },
   'click .profile-menu-edit-done' : function(e) {
+    var error = "";
+    var status = "";
     e.preventDefault();
-    // var pass = $('#account-password').value;
-    // if()
-    createModal("Sorry.","This feature is in development.",{close:"Ok"});
-    Session.set("edit_account",false);
+
+    var email = $('#email').val();
+    var displayName = $('#displayName').val();
+
+    var pass = $('#password').val();
+    var newPass = $('#password-new').val();
+    var conPass = $('#password-confirm').val();
+    if (!!pass){
+      if(newPass != conPass)
+        error+="Your password must match. \n";
+      else if(!validatePassword(newPass))
+        error+="Your password must be at least 6 characters long \n";
+    }
+
+    // There was an error
+    if(!!error) {
+      createModal("Sorry, there were some errors:",error,{close:"Ok"});
+    }
+    // Time to actually do stuff.
+    else {
+      if(!!pass) Accounts.changePassword(pass, newPass, function(e) {
+        if(e) alert(e);
+      });
+      Meteor.call("profileUpdate",{displayName:displayName,email:email});
+      createModal("Your account has been updated",status,{close:"Ok"});
+      Session.set("edit_account",false);
+    }
   },
   'click .icon-menu' : function(e) {
     e.preventDefault();

@@ -48,6 +48,33 @@ uploadPicture = function(button) {
 
 }
 
+getImgUrl = function(picture) {
+    if (typeof picture == "object" && picture.hasOwnProperty("url")) var url = picture.url;
+    else if (picture.indexOf("{") !== -1) var url = jQuery.parseJSON(picture).url;
+    else var url = picture; // Phew.
+    return url;
+}
+
+getImg = function(picture) {
+  var img = {url:"",avgColor:"",storyColor:""}
+    if (typeof picture == "object" && picture.hasOwnProperty("url")) {
+      img.url = picture.url;
+      if(picture.hasOwnProperty("avgColor")) 
+        img.avgColor = picture.avgColor;
+      if(picture.hasOwnProperty("storyColor")) 
+        img.storyColor = picture.storyColor;
+    }
+    else if (picture.indexOf("{") !== -1) {
+      img.url = jQuery.parseJSON(picture).url;
+      if(picture.hasOwnProperty("avgColor")) 
+        img.avgColor = picture.avgColor;
+      if(picture.hasOwnProperty("storyColor")) 
+        img.storyColor = picture.storyColor;
+    }
+    else img.url = picture; // Phew.
+    return img;
+}
+
 createModal = function(message1,message2,actions) {
   var html = '<div class="modal"><div class="modal-content"><p><span>';
 
@@ -83,7 +110,6 @@ createModal = function(message1,message2,actions) {
     },500);
   });
   $modal.find(".profile").click(function() {
-    $(".story").showStory();
     Session.set("expanded_story",false);
     Meteor.Router.to('/');
     setTimeout(function() {
@@ -91,6 +117,7 @@ createModal = function(message1,message2,actions) {
     },500);
   });
 }
+
 $imgPreload = null;
 makeBackground = function(picture) {
   // debugger;
@@ -165,61 +192,6 @@ makeBackground = function(picture) {
     $(".story-img").fadeOut(function() {$(this).remove()});
   }
 }
-// makeBackground: Sets the background image.
-$bgPreload = null;
-$bg = undefined;
-$bgImage = undefined;
-makeBackgroundOld = function(picture) {
-  if (Meteor.Router.page()!="journal") return false;
-
-  if( !$bg || (typeof $bg == "undefined" && $(".bg").length) || !$bg.closest("body").length ) $bg = $(".bg");
-  if( !$bgImage || (typeof $bgImage == "undefined" && $(".bg-image").length) || !$bgImage.closest("body").length ) $bgImage = $(".bg-image");
-
-  // If there's a previous thing happening, let's cancel that.
-  if($bgPreload) $bgPreload.unbind("load");
-
-  if (picture && typeof picture != "undefined"){
-    // Wait, we gotta check if this is a URL or an object, because you can pass either one in.
-    if (typeof picture == "object" && picture.hasOwnProperty("url")) var url = picture.url;
-    else if (picture.indexOf("{") !== -1) var url = jQuery.parseJSON(picture).url;
-    else var url = picture; // Phew.
-
-    toggleLoad(true,"bg");
-    var storyColor;
-    getImageLightness(url,function(brightness){
-      if(brightness<150) {
-        storyColor = "#ffffff";
-      }
-      else {
-        storyColor = "#666666";
-      }
-    });
-
-    // Fade it out, once it finishes loading, fade it back in.
-    $bg.stop().animate({opacity:0},function() {
-
-
-      $bgPreload = $('<img/>').attr("src",url);
-      $bgPreload.one("load", function() {
-        $bgImage.css("background-image","url("+url+")");
-        $("#story").cssPersist("color",storyColor);
-        $bg.animate({opacity:1}, function() {
-
-            toggleLoad(false,"bg");
-
-        });
-      });
-    });
-  }
-  else $bg.animate({opacity:0},function() {
-    setTimeout(function() {
-      $(".upload").removeClass("attached");
-      $bgImage.css("background-image","none");
-      $("#story").cssPersist("color","#666666");
-
-    },2);
-  });
-}
 
 // toggleLoad: This triggers a loading animation.
 loading = [];
@@ -277,7 +249,7 @@ findStory = function(user,date) {
   }
 
   if (story.length > 1) {
-    if(confirm("Multiple ("+story.length+") stories detected for "+prettyDate(date)+". This is usually our fault. Resolve? No data will be deleted.")) {
+    if(confirm("Multiple ("+story.length+") stories detected for "+date+". This is usually our fault. Resolve? No data will be deleted.")) {
       resolveMultiple(story);
       story = Stories.find({"owner": user,"discreteDate":date},{sort: {created:-1,date:1}}).fetch();
     };
@@ -321,151 +293,7 @@ jQuery.fn.cssPersist = function(prop,val) {
 }
 
 
-
-cleanUp = "";              // Timeout for scrolling navigation
-dateChangeable = true;     // Toggle to determine whether it's ok to scroll navigate.
-$navUp = [];
-$navDn = [];
 scrollNav = function () {
-  // if ($navUp.length && $navUp.closest("body").length) return false;
-
-  // // Bug fixing, because sometimes when the page re renders, we lose it.
-  // $("#journal").unbind("mousewheel wheel");
-  // $(document).unbind("touchstart touchmove");
-  // $navUp = $(".nav-up");
-  // $navDn = $(".nav-dn");
-  
-  // function resetScroll() {
-  //   if(!!$bgImage) $bgImage.animate({"top":"0px"});
-  //   $("#journal").animate({"border-top-width":"20px","border-bottom-width":"20px","top":"0px","height":"100%"});
-  //   $(".nav-up").animate({"top":"-48px"});
-  //   $(".nav-dn").animate({"bottom":"-48px"},function() {
-  //     $(".nav-up").css({ WebkitTransform: 'rotate(0deg)'});
-  //     $(".nav-dn").css({ WebkitTransform: 'rotate(180deg)'});
-  //     // For Mozilla browser: e.g. Firefox
-  //     $(".nav-up").css({ '-moz-transform': 'rotate(0deg)'});
-  //     $(".nav-dn").css({ '-moz-transform': 'rotate(180deg)'});
-  //     dateChangeable = true;
-  //   });
-
-  // }
-
-  // function animateReset(date) {
-  //   $(".nav-up").rotate(180);
-  //   $(".nav-dn").rotate(180);
-  //   setTimeout(function() {
-  //     if(setDate(Session.get("session_user"),date,true)) {
-  //       resetScroll();
-  //     } else {
-  //       animateFail();
-  //     }
-  //   },500);
-  // }
-
-
-  // jQuery.fn.rotate = function(degree) {
-  //   var d = 0;
-  //   function animation_loop() {
-  //       setTimeout(function() { 
-  //         $(".nav-up").css({ WebkitTransform: 'rotate(' + d + 'deg)'});
-  //         $(".nav-dn").css({ WebkitTransform: 'rotate(' + (180-d) + 'deg)'});
-  //         // For Mozilla browser: e.g. Firefox
-  //         $(".nav-up").css({ '-moz-transform': 'rotate(' + d + 'deg)'});
-  //         $(".nav-dn").css({ '-moz-transform': 'rotate(' + (180-d) + 'deg)'});
-  //         d+=5; 
-  //         if (d <= degree) { animation_loop(); } 
-  //       }, 1);
-  //   };
-  //   animation_loop();
-
-  // }
-
-  // function animateFail() {
-  //   $(".nav").animate({left:"+=10px"},100,function() {
-  //     $(this).animate({left:"-=20px"},80,function() {
-  //       $(this).animate({left:"+=10px"},70,function() {
-  //         resetScroll();
-  //       })
-  //     })
-  //   });
-  // }
-  
-  // var y;
-  // var touchVelocity = 0;
-  // $(document).bind("touchstart touchmove", function(e) {  
-  //   //Disable scrolling by preventing default touch behaviour  
-  //   e.preventDefault();  
-  //   var orig = e.originalEvent;  
-  //   // Move a div with id "rect"  
-  //   var newY = orig.changedTouches[0].pageY;
-
-  //   if(y>newY) {
-  //     touchVelocity += 1;
-  //     if (touchVelocity%3==0) up();
-  //   }
-  //   else if(y<newY) {
-  //     touchVelocity -= 1     
-  //     if (touchVelocity%3==0) dn(); 
-  //   }
- 
-  //   y = newY;
-  // }); 
-
-  // up = function() {
-  //   if ($story.scrollTop() > 0) return;
-  //   else event.preventDefault();
-  //   if($(".nav-up").css("top").replace(/[^-\d\.]/g, '')<200){
-  //     $(".nav-up").css({"top" : "+=8px"});
-  //     $("#journal").css({"border-top-width":"+=2px"});
-  //     if(!!$bgImage) $bgImage.css({"top":"+=1px"});
-  //     clearTimeout(cleanUp);
-  //     cleanUp = setTimeout(function() {
-  //       resetScroll();
-  //     },100);
-  //   }
-  //   else {
-  //     clearTimeout(cleanUp);
-  //     dateChangeable = false;
-  //     animateReset( incrementDate(Session.get("session_date"),1) );
-  //   }
-  // }
-
-  // dn = function() {
-  //   if ($story.scrollTop()+$story.innerHeight()<$story[0].scrollHeight) return;
-  //   else event.preventDefault();
-  //   if($(".nav-dn").css("bottom").replace(/[^-\d\.]/g, '')<200){
-  //     $(".nav-dn").css({"bottom" : "+=8px"});
-  //     $("#journal").css({"border-bottom-width":"+=2px","top":"-=2px","height":"+=2px"});
-  //     if(!!$bgImage) $bgImage.css({"top":"-=1px"});
-  //     clearTimeout(cleanUp);
-  //     cleanUp = setTimeout(function() {
-  //       resetScroll();
-  //       $story.scrollTop($story[0].scrollHeight-$story.innerHeight());
-  //     },100);
-  //   }
-  //   else {
-  //     clearTimeout(cleanUp);
-  //     dateChangeable = false;
-  //     animateReset( incrementDate(Session.get("session_date"),-1) );
-  //   }
-  // }
-
-
-  // $("#journal").bind('mousewheel wheel', function(event) {
-
-  //   if(!$story.closest("body").length) $story = $("#story");
-
-  //   // console.log($story.scrollTop()+$story.innerHeight(),$story[0].scrollHeight);
-
-
-  //   if(event.originalEvent.wheelDelta) delta = event.originalEvent.wheelDelta;
-  //   else delta = -event.originalEvent.deltaY;
-  //   if(dateChangeable) {
-
-  //     if (delta >= 0) up()
-  //     else dn()
-  //   }
-  // });
 }
 
 
@@ -507,8 +335,6 @@ resolveMultiple = function(storyArray) {
 }
 
 
-
-
 getScreenName = function(id) {
   if(!id) {id = Meteor.userId();}
   user = Meteor.users.find(id).fetch()[0];
@@ -539,15 +365,15 @@ getUserId = function(name) {
 }
 getDisplayName = function(id) {
   if(!id) {id = Meteor.userId();}
-  user = Meteor.users.find(id).fetch()[0];
+  var user = Meteor.users.find(id).fetch()[0];
   var name = "";
   if(user!=undefined) {
-    if(!user.hasOwnProperty("displayName") || !user.displayName || user.displayName == "null") {
+    if(!user.profile.hasOwnProperty("displayName") || !user.profile.displayName || user.profile.displayName == "null") {
       name = getScreenName(id);
     }
 
     else {
-      name = user.displayName;
+      name = user.profile.displayName;
     }
   }
   return name;
@@ -579,8 +405,10 @@ discreteDate = function(story) {
   if(story.getMonth) {
     ddate = {year:story.getFullYear(),month:story.getMonth(),date:story.getDate()};
   } else {
-    if(story.hasOwnProperty("discreteDate"))
-      return story.discreteDate;
+    if(story.hasOwnProperty("discreteDate")) {
+      if(!!story.discreteDate)
+        return story.discreteDate;
+    }
 
     // console.warn("Caution: Legacy post with no discrete date set. Timezone issues possible.");
     var date = new Date(story.date);
@@ -660,66 +488,12 @@ updateStats = function(id) {
 }
 
 
-jQuery.fn.imgCover = function(container) {
-  this.each(function() {
-
-    // Image container
-    // Image width
-    var screenImage = $(this).find("img");
-    if (!screenImage.length) return false;
-
-    $imageContainer = screenImage.parent();
-
-    var theImage = new Image();
-
-
-    theImage.src = screenImage.attr("src");
-    var imageWidth = theImage.width;
-    var imageHeight = theImage.height;
-
-    // Container width
-
-    if(typeof container != "undefined") {
-      var containerWidth = $(container).width() - 80;
-      var containerHeight = $(container).height() - 80;
-    } else {
-      var containerWidth = $(this).width();
-      var containerHeight = $(this).height(); 
-    }
-    var y;
-    var x;
-
-    // Determine if it needs to be stretched horizontally or vertically
-    if(imageWidth/imageHeight > containerWidth/containerHeight) {
-      y = containerHeight;
-      x = imageWidth * containerHeight/imageHeight;
-    } else {
-      x = containerWidth;
-      y = imageHeight * containerWidth/imageWidth;
-    }
-
-    var marginX = -1 * (x/4 - containerWidth)/2;
-    var marginY = -1 * (y/4 - containerHeight)/2;
-
-    if(typeof container != "undefined") {
-      $imageContainer.animate({
-        "left":(marginX/containerWidth)*100+"%",
-        "right":(marginX/containerWidth)*100+"%",
-        "bottom":(marginY/containerHeight)*100+"%",
-        "top":(marginY/containerHeight)*100+"%"
-      });
-      // screenImage.css("opacity","1");
-    } else {
-      $imageContainer.css({
-        "left":(marginX/containerWidth)*100+"%",
-        "right":(marginX/containerWidth)*100+"%",
-        "bottom":(marginY/containerHeight)*100+"%",
-        "top":(marginY/containerHeight)*100+"%"
-      });
-      // screenImage.css("opacity","1");
-    }
-    return true;
-
-  });
+validatePassword = function(pass) {
+      if(pass.length < 6) {
+        // alert("Error: Password must contain at least six characters!");
+        // form.pwd1.focus();
+        return false;
+      } else {
+        return true;
+      }
 }
-

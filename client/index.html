@@ -19,6 +19,10 @@
 
 <template name="page">
   
+  {{#if loading}}
+    <div class="loading">Loading&hellip;</div>
+  {{/if}}
+
   {{renderPage}}
 
   {{#unless loggedIn}}

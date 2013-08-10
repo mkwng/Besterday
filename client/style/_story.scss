@@ -29,8 +29,8 @@
       display:block;
       float:left;
       overflow:hidden;
-      width:$columnWidth;
-      height:$rowHeight;
+      // width:$columnWidth;
+      // height:$rowHeight;
       color:$grey1;
       text-align:center;
       text-decoration:none;
@@ -63,7 +63,6 @@
       }
       // Removing text-area styles
       textarea.story-text,textarea.profile-grid-stories-story {
-        @include prefix(transition,padding .3s);
         background: transparent;
         border: none;
         resize: none;
@@ -71,6 +70,9 @@
         height:99%;
         width:80%;
 
+        &.animate{
+          @include prefix(transition,padding .3s);
+        }
       }
       .story-text,.profile-grid-stories-story {
         @include transition(font-size .5s);

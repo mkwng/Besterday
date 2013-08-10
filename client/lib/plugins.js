@@ -1,4 +1,4 @@
-
+ 
 /*
  * Change element type
  * Author: Andrew Whitaker
@@ -276,7 +276,7 @@
  */
 jQuery.fn.verticalCenterTextarea = function(first) {
   $t = $(this);
-  if(typeof first != undefined && first) {
+  // if(typeof first != undefined && first) {
     if(!!$dummy && !!$dummy.closest("body").length) {}
     else {
       $dummy = $('<div class="dummy"></div>').appendTo($("body"));
@@ -290,7 +290,7 @@ jQuery.fn.verticalCenterTextarea = function(first) {
       'font-family':getStyle($t[0], 'font-family'),
       padding:getStyle($t[0], 'padding'),
     });
-  }
+  // }
   $dummy.html(formatDummyText($t.val()));
   setTimeout(function() { 
     var top=calculateTop($t);
@@ -306,7 +306,7 @@ jQuery.fn.verticalCenterTextarea = function(first) {
       $t.removeClass("scroll scroll-more");
     }
     $t.css("padding-top",top);
-
+    console.log(top);
   },0);
   return $t;
 }
@@ -317,7 +317,7 @@ formatDummyText = function(text) {
 calculateTop = function($ele) {
   if(typeof $ele == "undefined") $ele = $(window);
   var top=100;
-  if (!$dummy) return 0;
+  if (!$(".dummy")) return 0;
 
     if ($dummy.length && $dummy.height()>0) {
       var h = $ele.height();
