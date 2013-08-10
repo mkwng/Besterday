@@ -1,5 +1,5 @@
 <template name="profile_grid">
-  <div class="profile-grid"><div class="profile-grid-inner">
+
 
     {{#each stories}}
     <a class="profile-grid-stories{{#if img}} img{{/if}} {{randomClasses}}" data-date="{{date}}" data-public="{{public}}" href="/story/{{_id}}" {{#if img}}style="background:{{avgColor}};background-image:none;background-image:none;background-image:none;background-image:none;background-image:none;background-image:none;"{{/if}}>
@@ -16,6 +16,4 @@
     </a>
     {{/each}}
 
-  </div></div>
-  <a class="profile-grid-more" href="#">Show more&hellip;</a>
 </template>

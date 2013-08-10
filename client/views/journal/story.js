@@ -7,6 +7,14 @@ Template.storytime.created = function() {
 
 
 Template.storytime.rendered = function() {
+  if(!!story && story.hasOwnProperty("_id")) {
+    if(sessionId!=story._id) {
+      var tempStory = Stories.findOne(sessionId);
+      var tempDate = discreteDate(tempStory);
+      var tempUser = tempStory.owner;
+      setDate(tempUser,tempDate);
+    }
+  }
   storytime_ui();
 }
 
@@ -107,16 +115,16 @@ Template.storytime.helpers({
 });
 
 jQuery.fn.showStory = function(callback) {
-
   this.each(function() {
     $t = $(this);
-
     if(!$t.hasClass("expanded") && !$t.hasClass("story")) {
       var toDate = discreteDate(new Date($(this).attr("data-date")));
       setDate(Session.get("session_user"),toDate,true);
+      $cover.addClass("visible");
     } else if($t.hasClass("story")) {
       Session.set("expanded_story",false);
       Meteor.Router.to("/user/"+sessionScreenName);
+      $cover.removeClass("visible");
     }
     $t.toggleClass("expanded");
     if(typeof callback == "function"){

@@ -1,3 +1,4 @@
+
 gridHousekeeping = function() {
     $profileGridInner.widthDivisible();
     // Make sure the images are positioned correctly and load nicely
@@ -60,7 +61,7 @@ stickyLess = function() {
 
 Template.profile_grid.helpers({
   randomClasses : function() {
-    var ran = Math.floor(Math.random()*6);
+    var ran = Math.floor(Math.random()*7);
     var classes = ""
     switch(ran){
       case 0:
@@ -98,3 +99,16 @@ Template.profile_grid.helpers({
       return getImg(this.img).storyColor;
   },
 });
+
+showGrid = function() {
+    var $test = $(Template.profile_grid());
+    $(".profile-grid-inner").append($test);
+    // $clamp($test, {clamp: 4});
+    $(".profile-grid-inner").packery("appended",$test);
+
+      $test.filter("a").find(".profile-grid-stories-story").each(function() {
+        $clamp(this,{clamp:4,useNativeClamp:false});
+      });
+
+    storyPage++;
+}

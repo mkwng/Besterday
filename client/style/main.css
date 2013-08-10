@@ -133,12 +133,6 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(35, 31, 32, 0); }
-  .cover.no-transition, .cover-transition.no-transition {
-    -webkit-transition: all 0;
-    -moz-transition: all 0;
-    -ms-transition: all 0;
-    -o-transition: all 0;
-    transition: all 0; }
   .cover.visible, .cover-transition.visible {
     background: rgba(35, 31, 32, 0.9);
     pointer-events: auto; }
@@ -157,8 +151,6 @@ body {
 .cover {
   z-index: 11;
   background: transparent; }
-  .cover.visible {
-    background: transparent; }
 
 .nav {
   /* Positioning */
@@ -1698,11 +1690,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s;
   -webkit-transform-origin: 50% 100%;
   -moz-transform-origin: 50% 100%;
   -ms-transform-origin: 50% 100%;
@@ -1842,8 +1829,23 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     /* IE6-9 fallback on horizontal gradient */
     color: #ffffff; }
   .profile-grid-stories.alt-5 {
-    background: #25b399;
-    color: #53ecce; }
+    background: #30c1a6;
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #30c1a6 0%, #25b399 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #30c1a6), color-stop(100%, #25b399));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg, #30c1a6 0%, #25b399 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg, #30c1a6 0%, #25b399 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg, #30c1a6 0%, #25b399 100%);
+    /* IE10+ */
+    background: linear-gradient(135deg, #30c1a6 0%, #25b399 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */
+    color: #ffffff; }
   .profile-grid-stories.large {
     height: 360px; }
     .profile-grid-stories.large .profile-grid-stories-story {
@@ -1952,19 +1954,8 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     -ms-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
-    -webkit-filter: blur(6px);
-    -moz-filter: blur(6px);
-    -o-filter: blur(6px);
-    -ms-filter: blur(6px);
-    filter: blur(6px);
-    -webkit-transform: scale(4.2);
-    -moz-transform: scale(4.2);
-    -ms-transform: scale(4.2);
-    -o-transform: scale(4.2);
-    transform: scale(4.2);
-    filter: url(/img/blur.svg#blur);
-    height: 100%;
-    width: 100%; }
+    width: 100%;
+    opacity: .7; }
 
 .profile-grid-stories-story {
   -webkit-transition: font-size 0.5s;
@@ -1997,11 +1988,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   top: 52%;
   margin: -50px 0 0 -50px;
   opacity: 0;
-  -webkit-transition: top 0.5s, transform 0.5s;
-  -moz-transition: top 0.5s, transform 0.5s;
-  -ms-transition: top 0.5s, transform 0.5s;
-  -o-transition: top 0.5s, transform 0.5s;
-  transition: top 0.5s, transform 0.5s; }
+  -webkit-transition: top 0.3s;
+  -moz-transition: top 0.3s;
+  -ms-transition: top 0.3s;
+  -o-transition: top 0.3s;
+  transition: top 0.3s; }
 
 .profile-grid-stories-date-month {
   font-family: "futura-pt",Arial;
@@ -2268,11 +2259,6 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
     left: -5px;
     z-index: 0; }
     .story .story-img img, .story .profile-grid-stories-img img, .profile-grid-stories.story .story-img img, .profile-grid-stories.story .profile-grid-stories-img img {
-      -webkit-filter: blur(12px);
-      -moz-filter: blur(12px);
-      -o-filter: blur(12px);
-      -ms-filter: blur(12px);
-      filter: blur(12px);
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
       -moz-transform: translateZ(0);
@@ -2288,19 +2274,8 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -moz-perspective: 1000;
       -o-perspective: 1000;
       -ms-perspective: 1000;
-      -webkit-transition: all 0.5s;
-      -moz-transition: all 0.5s;
-      -ms-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s;
-      -webkit-transform: scale(4.2);
-      -moz-transform: scale(4.2);
-      -ms-transform: scale(4.2);
-      -o-transform: scale(4.2);
-      transform: scale(4.2);
-      filter: url(/img/blur.svg#blur);
-      height: 100%;
-      width: 100%; }
+      width: 100%;
+      opacity: .7; }
   .story textarea.story-text, .story textarea.profile-grid-stories-story, .profile-grid-stories.story textarea.story-text, .profile-grid-stories.story textarea.profile-grid-stories-story {
     background: transparent;
     border: none;
@@ -2347,11 +2322,11 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       font-size: 24px;
       line-height: 1.4em; }
   .story .story-date, .story .profile-grid-stories-date, .profile-grid-stories.story .story-date, .profile-grid-stories.story .profile-grid-stories-date {
-    -webkit-transition: top 0.5s, transform 0.5s;
-    -moz-transition: top 0.5s, transform 0.5s;
-    -ms-transition: top 0.5s, transform 0.5s;
-    -o-transition: top 0.5s, transform 0.5s;
-    transition: top 0.5s, transform 0.5s;
+    -webkit-transition: top 0.5s;
+    -moz-transition: top 0.5s;
+    -ms-transition: top 0.5s;
+    -o-transition: top 0.5s;
+    transition: top 0.5s;
     -webkit-transform: scale(0.5);
     -moz-transform: scale(0.5);
     -ms-transform: scale(0.5);

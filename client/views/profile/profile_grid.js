@@ -1,5 +1,6 @@
 $profileGridInner = undefined;
 profileGridLoaded = false;
+storyPage = 0;
 
 Template.profile_grid.created = function() {
   profileGridLoaded = false;
@@ -9,7 +10,7 @@ Template.profile_grid.created = function() {
 Template.profile_grid.rendered = function() {
   pageViews++;
 
-  // profile_grid_ui();
+  profile_grid_ui();
 }
 
 Template.profile_grid.destroyed = function() {
@@ -17,7 +18,7 @@ Template.profile_grid.destroyed = function() {
 }
 
 Template.profile_grid.stories = function(page) {
-  page = typeof page != "number" ? 0 : page;
+  page = typeof page != "number" ? storyPage : page;
   stories = Stories.find({text:{$ne: ""},owner:Session.get("session_user")},{sort:{created:-1},skip:Session.get("pref_gridcount")*page,limit:Session.get("pref_gridcount")}).fetch();
   return stories;
 }
@@ -25,7 +26,6 @@ Template.profile_grid.stories = function(page) {
 Template.profile_grid.events({
   'click a.profile-grid-stories' : function(e) {
     e.preventDefault();
-    $(e.currentTarget).showStory();
   }
 });
 
@@ -55,10 +55,10 @@ Template.profile_grid.helpers({
 profile_grid_ui = function() {
   $profileGridInner = $(".profile-grid-inner");
   $profileGridInner.widthDivisible();
-  setTimeout(function() {
-    gridHousekeeping();
-    setClamp();
-  },4)
+  // setTimeout(function() {
+  //   gridHousekeeping();
+  //   setClamp();
+  // },4)
 }
 
 

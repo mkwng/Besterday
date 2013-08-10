@@ -51,3 +51,16 @@ showUploadButton = function(){
     top: parseInt($('textarea.story-text').css("padding-top"),10)-60+"px"
   });
 }
+
+$cover = function() {
+  //Create the cover if it doesn't exist already
+  if(typeof $cover == "undefined" || !$cover.closest("body").length) {
+    $cover = $(".cover-transition");
+    if($cover.length) {}
+    else{
+      $cover = $('<div class="cover-transition"></div>');
+      $cover.appendTo("body");
+    }
+  }
+  return $cover;
+}

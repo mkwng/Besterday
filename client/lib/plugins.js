@@ -306,7 +306,6 @@ jQuery.fn.verticalCenterTextarea = function(first) {
       $t.removeClass("scroll scroll-more");
     }
     $t.css("padding-top",top);
-    console.log(top);
   },0);
   return $t;
 }

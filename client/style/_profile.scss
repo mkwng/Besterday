@@ -416,7 +416,7 @@ $columnWidth: 25%;
     }
 
     @include prefix(transform-style,preserve-3d);
-    @include prefix(transition,all .5s);
+    // @include prefix(transition,all .5s);
     @include prefix(transform-origin,50% 100%);
     @include gradient(#ffffff,mix(#ffffff,$grey4));
     position:relative;
@@ -434,7 +434,7 @@ $columnWidth: 25%;
     &.alt-2{@include gradient($grey4,mix($grey4,$grey3,95%))}
     &.alt-3{@include gradient(#ffffff,mix(#ffffff,$grey4))}
     &.alt-4{@include gradient($grey2,mix($grey2,$grey1,75%));color:#ffffff;}
-    &.alt-5{background:$green;color:$green-high}
+    &.alt-5{@include gradient(mix($green,$green-high,75%),$green);color:#ffffff}
 
     &.large{height:$rowHeight*2;
       .profile-grid-stories-story {max-height:7em}
@@ -512,11 +512,12 @@ $columnWidth: 25%;
       img {
         @include accelerate;
         @include transition(all .5s);
-        @include filter(blur(6px));
-        @include transform(scale(4.2));
-        filter:(url(/img/blur.svg#blur));
-        height:100%;
+        // @include filter(blur(6px));
+        // @include transform(scale(4.2));
+        // filter:(url(/img/blur.svg#blur));
+        // height:100%;
         width:100%;
+        opacity:.7;
       }
     }
     .profile-grid-stories-story {
@@ -544,7 +545,8 @@ $columnWidth: 25%;
       top:52%;
       margin:-50px 0 0 -50px;
       opacity:0;
-      @include transition(top .5s, transform .5s);
+
+      @include prefix(transition, top .3s);
 
     }
       .profile-grid-stories-date-month{

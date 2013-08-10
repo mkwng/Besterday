@@ -71,7 +71,7 @@ body {
   height:100%;
   background:rgba(darken($grey1,5%),0);
   &.no-transition{
-    @include transition(all 0);
+    // @include transition(all 0);
   }
   &.visible{
     background:rgba(darken($grey1,5%),.9);
@@ -98,7 +98,7 @@ body {
   z-index:11;
   background:transparent;
   &.visible{
-    background:transparent;
+    // background:transparent;
   }
 }
 

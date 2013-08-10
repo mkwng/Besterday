@@ -52,13 +52,14 @@
         left:-5px;
         z-index:0;
         img {
-          @include filter(blur(12px));        
+          // @include filter(blur(12px));        
           @include accelerate;
-          @include transition(all .5s);
-          @include transform(scale(4.2));
-          filter:(url(/img/blur.svg#blur));
-          height:100%;
+          // @include transition(all .5s);
+          // @include transform(scale(4.2));
+          // filter:(url(/img/blur.svg#blur));
+          // height:100%;
           width:100%;
+          opacity:.7;
         }
       }
       // Removing text-area styles
@@ -103,7 +104,7 @@
         }
       }
       .story-date,.profile-grid-stories-date {
-        @include transition(top .5s, transform .5s);
+        @include prefix(transition, top .5s);
         @include transform(scale(0.5));
         position:absolute;
         top:10%;

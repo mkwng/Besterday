@@ -39,23 +39,27 @@ initialize = function() {
   }
 
   // If no date, default date is yesterday.
-  if(!Session.get("session_date")) tempDate = discreteDate(incrementDate(new Date(),-1));
-  else tempDate = Session.get("session_date")
+  if(!!!tempDate) {
+    if(!Session.get("session_date")) tempDate = discreteDate(incrementDate(new Date(),-1));
+    else tempDate = Session.get("session_date")    
+  }
 
   // Still no session user set?
-  if(!Session.get("session_user")) {
-    var id;
-    // We have a screen name, but no user yet? This is from Router.
-    if(sessionScreenName) id = getUserId(sessionScreenName);
-    else if(Meteor.userId()) id = Meteor.userId();
+  if(!!!tempUser) {
+    if(!Session.get("session_user")) {
+      var id;
+      // We have a screen name, but no user yet? This is from Router.
+      if(sessionScreenName) id = getUserId(sessionScreenName);
+      else if(Meteor.userId()) id = Meteor.userId();
 
-    // Still no user. Must not be logged in. Re-route to home.
-    if(id) tempUser = id;
-    else {
-      console.warn("This should not have happened.");
-      Meteor.Router.to('/');
-    }
-  } else tempUser = Session.get("session_user");
+      // Still no user. Must not be logged in. Re-route to home.
+      if(id) tempUser = id;
+      else {
+        console.warn("This should not have happened.");
+        Meteor.Router.to('/');
+      }
+    } else tempUser = Session.get("session_user");
+  }
 
   setDate(tempUser,tempDate);
 
