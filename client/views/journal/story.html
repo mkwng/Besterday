@@ -1,4 +1,9 @@
 <template name="storytime">
+  
+{{#unless isOwner}}
+  {{> profile_top}}
+{{/unless}}
+
 <div id="storytime">
 
 <div class="cover visible no-transition" style="display: block;">
