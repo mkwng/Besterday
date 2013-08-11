@@ -44,6 +44,8 @@ jQuery.fn.widthDivisible = function(callback) {
   // This is fairly expensive, so setting a timeout so it doesn't run consecutively too many times.
   isoTimeout = setTimeout(function() {
     $(".profile-grid-inner").packery({itemSelector:'.profile-grid-stories',columnWidth:width/numCols});
+    if(typeof callback == "function")
+      callback();
   },100);
 
   return $(this);
@@ -100,15 +102,21 @@ Template.profile_grid.helpers({
   },
 });
 
-showGrid = function() {
-    var $test = $(Template.profile_grid());
-    $(".profile-grid-inner").append($test);
-    // $clamp($test, {clamp: 4});
-    $(".profile-grid-inner").packery("appended",$test);
-
-      $test.filter("a").find(".profile-grid-stories-story").each(function() {
-        $clamp(this,{clamp:4,useNativeClamp:false});
-      });
-
-    storyPage++;
+showGridUi = function($items) {
+  $stories = $items.filter("a");
+    $stories.find(".profile-grid-stories-story").each(function() {
+      $clamp(this,{clamp:4,useNativeClamp:false});
+    });
+    var imgLoad = imagesLoaded( $stories.find(".profile-grid-stories-img"), function() {
+      console.log("all images loaded");
+    });
+    imgLoad.on('progress',function(instance,image) {
+      if(image.isLoaded) {
+        $(image.img).parent().removeClass("loading");
+      }
+    });
 }
+
+
+
+

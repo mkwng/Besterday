@@ -135,7 +135,7 @@ jQuery.fn.showStory = function(callback) {
 
 closeStory = function() {
   Session.set("expanded_story",false);
-  Meteor.Router.to("/");
+  Meteor.Router.to("/user/"+sessionScreenName);
 }
 
 jQuery.fn.edit = function() {

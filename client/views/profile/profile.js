@@ -1,11 +1,17 @@
 /* ==========================================================================
    TEMPLATE: Shared
    ========================================================================== */
-Template.profile.created = function() {}
+Template.profile.created = function() {
+}
 
 
 Template.profile.rendered = function() {
-  $(".profile-grid-inner").widthDivisible();
+  pageViews++;
+  $(".profile-grid-inner").widthDivisible(function() {
+    if(!$(".profile-grid-inner a.profile-grid-stories").length)
+      storyPage = 0;
+      showGrid();
+  });
 }
 
 

@@ -356,7 +356,7 @@ getUserId = function(name) {
       return false;
     }
   }
-  users = Meteor.users.find({username:name}).fetch();
+  var users = Meteor.users.find({username:name}).fetch();
   if(users.length>1) console.log("Warning: Note that there is more than one",name);
   if(users[0] && users[0].hasOwnProperty("_id"))
     return users[0]._id;
@@ -368,13 +368,15 @@ getDisplayName = function(id) {
   var user = Meteor.users.find(id).fetch()[0];
   var name = "";
   if(user!=undefined) {
-    if(!user.profile.hasOwnProperty("displayName") || !user.profile.displayName || user.profile.displayName == "null") {
-      name = getScreenName(id);
+    if (user.hasOwnProperty("profile")) {
+      if(!user.profile.hasOwnProperty("displayName") || !user.profile.displayName || user.profile.displayName == "null") {
+        name = getScreenName(id);
+      }
+      else {
+        name = user.profile.displayName;
+      }
     }
 
-    else {
-      name = user.profile.displayName;
-    }
   }
   return name;
 }
@@ -401,6 +403,8 @@ getDateUrl = function(date) {
 
 discreteDate = function(story) {
   var ddate = {year:undefined,month:undefined,date:undefined};
+
+  if(!!!story) return ddate;
 
   if(story.getMonth) {
     ddate = {year:story.getFullYear(),month:story.getMonth(),date:story.getDate()};

@@ -8,7 +8,7 @@ Meteor.startup(function () {
   Session.set('status_userdata', false); 
   Session.set('status_storydata', false); 
 
-  Session.set("pref_gridcount", 10);
+  Session.set("pref_gridcount", 8);
 
   // This isn't immediately intuitive, but essentially, run initialize() only when both data sources return.
   Meteor.subscribe('stories', function(){
@@ -87,9 +87,10 @@ Meteor.Router.beforeRouting = function() {
 Meteor.Router.add({
   // Visiting the root page.
   '/': function() {
+    Session.set("expanded_story",false);
     // If logged in, set the session to current user.
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
-      Session.set("session_user",Meteor.userId());
+      setDate(Meteor.userId(),discreteDate(incrementDate(new Date(),-1)));
       return 'profile';
     } else {
       return 'landing';
@@ -100,7 +101,6 @@ Meteor.Router.add({
 
   '/user/:user': function(user) {
     Session.set("expanded_story",false);
-    $(".story").showStory();
     sessionScreenName = user;
     return 'profile';
   },

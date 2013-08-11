@@ -10,7 +10,15 @@ Template.profile_menu.destroyed = function() {}
 Template.profile_menu.events({
   'click .profile-menu-option-logout' : function(e) {
     e.preventDefault();
-    Meteor.logout();
+    Meteor.logout(function(e) {
+      if(e) alert(e);
+      else {
+        sessionId = "";
+        sessionScreenname = "";
+        user = "";
+        story = "";
+      }
+    });
     createModal("Good bye!","Have the best day ever.",{close:"I will"});
     setTimeout(function() {Meteor.Router.to("/")},500)
   },

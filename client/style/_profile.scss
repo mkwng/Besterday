@@ -33,7 +33,7 @@
   height:40px;
   background:$grey2;
   color:#ffffff;
-  z-index:9;
+  z-index:99;
   text-align:center;
   @include text-paragraph;
   line-height:40px;
@@ -503,12 +503,16 @@ $columnWidth: 25%;
 
   }
     .profile-grid-stories-img {
+      @include prefix(transition,opacity .5s);
       position:absolute;
       left:-5px;
       top:-5px;
       right:-5px;
       bottom:-5px;
       z-index:0;
+      &.loading{
+        opacity:0;
+      }
       img {
         @include accelerate;
         @include transition(all .5s);
@@ -578,10 +582,11 @@ $columnWidth: 25%;
   line-height:80px;
   text-decoration:none;
   opacity:.5;
-  &.less{
+  &.less,&.disabled{
     @include prefix(box-shadow, 0px 0px 20px rgba(0,0,0,.10));
     background-image:none;
     height:81px;    
+    cursor:default;
     &.fixed{
       position: fixed;
       bottom: 0px;
@@ -589,6 +594,11 @@ $columnWidth: 25%;
       background: #ffffff;
       opacity: 1;
       @include transition(all 0s);
+    }
+    &:hover{
+      color:$grey1;
+      background-position:50% 80px;
+      opacity:.5;
     }
   }
   &:hover{

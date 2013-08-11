@@ -1191,7 +1191,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   height: 40px;
   background: #443f41;
   color: #ffffff;
-  z-index: 9;
+  z-index: 99;
   text-align: center;
   font-weight: 200;
   font-size: 18px;
@@ -1927,12 +1927,19 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
         height: 540px; } }
 
 .profile-grid-stories-img {
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  transition: opacity 0.5s;
   position: absolute;
   left: -5px;
   top: -5px;
   right: -5px;
   bottom: -5px;
   z-index: 0; }
+  .profile-grid-stories-img.loading {
+    opacity: 0; }
   .profile-grid-stories-img img {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -2051,15 +2058,16 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -ms-background-size: 800px 50px;
       -o-background-size: 800px 50px;
       background-size: 800px 50px; } }
-  .profile-grid-more.less {
+  .profile-grid-more.less, .profile-grid-more.disabled {
     -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     -o-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
     background-image: none;
-    height: 81px; }
-    .profile-grid-more.less.fixed {
+    height: 81px;
+    cursor: default; }
+    .profile-grid-more.less.fixed, .profile-grid-more.disabled.fixed {
       position: fixed;
       bottom: 0px;
       margin-bottom: 0;
@@ -2070,6 +2078,10 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       -ms-transition: all 0s;
       -o-transition: all 0s;
       transition: all 0s; }
+    .profile-grid-more.less:hover, .profile-grid-more.disabled:hover {
+      color: #312b2c;
+      background-position: 50% 80px;
+      opacity: .5; }
   .profile-grid-more:hover {
     color: #ffc157;
     background-position: 50% 80px;

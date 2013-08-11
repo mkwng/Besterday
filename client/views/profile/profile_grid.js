@@ -8,8 +8,6 @@ Template.profile_grid.created = function() {
 
 
 Template.profile_grid.rendered = function() {
-  pageViews++;
-
   profile_grid_ui();
 }
 
@@ -50,6 +48,20 @@ Template.profile_grid.helpers({
 
 
 
+showGrid = function() {
+    var $test = $(Template.profile_grid());
+    if ($test.length) {
+      $(".profile-grid-inner").append($test);
+      // $clamp($test, {clamp: 4});
+      $(".profile-grid-inner").packery("appended",$test);
+
+      showGridUi($test);
+
+      storyPage++;
+    } else {
+      $("a.profile-grid-more").html("No more stories").addClass("disabled");
+    }
+}
 
 
 profile_grid_ui = function() {
