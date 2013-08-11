@@ -14,6 +14,13 @@ Template.storytime.rendered = function() {
       var tempUser = tempStory.owner;
       setDate(tempUser,tempDate);
     }
+  } else {
+    if(!!sessionId) {
+      var tempStory = Stories.findOne(sessionId);
+      var tempDate = discreteDate(tempStory);
+      var tempUser = tempStory.owner;
+      setDate(tempUser,tempDate);
+    }
   }
   storytime_ui();
 }
