@@ -1781,7 +1781,10 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   text-align: center;
   line-height: normal;
   color: #312b2c;
-  text-decoration: none; }
+  text-decoration: none;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: zoom-in; }
   .profile-grid-stories::before {
     right: -1em;
     display: inline-block;

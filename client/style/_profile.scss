@@ -429,6 +429,9 @@ $columnWidth: 25%;
     line-height:normal;
     color:$grey1;
     text-decoration:none;
+    cursor:-webkit-zoom-in;
+    cursor:-moz-zoom-in;
+    cursor:zoom-in;
 
     &.alt-1{@include gradient($borange,mix($borange,$borange-shad,75%));color:#ffffff;}
     &.alt-2{@include gradient($grey4,mix($grey4,$grey3,95%))}
