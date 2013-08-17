@@ -43,7 +43,7 @@ Never use database calls to get info outside of `setDate()`, these objects shoul
 
 `"status_userdata"`
 
-"status_storydata"
+`"status_storydata"`
 
 
 **Preferences:**

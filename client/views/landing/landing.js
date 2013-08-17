@@ -7,12 +7,7 @@
 
 // Tasks when Landing is rendered.
 Template.landing.rendered = function() {
-  // makeBackground();
-  $window = $(window);
-  $window.scroll(function(e) {
-    if($window.scrollTop() > 250) $(".landing-hero-example").addClass("active");
-    else $(".landing-hero-example").removeClass("active");
-  });
+
 }
 
 
@@ -22,10 +17,9 @@ Template.landing.rendered = function() {
 
 // Events
 Template.landing.events({
-
-  'click a.cta' : function() {
-    $(".landing-hero p").css("left","-100%");
-    $("#login").css("left","0");
+  'click a.landing-hero-main-cta' : function(e) {
+    e.preventDefault();
+    $(".mailchimp").slideDown();
   }
 });
 // Helpers

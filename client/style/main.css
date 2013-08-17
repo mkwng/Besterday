@@ -592,7 +592,10 @@ strong {
     border: none;
     background: #ffc157;
     color: #ffffff;
-    text-align: center; }
+    text-align: center;
+    cursor: pointer; }
+    .login button:hover {
+      background: #ffea85; }
 
 .landing-body {
   position: relative;
@@ -627,6 +630,44 @@ strong {
     vertical-align: middle;
     text-align: left;
     padding: 25px; }
+
+#mc_embed_signup label {
+  display: none; }
+#mc_embed_signup input {
+  font-weight: 200;
+  font-size: 18px;
+  font-family: "ratio",Arial;
+  line-height: 1.2em;
+  display: inline-block;
+  float: left;
+  margin: 0 10px 0 0;
+  padding: 7px 6px;
+  width: 360px;
+  outline: none;
+  border: none;
+  border: 1px solid #443f41;
+  background: #443f41;
+  color: #e5e1e1; }
+  #mc_embed_signup input:focus {
+    border-color: #ffc157; }
+#mc_embed_signup #mc-embedded-subscribe {
+  font-weight: 200;
+  font-size: 18px;
+  font-family: "ratio",Arial;
+  line-height: 1.2em;
+  display: inline-block;
+  float: left;
+  margin: 0px;
+  padding: 9px 8px;
+  width: 120px;
+  outline: none;
+  border: none;
+  background: #ffc157;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer; }
+  #mc_embed_signup #mc-embedded-subscribe:hover {
+    background: #ffea85; }
 
 footer {
   background: #ffc157;

@@ -100,6 +100,8 @@
     background:$yellow;
     color:#ffffff;
     text-align:center;
+    cursor:pointer;
+    &:hover {background:$yellow-high;}
   }
 }
 
@@ -134,3 +136,38 @@
   }
 
 
+#mc_embed_signup {
+  label {display:none;}
+  input {
+    @include text-paragraph;
+    display:inline-block;
+    float:left;
+    margin:0 10px 0 0;
+    padding:7px 6px;
+    width:360px;
+    outline:none;
+    border:none;
+    border:1px solid $grey2;
+    background:$grey2;
+    color:$grey4;
+    &:focus {
+      border-color:$yellow;
+    }
+  }
+
+  #mc-embedded-subscribe {
+    @include text-paragraph;
+    display:inline-block;
+    float:left;
+    margin:0px;
+    padding:9px 8px;
+    width:120px;
+    outline:none;
+    border:none;
+    background:$yellow;
+    color:#ffffff;
+    text-align:center;
+    cursor:pointer;
+    &:hover {background:$yellow-high;}
+  }
+}
