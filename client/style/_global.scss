@@ -390,4 +390,6 @@ $borderWidthY: 10px;
   border-radius: $borderWidthY*5 $borderWidthX*5 $borderWidthY*5 $borderWidthX*5;
   content:"";
   opacity:0;
+
+  pointer-events:none;
 }

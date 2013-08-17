@@ -1,84 +1,136 @@
-
-
 .landing-hero {
-  @include box-sizing;
-  position:relative;
-  margin:0;
-  padding:40px;
-  width:100%;
-  min-height:100%;
-  background:#efefef;
-  h1 {
-    display:block;
-    margin:0;
-    padding:40px;
-    color:#cecece;
-    font-weight:800;
-    font-size:24px;
-    font-family:"ratio";
+  background:$grey1;
+  color:#ffffff;
+  border-top:4px solid $green;
+}
+  .landing-hero-top{
+    overflow:hidden;
   }
-
-  p {
-    @include transition(left 1s);
-    position:relative;
-    display:block;
-    margin:0;
-    padding:40px;
-    color:#666666;
-    font-weight:300;
-    font-size:48px;
-    font-family:"ratio";
-    a.cta {      
-      /* Positioning */
-      height:36px;
-      width:160px;
-
-      /* Display & Box Model */
+    .landing-hero-top-logo {
       display:block;
-      @include box-sizing;
-      padding:10px 0 0;
-      margin:20px 0;
+      float:left;
+      margin:40px;
+      padding:0;
+      width:30px;
+      height:40px;
+      a {
+        display:block;
+        padding:0;
+        width:100%;
+        height:100%;
+        background:url(/img/logo.svg);
+        text-indent:-9999em;
+      }
+    }
+    .landing-hero-top-login {
+      float:right;
+      overflow:hidden;
+      margin:40px;
+      width:374px;
+      height:40px;
+    }
 
-      /* Presentation */
-      background-color:$orange;
-
-      /* Font */
-      color:#ffffff;
-      text-align:center;
-      text-decoration:none;
-      text-transform:uppercase;
-      letter-spacing:.2em;
-      font-weight:400;
-      font-size:12px;
-      font-family:"ratio";
-      @include transition(background-color .2s);
-      @include transition(color .2s);
+  .landing-hero-main{
+    clear:both;
+    padding:0 40px 80px;
+    p {
+      @include text-h1;
+      .landing-hero-main-link {
+        border-color:$yellow;
+        border-bottom:2px solid $yellow;
+        color:#ffffff;
+        text-decoration:none;
+        &:hover {border-color:$yellow-high;color:$yellow-high;}
+        &.capture { border-color:$green;
+          &:hover { border-color:$green-high;color:$green-high; }
+        }
+        &.catalogue { border-color:$red;
+          &:hover { border-color:$red-high;color:$red-high; }
+        }
+        &.remember { border-color:$blue;
+          &:hover { border-color:$blue-high;color:$blue-high; }
+        }
+      }
     }
   }
-}
+      .landing-hero-main-cta {
+        @include text-smallcaps;
+        @include prefix(border-radius,4px);
+        display:inline-block;
+        padding:20px;
+        border:1px solid $grey3;
+        color:$grey3;
+        text-decoration:none;
+        margin-top:10px;
+        &:hover {
+          background:$yellow;
+          border-color:$yellow;
+          color:#ffffff;
+        }
+      }
 
-
-.landing-hero-example {
-  @include box-sizing;
-  @include box-shadow(0 0 80px rgba(0,0,0,.05));
-  @include transform(perspective(1000px) rotateX(-30deg) translateZ(-180px) translateY(100px));
-  position:relative;
-  margin:80px auto;
-  padding:20px;
-  max-width:90%;
-  max-height:90%;
-  width:800px;
-  height:600px;
-  border:20px solid #ffffff;
-  background:$bg;
-  color:#cecece;
-  font-weight:300;
-  font-size:36px;
-  font-family:"ratio";
-  line-height:520px;
-  @include transition(-webkit-transform 1s, -moz-transform 1s, -o-transform 1s, -ms-transform 1s, transform 1s);
-  &.active {
-    @include transform(perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px));
+.login {
+  display:block;
+  label {display:none;}
+  input {
+    @include text-paragraph;
+    display:inline-block;
+    float:left;
+    margin:0 10px 0 0;
+    padding:7px 6px;
+    width:120px;
+    outline:none;
+    border:none;
+    border:1px solid $grey2;
+    background:$grey2;
+    color:$grey4;
+    &:focus {
+      border-color:$yellow;
+    }
+  }
+  button {
+    @include text-paragraph;
+    display:inline-block;
+    float:left;
+    margin:0px;
+    padding:9px 8px;
+    width:80px;
+    outline:none;
+    border:none;
+    background:$yellow;
+    color:#ffffff;
+    text-align:center;
   }
 }
+
+
+.landing-body {
+  position:relative;
+  background:#ffffff;
+  text-align:center;
+  padding:80px 0;
+  img {
+    max-width:60%;
+  }
+}
+  .landing-body-tout {
+    position:absolute;
+    top:40px;
+    right:15%;
+    @include prefix(border-radius,70px);
+    width:140px;
+    height:140px;
+    background:$red-high;
+    color:#ffffff;
+    display:table;
+    overflow:hidden;
+    span {
+      @include text-smallcaps;
+      display:table-cell;
+      vertical-align:middle;
+      text-align:left;
+      padding:25px;
+    }
+  }
+
 
