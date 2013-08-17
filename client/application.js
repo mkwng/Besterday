@@ -32,6 +32,7 @@ Meteor.autorun(function() {
 initialize = function() {
   var tempDate,tempUser;
   // We're entering with just the story id?
+
   if(!!sessionId) {
     story = Stories.findOne(sessionId);
     tempDate = discreteDate(story);
@@ -87,6 +88,7 @@ Meteor.Router.beforeRouting = function() {
 Meteor.Router.add({
   // Visiting the root page.
   '/': function() {
+    document.title = "Besterday";
     Session.set("expanded_story",false);
     // If logged in, set the session to current user.
     if (!(Meteor.userId()==null || Meteor.userId()===false)){
@@ -100,11 +102,13 @@ Meteor.Router.add({
   '/404': 'landing',
 
   '/user/:user': function(user) {
+    document.title = "Besterday - "+user+"'s Profile";
     Session.set("expanded_story",false);
     sessionScreenName = user;
     return 'profile';
   },
   '/story/yesterday':function() {
+    document.title = "Besterday - Yesterday";
     Session.set("expanded_story",true);
     Session.set("edit",true);
     return 'storytime';
@@ -119,6 +123,7 @@ Meteor.Router.add({
       return 'storytime';
   },
   '/story/:storyId': function(storyId) {
+    document.title = "Besterday - Story";
     sessionId = storyId;
     Session.set("expanded_story",true);
     if(Meteor.Router.page()=='profile')
@@ -128,6 +133,7 @@ Meteor.Router.add({
   },
 
   '/youdonthaveausername': function() {
+    document.title = "Please select a username.";
     return 'youdonthaveausername';
   }
 

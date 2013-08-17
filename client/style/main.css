@@ -222,6 +222,9 @@ body {
 /* ==========================================================================
    Text styles
    ========================================================================== */
+strong {
+  font-weight: 700; }
+
 /* ==========================================================================
    Popover styles
    ========================================================================== */
@@ -624,6 +627,20 @@ body {
     vertical-align: middle;
     text-align: left;
     padding: 25px; }
+
+footer {
+  background: #ffc157;
+  padding: 60px 40px; }
+  footer p {
+    font-family: "ratio",Arial;
+    font-weight: 100;
+    font-size: 42px;
+    color: #000000; }
+    footer p a {
+      color: #000000;
+      text-decoration: none; }
+      footer p a:hover {
+        color: #ffea85; }
 
 /* ==========================================================================
    Journal
