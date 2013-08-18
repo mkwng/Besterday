@@ -4,3 +4,5 @@
 .DS_Store
 
 meteoric.config.sh
+
+lib/googleanalytics.js

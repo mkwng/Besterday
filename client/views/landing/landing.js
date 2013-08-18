@@ -7,7 +7,7 @@
 
 // Tasks when Landing is rendered.
 Template.landing.rendered = function() {
-
+  if(typeof runGaq == "function") runGaq();
 }
 
 
