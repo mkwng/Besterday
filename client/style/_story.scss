@@ -52,14 +52,14 @@
         left:-5px;
         z-index:0;
         img {
-          // @include filter(blur(12px));        
+          @include filter(blur(12px));        
           @include accelerate;
           // @include transition(all .5s);
           // @include transform(scale(4.2));
-          // filter:(url(/img/blur.svg#blur));
+          filter:(url(/img/blur.svg#blur));
           // height:100%;
           width:100%;
-          opacity:.7;
+          // opacity:.7;
         }
       }
       // Removing text-area styles

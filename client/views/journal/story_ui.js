@@ -6,7 +6,10 @@ uploadButtonTimeout = setTimeout(function() {},0);
 
 
 storytime_ui = function() {
-  $("textarea").verticalCenterTextarea().addClass("animate");
+  $("textarea").verticalCenterTextarea();
+  setTimeout(function() {
+    $("textarea").addClass("animate");
+  },100);
 }
 
 Template.storytime.events({

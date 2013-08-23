@@ -65,6 +65,7 @@ Template.profile_menu.events({
   'click .icon-menu' : function(e) {
     e.preventDefault();
     $(".profile-menu").toggleClass("active");
+    if(Session.get("edit_account")) {Session.set("edit_account",false);}
   },
   'click .profile-menu-edit-delete a' : function(e) {
     e.preventDefault();

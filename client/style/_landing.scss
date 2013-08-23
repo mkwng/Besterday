@@ -53,55 +53,33 @@
       }
     }
   }
-      .landing-hero-main-cta {
-        @include text-smallcaps;
-        @include prefix(border-radius,4px);
-        display:inline-block;
-        padding:20px;
-        border:1px solid $grey3;
-        color:$grey3;
-        text-decoration:none;
-        margin-top:10px;
-        &:hover {
-          background:$yellow;
-          border-color:$yellow;
-          color:#ffffff;
+      .landing-hero-main-email {
+        float:left;
+        label {display:none;}
+        input {
+          @include input-default;
+          padding:17px 20px 18px;
+          width:240px;
         }
+      }
+      .landing-hero-main-cta {
+        @include button-default;
+        padding:20px;
+        font-size:14px;
       }
 
 .login {
   display:block;
   label {display:none;}
   input {
-    @include text-paragraph;
+    @include input-default;
     display:inline-block;
     float:left;
-    margin:0 10px 0 0;
-    padding:7px 6px;
-    width:120px;
-    outline:none;
-    border:none;
-    border:1px solid $grey2;
-    background:$grey2;
-    color:$grey4;
-    &:focus {
-      border-color:$yellow;
-    }
   }
   button {
-    @include text-paragraph;
+    @include button-default;
     display:inline-block;
     float:left;
-    margin:0px;
-    padding:9px 8px;
-    width:80px;
-    outline:none;
-    border:none;
-    background:$yellow;
-    color:#ffffff;
-    text-align:center;
-    cursor:pointer;
-    &:hover {background:$yellow-high;}
   }
 }
 
@@ -116,22 +94,22 @@
   }
 }
   .landing-body-tout {
+    @include prefix(border-radius,70px);
     position:absolute;
     top:40px;
     right:15%;
-    @include prefix(border-radius,70px);
+    display:table;
+    overflow:hidden;
     width:140px;
     height:140px;
     background:$red-high;
     color:#ffffff;
-    display:table;
-    overflow:hidden;
     span {
       @include text-smallcaps;
       display:table-cell;
+      padding:25px;
       vertical-align:middle;
       text-align:left;
-      padding:25px;
     }
   }
 
@@ -139,35 +117,10 @@
 #mc_embed_signup {
   label {display:none;}
   input {
-    @include text-paragraph;
-    display:inline-block;
-    float:left;
-    margin:0 10px 0 0;
-    padding:7px 6px;
-    width:360px;
-    outline:none;
-    border:none;
-    border:1px solid $grey2;
-    background:$grey2;
-    color:$grey4;
-    &:focus {
-      border-color:$yellow;
-    }
+    @include input-default;
   }
 
   #mc-embedded-subscribe {
-    @include text-paragraph;
-    display:inline-block;
-    float:left;
-    margin:0px;
-    padding:9px 8px;
-    width:120px;
-    outline:none;
-    border:none;
-    background:$yellow;
-    color:#ffffff;
-    text-align:center;
-    cursor:pointer;
-    &:hover {background:$yellow-high;}
+    @include button-default;
   }
 }

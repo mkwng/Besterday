@@ -17,6 +17,7 @@ Template.login.events({
           // alert("login");
           dateSetOnce = false;
           Meteor.Router.to("/");
+          initialize();
       });
        return false; 
     }

@@ -7,7 +7,7 @@
 
 // Tasks when Landing is rendered.
 Template.landing.rendered = function() {
-  if(typeof runGaq == "function") runGaq();
+  if(typeof runGaq == "function") $.throttle(250, runGaq);
 }
 
 
@@ -17,10 +17,10 @@ Template.landing.rendered = function() {
 
 // Events
 Template.landing.events({
-  'click a.landing-hero-main-cta' : function(e) {
-    e.preventDefault();
-    $(".mailchimp").slideDown();
-  }
+  // 'click a.landing-hero-main-cta' : function(e) {
+  //   e.preventDefault();
+  //   $(".mailchimp").slideDown();
+  // }
 });
 // Helpers
 

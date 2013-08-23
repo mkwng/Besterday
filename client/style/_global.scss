@@ -218,6 +218,47 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@mixin input-default {
+  @include prefix(transition,all .2s);
+  @include prefix(border-radius,2px);
+  @include text-paragraph;
+  display:inline-block;
+  margin:0 10px 0 0;
+  padding:7px 6px;
+  width:120px;
+  outline:none;
+  border:1px solid $grey2;
+  background:$grey2;
+  color:$grey4;
+  &:hover {
+    background:lighten($grey2,2%);
+  }
+  &:focus {
+    border-color:$yellow;
+  }
+}
+
+@mixin button-default {
+  @include text-smallcaps;
+  @include prefix(border-radius,4px);
+  display:inline-block;
+  margin:0px;
+  padding:11px 8px 12px;
+  min-width:80px;
+  text-align:center;
+  outline:none;
+  border:1px solid $grey3;
+  background:transparent;
+  color:$grey3;
+  text-decoration:none;
+  font-size:11px;
+  &:hover {
+    border-color:$yellow;
+    background:$yellow;
+    color:#ffffff;
+  }
+}
+
 strong {
   font-weight:700;
 }

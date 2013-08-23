@@ -519,12 +519,12 @@ $columnWidth: 25%;
       img {
         @include accelerate;
         @include transition(all .5s);
-        // @include filter(blur(6px));
+        @include filter(blur(6px));
         // @include transform(scale(4.2));
-        // filter:(url(/img/blur.svg#blur));
+        filter:(url(/img/blur.svg#blur));
         // height:100%;
         width:100%;
-        opacity:.7;
+        // opacity:.7;
       }
     }
     .profile-grid-stories-story {

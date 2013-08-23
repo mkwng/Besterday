@@ -7,7 +7,7 @@ Template.storytime.created = function() {
 
 
 Template.storytime.rendered = function() {
-  if(typeof runGaq == "function") runGaq();
+  if(typeof runGaq == "function") $.throttle(250, runGaq);
   if(!!story && story.hasOwnProperty("_id")) {
     if(sessionId!=story._id) {
       var tempStory = Stories.findOne(sessionId);
@@ -142,8 +142,8 @@ jQuery.fn.showStory = function(callback) {
 }
 
 closeStory = function() {
-  Session.set("expanded_story",false);
   Meteor.Router.to("/user/"+sessionScreenName);
+  Session.set("expanded_story",false);
 }
 
 jQuery.fn.edit = function() {
