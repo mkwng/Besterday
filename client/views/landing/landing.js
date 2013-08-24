@@ -17,10 +17,12 @@ Template.landing.rendered = function() {
 
 // Events
 Template.landing.events({
-  // 'click a.landing-hero-main-cta' : function(e) {
-  //   e.preventDefault();
-  //   $(".mailchimp").slideDown();
-  // }
+  'click button.landing-hero-main-cta' : function(e) {
+    Session.set("status_signup",true);
+  }
 });
 // Helpers
+Template.landing.helpers({
+
+});
 

@@ -19,7 +19,9 @@
 Template.page.loading = function() {
   return Session.get("loading");
 }
-
+Template.page.create = function() {
+  return Session.get("status_signup");
+}
 
 
 Template.page.loggedIn = function () {

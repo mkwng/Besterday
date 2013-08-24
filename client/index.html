@@ -25,11 +25,12 @@
     <div class="loading">Loading&hellip;</div>
   {{/if}}
 
+  {{#if create}}
+    {{> signup}}
+  {{/if}}
+
   {{renderPage}}
 
-  {{#unless loggedIn}}
-    {{> loginForm}}
-  {{/unless}}
 </template>
 
 

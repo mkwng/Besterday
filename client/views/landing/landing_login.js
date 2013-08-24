@@ -1,5 +1,5 @@
 Template.login.events({
-  'submit .login' : function(e, t){
+  'submit #login' : function(e, t){
     e.preventDefault();
     // retrieve the input field values
     var username = t.find('#username').value

@@ -38,6 +38,8 @@ Never use database calls to get info outside of `setDate()`, these objects shoul
 
 `"state_storytime"`
 
+`"state_signup"`
+
 
 **Status Session Variables:**
 

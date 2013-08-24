@@ -1,0 +1,42 @@
+#signup {
+  z-index:99;
+  display:block;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba($grey1,.95);
+  color:#ffffff;
+  .control-group {
+    float:left;
+    width:50%;
+
+    &:first-child {
+      text-align:right;
+    }
+  }
+  .control-submit {
+    clear:left;
+    text-align:center;
+  }
+  .signup-wrapper {
+    overflow:hidden;
+    margin:0 auto 40px auto;
+  }
+  h3 {
+    @include text-h1;
+    text-align:center;
+  }
+  label {
+    display:none;
+  }
+  input {
+    @include input-default;
+    width:240px;
+    margin:5px 20px;
+  }
+  button {
+    @include button-large;
+  }
+}

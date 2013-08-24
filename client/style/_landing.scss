@@ -63,12 +63,10 @@
         }
       }
       .landing-hero-main-cta {
-        @include button-default;
-        padding:20px;
-        font-size:14px;
+        @include button-large;
       }
 
-.login {
+#login {
   display:block;
   label {display:none;}
   input {
