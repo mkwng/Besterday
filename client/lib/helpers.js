@@ -451,10 +451,12 @@ updateStats = function(id) {
 
     if(!!user.profile) {
       // Last updated
-      if (user.profile.hasOwnProperty("lastUpdate"))
+
+      if (user.profile.hasOwnProperty("lastUpdate")){
         var dayOld = new Date(user.profile.lastUpdate.year,user.profile.lastUpdate.month,user.profile.lastUpdate.date);
         var dayLast = new Date(lastUpdate.year,lastUpdate.month,lastUpdate.date);
         var diff = dayDiff(dayOld,dayLast);
+      }
 
       // Current streak
       var currstreak = user.profile.hasOwnProperty("currstreak") ? user.profile.currstreak : 1;
