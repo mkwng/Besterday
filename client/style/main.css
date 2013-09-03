@@ -1892,7 +1892,8 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
    Profile Grid
    ========================================================================== */
 .profile-grid {
-  width: 100%;
+  width: 95%;
+  padding-left: 5%;
   /* Prevent vertical gaps */
   overflow: hidden;
   background: #cdc6c6;
@@ -1901,6 +1902,10 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   -ms-transition: max-height 2s;
   -o-transition: max-height 2s;
   transition: max-height 2s; }
+
+.profile-grid-menu {
+  width: 5%;
+  background: #312b2c; }
 
 .profile-grid-stories {
   -webkit-transform-style: preserve-3d;

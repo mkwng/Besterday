@@ -367,12 +367,17 @@
 $rowHeight: 180px;
 $columnWidth: 25%;
 .profile-grid {
-  width:100%;
+  width:95%;
+  padding-left:5%;
   // max-height:$rowHeight*2;
   /* Prevent vertical gaps */
   overflow:hidden;
   background:darken($grey4,10%);
   @include transition(max-height 2s);
+}
+.profile-grid-menu {
+  width:5%;
+  background:$grey1;
 }
   .profile-grid-stories {
 

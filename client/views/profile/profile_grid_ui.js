@@ -33,7 +33,7 @@ jQuery.fn.widthDivisible = function(callback) {
 
   numCols = Math.round(1/($(".profile-grid-stories:not(.wide)").slice(0,1).width()/$(window).width()));
 
-  var width = $(window).width();
+  var width = $(".profile-grid-inner").width();
 
   // Force the width of the container to a number evenly divisible by numCols
   if(width%numCols!=0){

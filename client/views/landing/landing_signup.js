@@ -22,6 +22,7 @@ Template.signup.events({
           // has logged in successfully. 
           setDate(Meteor.userId(),discreteDate(incrementDate(new Date(),-1)));
           updateStats(Meteor.userId());
+          Session.set("status_signup",false);
           createModal("Welcome!","Let's create your first Besterday.",{close:"Ok"})
           setTimeout(function() {Meteor.Router.to("/story/yesterday")},500)
         }
