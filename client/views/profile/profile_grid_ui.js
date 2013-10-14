@@ -1,8 +1,9 @@
 
 gridHousekeeping = function() {
+  if($profileGridInner)
     $profileGridInner.widthDivisible();
-    // Make sure the images are positioned correctly and load nicely
-    $(".profile-grid-stories.img").imgCover();
+  // Make sure the images are positioned correctly and load nicely
+  $(".profile-grid-stories.img").imgCover();
 }
 setClamp = function() {
     // On load, let's clip all the text so it fits in four lines.
@@ -107,7 +108,7 @@ showGridUi = function($items) {
       $clamp(this,{clamp:4,useNativeClamp:false});
     });
     var imgLoad = imagesLoaded( $stories.find(".profile-grid-stories-img"), function() {
-      console.log("all images loaded");
+      // console.log("all images loaded");
     });
     imgLoad.on('progress',function(instance,image) {
       if(image.isLoaded) {

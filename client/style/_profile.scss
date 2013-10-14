@@ -362,22 +362,19 @@
 /* ==========================================================================
    Profile Grid
    ========================================================================== */
-
+.grid-container {
+  background:$grey1;
+}
 
 $rowHeight: 180px;
 $columnWidth: 25%;
 .profile-grid {
-  width:95%;
-  padding-left:5%;
+  margin-left:40px;
   // max-height:$rowHeight*2;
   /* Prevent vertical gaps */
   overflow:hidden;
   background:$grey1;
   @include transition(max-height 2s);
-}
-.profile-grid-menu {
-  width:5%;
-  background:$grey1;
 }
   .profile-grid-stories {
 
@@ -617,6 +614,49 @@ $columnWidth: 25%;
 }
 
 
+
+
+
+/* ==========================================================================
+   Profile Grid Menu
+   ========================================================================== */
+
+.profile-grid-menu {
+  width:40px;
+  background:$grey1;
+  position:absolute;
+  padding:5px;
+
+  a{
+    display:block;
+    width:30px;
+    height:30px;
+    margin-bottom:5px;
+    text-align:center;
+    background:#000000;
+    &:hover {
+      background:$yellow;
+    }
+    &.sticky {
+      position:fixed;
+      bottom:0;
+    }
+  }
+
+  .back {
+    font-size:0;
+    &::after {
+      content:"";
+      display:inline-block;
+      width: 0; 
+      height: 0; 
+      margin-top: 10px;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #ffffff;
+    }
+  }
+}
 
 
 

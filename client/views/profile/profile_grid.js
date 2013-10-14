@@ -1,17 +1,17 @@
 $profileGridInner = undefined;
 profileGridLoaded = false;
+profileGridLoading = false;
 storyPage = 0;
 
 Template.profile_grid.created = function() {
-  profileGridLoaded = false;
+  profileGridLoaded = true;
 }
 
 Template.profile_grid.rendered = function() {
-  profile_grid_ui();
 }
 
 Template.profile_grid.destroyed = function() {
-  profileGridLoaded = false;
+  // profileGridLoaded = false;
 }
 
 Template.profile_grid.stories = function(page) {
@@ -48,22 +48,32 @@ Template.profile_grid.helpers({
 
 
 showGrid = function() {
+    profileGridLoaded = false;
     var $test = $(Template.profile_grid());
-    if ($test.length) {
-      $(".profile-grid-inner").append($test);
-      // $clamp($test, {clamp: 4});
-      $(".profile-grid-inner").packery("appended",$test);
 
-      showGridUi($test);
-
-      storyPage++;
-    } else {
-      $("a.profile-grid-more").html("No more stories").addClass("disabled");
+    function go() {
+      if(profileGridLoaded == false) {
+        console.log("not yet");
+        setTimeout(go,200);
+      }
+      else {
+        if ($test.length) {
+          $(".profile-grid-inner").append($test);
+          $(".profile-grid-inner").packery("appended",$test);
+          showGridUi($test);
+          storyPage++;
+        } else {
+          $("a.profile-grid-more").html("No more stories").addClass("disabled");
+        }
+        profileGridLoaded = true;
+      }
     }
+
+    setTimeout(go,200);
 }
 
 gridScrollCheck = function() {
-  if($(".profile-grid-more").offset().top - winHeight - winTop < 0)
+  if($(".profile-grid-more").offset().top - winHeight - winTop < 0 && profileGridLoaded)
     showGrid();
 }
 

@@ -150,13 +150,13 @@ winHeight = $(window).height();
 winTop = 0;
 application_ui = function() {
   $(window).resize(function() {
-    winHeight = $(window).height();
-    $.throttle( 250, resizeHousekeeping ) 
+    winHeight = $(window).height(); 
   });
   $(window).scroll(function() {
     winTop = $(window).scrollTop();
-    gridScrollCheck();
   });
+  $(window).resize( $.throttle( 250, resizeHousekeeping ) );
+  $(window).scroll( $.throttle( 250, gridScrollCheck ) );
 }
 
 
