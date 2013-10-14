@@ -628,14 +628,19 @@ $columnWidth: 25%;
   padding:5px;
 
   a{
+    @include prefix(transition,all .2s);
     display:block;
     width:30px;
     height:30px;
     margin-bottom:5px;
     text-align:center;
     background:#000000;
+    border-radius:3px;
     &:hover {
       background:$yellow;
+      &::after {
+        border-bottom-color:#ffffff;
+      }
     }
     &.sticky {
       position:fixed;
@@ -653,7 +658,7 @@ $columnWidth: 25%;
       margin-top: 10px;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-bottom: 8px solid #ffffff;
+      border-bottom: 8px solid $grey3;
     }
   }
 }

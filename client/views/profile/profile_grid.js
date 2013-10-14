@@ -53,7 +53,6 @@ showGrid = function() {
 
     function go() {
       if(profileGridLoaded == false) {
-        console.log("not yet");
         setTimeout(go,200);
       }
       else {

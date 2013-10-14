@@ -696,12 +696,33 @@ strong {
       color: #ffffff; }
 
 .landing-body {
+  font-weight: 200;
+  font-size: 18px;
+  font-family: "ratio",Arial;
+  line-height: 1.2em;
   position: relative;
   background: #ffffff;
   text-align: center;
-  padding: 80px 0; }
+  padding: 20px 0 80px 0; }
   .landing-body img {
-    max-width: 60%; }
+    max-width: 60%;
+    margin-bottom: 24px; }
+  .landing-body p, .landing-body h2 {
+    max-width: 60%;
+    margin: 0 auto;
+    margin-bottom: 24px; }
+  .landing-body h2 {
+    font-family: "futura-pt",Arial;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-top: 36px;
+    font-weight: 200;
+    color: #726d6e; }
+  .landing-body p {
+    font-weight: 300;
+    text-align: left; }
 
 .landing-body-tout {
   -webkit-border-radius: 70px;
@@ -710,7 +731,6 @@ strong {
   -o-border-radius: 70px;
   border-radius: 70px;
   position: absolute;
-  top: 40px;
   right: 15%;
   display: table;
   overflow: hidden;
@@ -2325,14 +2345,22 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   position: absolute;
   padding: 5px; }
   .profile-grid-menu a {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
     display: block;
     width: 30px;
     height: 30px;
     margin-bottom: 5px;
     text-align: center;
-    background: #000000; }
+    background: #000000;
+    border-radius: 3px; }
     .profile-grid-menu a:hover {
       background: #ffc157; }
+      .profile-grid-menu a:hover::after {
+        border-bottom-color: #ffffff; }
     .profile-grid-menu a.sticky {
       position: fixed;
       bottom: 0; }
@@ -2346,7 +2374,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
       margin-top: 10px;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-bottom: 8px solid #ffffff; }
+      border-bottom: 8px solid #726d6e; }
 
 @-webkit-keyframes OpenTop {
   25% {
