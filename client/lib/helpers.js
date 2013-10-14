@@ -74,7 +74,14 @@ getImg = function(picture) {
     else img.url = picture; // Phew.
     return img;
 }
-
+destroyModal = function() {
+  $modal = $(".modal");
+  $modal.removeClass("show");
+  setTimeout(function() {
+    $modal.remove();
+    $(window).unbind("keypress keyup");
+  },500);
+}
 createModal = function(message1,message2,actions) {
   var html = '<div class="modal"><div class="modal-content"><p><span>';
 
@@ -90,31 +97,41 @@ createModal = function(message1,message2,actions) {
     }
   }
 
+
+
   html += '</p></div></div><div class="modal-overlay"></div>';
   var $modal = $(html);
   $modal.appendTo("body");
+  var $testbutton = $modal.find("a:first").select().focus();
   setTimeout(function() {
     $modal.addClass("show");
+    $(window).bind('keypress keyup',function(e) {
+      e.preventDefault();
+    });
   },0);
+
+  setTimeout(function() {
+    $(window).bind('keypress keyup',function(e) {
+      e.preventDefault();
+      if ( e.keyCode == 13 ) {
+        destroyModal();
+      }
+    });
+  },100)
+
+
+
   $modal.find(".close").click(function() {
-    $modal.removeClass("show");
-    setTimeout(function() {
-      $modal.remove();
-    },500);
+    destroyModal();
   });
   $modal.find(".home").click(function() {
-    $modal.removeClass("show");
     Meteor.Router.to('/landing');
-    setTimeout(function() {
-      $modal.remove();
-    },500);
+    destroyModal();
   });
   $modal.find(".profile").click(function() {
     Session.set("expanded_story",false);
     Meteor.Router.to('/');
-    setTimeout(function() {
-      $modal.remove();
-    },500);
+    destroyModal();
   });
 }
 

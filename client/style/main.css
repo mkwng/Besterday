@@ -1896,7 +1896,7 @@ li.sidebar-menu-sub-list-week.prev, li.sidebar-menu-sub-list-week.next {
   padding-left: 5%;
   /* Prevent vertical gaps */
   overflow: hidden;
-  background: #cdc6c6;
+  background: #312b2c;
   -webkit-transition: max-height 2s;
   -moz-transition: max-height 2s;
   -ms-transition: max-height 2s;

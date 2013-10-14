@@ -7,7 +7,6 @@ Template.storytime.created = function() {
 
 
 Template.storytime.rendered = function() {
-  if(typeof runGaq == "function") $.throttle(250, runGaq);
   if(!!story && story.hasOwnProperty("_id")) {
     if(sessionId!=story._id) {
       var tempStory = Stories.findOne(sessionId);

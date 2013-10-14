@@ -6,7 +6,6 @@ Template.profile_grid.created = function() {
   profileGridLoaded = false;
 }
 
-
 Template.profile_grid.rendered = function() {
   profile_grid_ui();
 }
@@ -61,6 +60,11 @@ showGrid = function() {
     } else {
       $("a.profile-grid-more").html("No more stories").addClass("disabled");
     }
+}
+
+gridScrollCheck = function() {
+  if($(".profile-grid-more").offset().top - winHeight - winTop < 0)
+    showGrid();
 }
 
 

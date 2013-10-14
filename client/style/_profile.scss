@@ -372,7 +372,7 @@ $columnWidth: 25%;
   // max-height:$rowHeight*2;
   /* Prevent vertical gaps */
   overflow:hidden;
-  background:darken($grey4,10%);
+  background:$grey1;
   @include transition(max-height 2s);
 }
 .profile-grid-menu {

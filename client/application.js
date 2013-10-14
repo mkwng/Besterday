@@ -20,7 +20,7 @@ Meteor.startup(function () {
     if(Session.get('status_storydata')) initialize();
   });
 
-  // application_ui();
+  application_ui();
 
 });
 
@@ -78,8 +78,13 @@ initialize = function() {
 
 }
 
+gaqTimeout = setTimeout(function() {},0);
 Meteor.Router.beforeRouting = function() {
   Session.set("edit",false);
+  clearTimeout(gaqTimeout);
+  gaqTimeout = setTimeout(function() {
+    runGaq();
+  },500);
   // initialize();
 }
 
@@ -141,9 +146,17 @@ Meteor.Router.add({
 });
 
 
-
+winHeight = $(window).height();
+winTop = 0;
 application_ui = function() {
-  $(window).resize($.throttle( 250, resizeHousekeeping ) )
+  $(window).resize(function() {
+    winHeight = $(window).height();
+    $.throttle( 250, resizeHousekeeping ) 
+  });
+  $(window).scroll(function() {
+    winTop = $(window).scrollTop();
+    gridScrollCheck();
+  });
 }
 
 

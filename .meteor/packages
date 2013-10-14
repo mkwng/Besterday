@@ -10,3 +10,8 @@ accounts-ui
 preserve-inputs
 accounts-base
 jquery
+filepicker
+isotope
+jquery-masonry
+page-js-ie-support
+router
