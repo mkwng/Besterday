@@ -52,16 +52,18 @@ showGrid = function() {
     var $test = $(Template.profile_grid());
 
     function go() {
-      if(profileGridLoaded == false) {
+      if(profileGridLoaded == false || typeof $test == "undefined") {
         setTimeout(go,200);
       }
       else {
         if ($test.length) {
+          $("a.profile-grid-more").html("Show more")
           $(".profile-grid-inner").append($test);
           $(".profile-grid-inner").packery("appended",$test);
           showGridUi($test);
           storyPage++;
         } else {
+          console.log("No more");
           $("a.profile-grid-more").html("No more stories").addClass("disabled");
         }
         profileGridLoaded = true;

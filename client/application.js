@@ -155,8 +155,10 @@ application_ui = function() {
   $(window).scroll(function() {
     winTop = $(window).scrollTop();
   });
-  $(window).resize( $.throttle( 250, resizeHousekeeping ) );
-  $(window).scroll( $.throttle( 250, gridScrollCheck ) );
+  if(Meteor.Router.page()=='profile') {
+    $(window).resize( $.throttle( 250, resizeHousekeeping ) );
+    $(window).scroll( $.throttle( 250, gridScrollCheck ) );
+  }
 }
 
 
